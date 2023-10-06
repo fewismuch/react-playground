@@ -7,6 +7,7 @@ interface IPlaygroundProps {
   theme: Theme,
   files: any,
   setTheme?: (theme: Theme) => void,
+  updateFile?: () => void,
   addFile?: () => void,
   deleteFile?: () => void,
   downloadApp?: () => void,
@@ -31,8 +32,11 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
   const downloadApp = () => {
   }
 
+  const updateFile = () => {
+  }
+
   return (
-    <PlaygroundContext.Provider value={{theme, setTheme, files, addFile, deleteFile, downloadApp}}>
+    <PlaygroundContext.Provider value={{theme, setTheme, files, updateFile, addFile, deleteFile, downloadApp}}>
       {children}
     </PlaygroundContext.Provider>
   );
