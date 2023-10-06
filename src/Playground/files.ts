@@ -7,8 +7,10 @@ export const initFiles: any = {
   import {name} from './const'
   import React from 'react'
 import ReactDOM from 'react-dom/client'
+import {round} from 'lodash'
   
 	const App = ()=>{
+  console.log(round(1.567))
 	  const [num,setNum]=React.useState<number>(1)
 	  return <>
 	  <button onClick={()=>setNum(num+1)}>clickab</button>
@@ -38,4 +40,15 @@ import ReactDOM from 'react-dom/client'
     value: `export const name = 'abc';
 				export const age = 20;`,
   },
+  'import-map.json': {
+    name: 'import-map.json',
+    language: 'json',
+    value: `{
+    "imports": {
+          "react": "https://esm.sh/react",
+          "react-dom/client": "https://esm.sh/react-dom/client",
+          "lodash":"https://cdn.jsdelivr.net/npm/lodash-es@4.17.21/+esm"
+        }
+    }`,
+  }
 };

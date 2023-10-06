@@ -1,14 +1,12 @@
-import React, {useEffect, useRef} from "react";
+import React, {useContext, useRef} from "react";
 import iframe from './iframe.html?raw';
 import {useMount, useUpdateEffect} from "ahooks";
-
-interface Props {
-  files: any
-}
+import {PlaygroundContext} from "../../PlaygroundContext.tsx";
 
 const url = URL.createObjectURL(new Blob([iframe], {type: 'text/html'}));
 
-export const Preview: React.FC<Props> = ({files}) => {
+export const Preview: React.FC = () => {
+  const {files} = useContext(PlaygroundContext);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   // compiler?.addEventListener('message', ({ data }) => {
@@ -32,12 +30,10 @@ export const Preview: React.FC<Props> = ({files}) => {
     iframeRef.current?.contentWindow?.postMessage({
       type: 'UPDATE_CODE',
       data: {
-        importmap: {
-          "react": "https://esm.sh/react",
-          "react-dom/client": "https://esm.sh/react-dom/client",
-        },
-        compileCode: `console.log("ok")`,
-        files: mapValues(files, o => o.value)
+        imports: files['import-map.json'].value,
+        files: mapValues(files, o => {
+          if(['javascript','typescript'].includes(o.language)) return o.value
+        })
       }
     })
   }
@@ -46,9 +42,9 @@ export const Preview: React.FC<Props> = ({files}) => {
     changeCode()
   }, [files])
 
-  useMount(()=>{
-    window.addEventListener('message', (msg)=>{
-      if(msg.data.type==='LOADED' && msg.data.data) {
+  useMount(() => {
+    window.addEventListener('message', (msg) => {
+      if (msg.data.type === 'LOADED' && msg.data.data) {
         changeCode()
       }
     }, false);

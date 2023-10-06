@@ -16,6 +16,10 @@ export const Tabs: React.FC<Props> = ({files, activatedTab, onChange}) => {
     onChange(fileName)
   }
 
+  const editImportMap = ()=>{
+    onChange('import-map.json')
+  }
+
   return <div className={styles.tabsBox}>
     {
       files.map((item, index) =>
@@ -27,5 +31,10 @@ export const Tabs: React.FC<Props> = ({files, activatedTab, onChange}) => {
       )
     }
     <div className={styles.add} onClick={addTab}>+</div>
+    <div className={styles['import-map-wrapper']}>
+      <div className={styles.tabItem} onClick={editImportMap}>
+        Import Map
+      </div>
+    </div>
   </div>
 }

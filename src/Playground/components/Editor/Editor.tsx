@@ -1,23 +1,17 @@
-import React, {useCallback, useRef, useState} from "react";
+import React, {useCallback, useContext, useRef, useState} from "react";
 import MonacoEditor, {Monaco} from '@monaco-editor/react';
-import {
-  MonacoJsxSyntaxHighlight,
-  getWorker
-} from "monaco-jsx-syntax-highlight";
-//import "./userWoker.ts";
+import {getWorker, MonacoJsxSyntaxHighlight} from "monaco-jsx-syntax-highlight";
+import "./userWoker.ts";
 //import './jsx-highlight.less'
 import {useGetState} from "ahooks";
 import {useEditor} from "./useEditor.ts";
 import {Tabs} from './Tabs.tsx'
+import {PlaygroundContext} from "../../PlaygroundContext.tsx";
+import {languages} from "monaco-editor";
+import ModuleKind = languages.typescript.ModuleKind;
 
-interface Props {
-  theme: string
-  files: any,
-  onChange: (files: any) => void
-}
-
-export const Editor: React.FC<Props> = (props) => {
-  const {theme, files, onChange} = props
+export const Editor: React.FC = (props) => {
+  const {theme, files, setFiles} = useContext(PlaygroundContext);
   const editorRef = useRef<any>(null);
   const jsxSyntaxHighlight = useRef<any>({highlighter: null})
   const [models, setModels, getModels] = useGetState({})
@@ -25,11 +19,12 @@ export const Editor: React.FC<Props> = (props) => {
   const {initExtraLibs, doOpenEditor} = useEditor()
   const [activatedTab, setActivatedTab] = useState('App.tsx')
 
+
   function handleEditorChange(value: any, event: any) {
     // TODO 防抖
     const newFiles = JSON.parse(JSON.stringify(files))
     newFiles[activatedTab].value = value
-    onChange(newFiles)
+    setFiles?.(newFiles)
   }
 
   const findModel = (url) => {
@@ -61,7 +56,7 @@ export const Editor: React.FC<Props> = (props) => {
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
       jsx: monaco.languages.typescript.JsxEmit.Preserve,
       target: monaco.languages.typescript.ScriptTarget.ES2020,
-      esModuleInterop: true
+      esModuleInterop: true,
     });
 
     const monacoJsxSyntaxHighlight = new MonacoJsxSyntaxHighlight(
@@ -108,11 +103,33 @@ export const Editor: React.FC<Props> = (props) => {
       <MonacoEditor
         className={"editor"}
         height="calc(100vh - 100px)"
-        theme={theme}
+        theme={`vs-${theme}`}
         onChange={handleEditorChange}
         onMount={handleEditorDidMount}
         beforeMount={handleEditorWillMount}
         onValidate={handleEditorValidation}
+        options={
+          {
+            automaticLayout: true,
+            cursorBlinking: 'smooth',
+            fontLigatures: true,
+            formatOnPaste: true,
+            formatOnType: true,
+            fontSize: 14,
+            showDeprecated: true,
+            showUnused: true,
+            showFoldingControls: 'mouseover',
+            minimap: {
+              autohide: true,
+            },
+            smoothScrolling: true,
+            smartSelect: {
+              selectSubwords: true,
+              selectLeadingAndTrailingWhitespace: true,
+            },
+            tabSize: 2,
+          }
+        }
       />
     </>
   )

@@ -19,9 +19,7 @@
       const importmapTag = document.querySelector(
         'script[type="importmap"]',
       );
-      importmapTag.innerHTML = JSON.stringify({
-        imports: data.data.importmap,
-      });
+      importmapTag.innerHTML = data.data.imports
 
       // update app code
       run(data.data.files)
@@ -134,6 +132,7 @@
         });
       });
 
+      console.log(newFiles);
       updateEntryFile(newFiles["App.tsx"])
 
     });

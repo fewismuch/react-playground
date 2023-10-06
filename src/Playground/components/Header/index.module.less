@@ -1,16 +1,11 @@
-:root {
-  --nav-height: 50px;
-  --color-branding: #42d392;
-  --primary-color: #42d392;
-}
-
 .box {
   color: var(--base);
-  height: var(--nav-height);
+  height: 50px;
   box-sizing: border-box;
   padding: 0 1em;
   background-color: var(--bg);
-  box-shadow: 0 0 4px #00000054;
+  box-shadow: 0 0 4px var(--box-shadow);
+  border-bottom: 1px solid var(--border);
   position: relative;
   z-index: 999;
   display: flex;
@@ -50,18 +45,6 @@
       width: 18px;
       height: 18px;
 
-    }
-  }
-}
-
-.dark .box {
-
-  box-shadow: none;
-  border-bottom: 1px solid var(--border);
-
-  .links {
-    button > svg {
-      fill: #fff;
     }
   }
 }

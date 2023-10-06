@@ -8,21 +8,19 @@ body {
 }
 
 body.light {
+    --base: #444;
     --bg: #fff;
-    --bg-light: #fff;
     --border: #ddd;
-    --btn: #666;
-    --highlight: #333;
-    --green: #3ca877;
-    --purple: #904cbc;
-    --btn-bg: #eee;
+    --box-shadow:#00000054;
+
+    --primary: #00d8fe;
 }
 
 body.dark {
     --base: #ddd;
     --bg: #1a1a1a;
-    --bg-light: #242424;
     --border: #383838;
-    --highlight: #fff;
-    --btn-bg: #333;
+    --box-shadow: #00000000;
+
+    --primary: #00d8fe;
 }

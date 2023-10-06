@@ -19,6 +19,10 @@ export const useEditor = () => {
         `file://${path}`,
       );
     });
+
+    // 可匹配到.d.ts文件，但是没内容
+    // const uri = monaco.Uri.file("dir/lodash.d.ts");
+    // monaco.languages.typescript.typescriptDefaults.addExtraLib(`declare module 'lodash' {}`,uri);
   };
 
 
