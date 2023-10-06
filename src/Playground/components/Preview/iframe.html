@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Preview</title>
+  <script src="https://cdn.jsdelivr.net/npm/esbuild-wasm"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom/umd/react-dom.production.min.js"></script>
+  <script>
+    const WASM_URL = "https://cdn.jsdelivr.net/npm/esbuild-wasm@latest/esbuild.wasm"
+  </script>
+</head>
+<body>
+<script>
+  window.addEventListener('message', ({data}) => {
+    if (data.type === 'UPDATE_CODE') {
+      // update importmap
+      const importmapTag = document.querySelector(
+        'script[type="importmap"]',
+      );
+      importmapTag.innerHTML = JSON.stringify({
+        imports: data.data.importmap,
+      });
+
+      // update app code
+      run(data.data.files)
+    }
+  });
+</script>
+
+<script>
+  async function init() {
+    await esbuild.initialize({
+      wasmURL: WASM_URL
+    });
+    return true
+  }
+
+  init().then((loaded) => {
+    window.parent.postMessage({type: 'LOADED', data: loaded}, window.parent.location.href);
+  })
+</script>
+<script>
+  /**
+   * 更新app代码
+   * @param entryFile
+   */
+  const updateEntryFile = (entryFile) => {
+    const appSrcTag = document.querySelector('#appSrc');
+    const oldSrc = appSrcTag.getAttribute('src');
+    appSrcTag.remove();
+    const script = document.createElement('script');
+    script.src = URL.createObjectURL(
+      new Blob([entryFile], {
+        type: 'application/javascript',
+      }),
+    );
+    script.id = 'appSrc';
+    script.type = 'module';
+    document.body.appendChild(script);
+    URL.revokeObjectURL(oldSrc);
+  }
+
+  function run(files) {
+    const newFiles = JSON.parse(JSON.stringify(files));
+    const compile = async (path) => {
+      if (!newFiles[path]) {
+        console.error("error entryFile");
+        return false;
+      }
+      const code = newFiles[path];
+
+      if (path.endsWith(".css")) {
+        const js = `
+		                (() => {
+		                  let stylesheet = document.getElementById('${path}');
+		                  if (!stylesheet) {
+		                    stylesheet = document.createElement('style')
+		                    stylesheet.setAttribute('id', '${path}')
+		                    document.head.appendChild(stylesheet)
+		                  }
+		                  const styles = document.createTextNode(\`${code}\`)
+		                  stylesheet.innerHTML = ''
+		                  stylesheet.appendChild(styles)
+		                })()
+		                `;
+        const url = URL.createObjectURL(
+          new Blob([js], {
+            type: "application/javascript"
+          })
+        );
+        newFiles[path] = js;
+        return url;
+      } else {
+        let comp = await esbuild.transform(code, {
+          loader: "tsx"
+        });
+        const url = URL.createObjectURL(
+          new Blob([comp.code], {
+            type: "application/javascript"
+          })
+        );
+        newFiles[path] = comp.code;
+        return url;
+      }
+    };
+
+    const getUrl = async (path) => {
+      const url = await compile(path);
+      return new Promise((reslove) => {
+        reslove({
+          path,
+          url
+        });
+      });
+    };
+    const getUrlTaskList = [];
+
+    Object.keys(newFiles).forEach(async (item) => {
+      getUrlTaskList.push(getUrl(item));
+    });
+
+    Promise.all(getUrlTaskList).then((res) => {
+      // 替换代码中的自定义依赖包路径，'./Button.tsx'=>'blob:http://localhost:xxx'
+      res.forEach((item) => {
+        Object.keys(newFiles).forEach((f) => {
+          if (f !== item.path) {
+            newFiles[f] = newFiles[f].replace(
+              `./${item.path.replace(/\.[^.]+$/, "")}`,
+              item.url
+            );
+          }
+        });
+      });
+
+      updateEntryFile(newFiles["App.tsx"])
+
+    });
+  }
+</script>
+
+<script type="importmap"></script>
+<script type="module" id="appSrc"></script>
+<div id="root">Loading...</div>
+</body>
+</html>

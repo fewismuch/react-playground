@@ -1,0 +1,67 @@
+:root {
+  --nav-height: 50px;
+  --color-branding: #42d392;
+  --primary-color: #42d392;
+}
+
+.box {
+  color: var(--base);
+  height: var(--nav-height);
+  box-sizing: border-box;
+  padding: 0 1em;
+  background-color: var(--bg);
+  box-shadow: 0 0 4px #00000054;
+  position: relative;
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .logo {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+
+    img {
+      height: 24px;
+      margin-right: 10px;
+    }
+  }
+
+  .links {
+    height: 100%;
+    display: flex;
+
+    button {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      background-color: transparent;
+      height: 100%;
+      padding: 0 6px;
+      margin-left: 4px;
+    }
+
+    button > svg {
+      color: #666;
+    }
+
+    button.theme > svg {
+      width: 18px;
+      height: 18px;
+
+    }
+  }
+}
+
+.dark .box {
+
+  box-shadow: none;
+  border-bottom: 1px solid var(--border);
+
+  .links {
+    button > svg {
+      fill: #fff;
+    }
+  }
+}
