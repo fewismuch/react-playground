@@ -1,12 +1,12 @@
-import React, { useContext, useRef } from "react";
+import React, {useContext, useRef} from "react";
 import iframe from "./iframe.html?raw";
-import { useMount, useUpdateEffect } from "ahooks";
-import { PlaygroundContext } from "../../PlaygroundContext.tsx";
+import {useMount, useUpdateEffect} from "ahooks";
+import {PlaygroundContext} from "../../PlaygroundContext.tsx";
 
-const url = URL.createObjectURL(new Blob([iframe], { type: "text/html" }));
+const url = URL.createObjectURL(new Blob([iframe], {type: "text/html"}));
 
 export const Preview: React.FC = () => {
-  const { files } = useContext(PlaygroundContext);
+  const {files} = useContext(PlaygroundContext);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   function mapValues(
@@ -16,6 +16,7 @@ export const Preview: React.FC = () => {
     const modifiedObject = {};
     for (const key in originalObject) {
       if (originalObject.hasOwnProperty(key)) {
+        // @ts-ignore
         modifiedObject[key] = modifierFunction(originalObject[key]);
       }
     }
@@ -28,10 +29,10 @@ export const Preview: React.FC = () => {
       type: "UPDATE_CODE",
       data: {
         imports: files["import-map.json"].value,
-        files: mapValues(files, (o) => {
-          if (["javascript", "typescript"].includes(o.language)) return o.value;
+        files: mapValues(files, (o: any) => {
+          if (!['import-map.json'].includes(o.name)) return o.value;
         }),
-        entryFileName: "App.jsx",
+        entryFileName: "main.jsx",
       },
     });
   };
@@ -57,7 +58,7 @@ export const Preview: React.FC = () => {
       <iframe
         ref={iframeRef}
         src={url}
-        style={{ width: "100vw", height: "100vh", padding: 0, border: "none" }}
+        style={{width: "100vw", height: "100vh", padding: 0, border: "none"}}
         sandbox="allow-popups-to-escape-sandbox allow-scripts allow-popups allow-forms allow-pointer-lock allow-top-navigation allow-modals allow-same-origin"
       />
     </>

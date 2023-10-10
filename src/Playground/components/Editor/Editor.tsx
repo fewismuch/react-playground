@@ -6,7 +6,7 @@ import React, {
   useCallback,
 } from "react";
 import MonacoEditor, { Monaco } from "@monaco-editor/react";
-//import "./userWoker.ts";
+import "./userWoker.ts";
 import { useEditor } from "./useEditor.ts";
 import { Tabs } from "./Tabs.tsx";
 import { PlaygroundContext } from "../../PlaygroundContext.tsx";
@@ -14,7 +14,7 @@ import { PlaygroundContext } from "../../PlaygroundContext.tsx";
 export const Editor: React.FC = (props) => {
   const { theme, files, setFiles } = useContext(PlaygroundContext);
   const editorRef = useRef<any>(null);
-  const [fileName, setFileName] = useState("App.jsx");
+  const [fileName, setFileName] = useState("main.jsx");
   const file = files[fileName] || {};
 
   function handleEditorChange(value: any, event: any) {

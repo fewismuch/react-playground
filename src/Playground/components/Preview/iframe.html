@@ -5,17 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Preview</title>
   <script src="https://cdn.jsdelivr.net/npm/esbuild-wasm"></script>
- <script>
+
+  <script>
     const WASM_URL = "https://cdn.jsdelivr.net/npm/esbuild-wasm@latest/esbuild.wasm"
 
     esbuild.initialize({
       wasmURL: WASM_URL
     }).then(() => {
-      window.parent.postMessage({ type: 'LOADED', data: true }, window.parent.location.href);
+      window.parent.postMessage({type: 'LOADED', data: true}, window.parent.location.href);
     })
 
     // 监听代码更新
-    window.addEventListener('message', ({ data }) => {
+    window.addEventListener('message', ({data}) => {
       if (data.type === 'UPDATE_CODE') {
         // update importmap
         const importmapTag = document.querySelector(
@@ -30,50 +31,30 @@
   </script>
   <script>
     /**
-   * 更新app代码
-   * @param entryFile 入口文件代码字符串
-   */
-  const updateEntryFile = (entryFile) => {
-    const appSrcTag = document.querySelector('#appSrc');
-    const oldSrc = appSrcTag.getAttribute('src');
-    appSrcTag.remove();
-    const script = document.createElement('script');
-    script.src = URL.createObjectURL(
-      new Blob([entryFile], {
-        type: 'application/javascript',
-      }),
-    );
-    script.id = 'appSrc';
-    script.type = 'module';
-    document.body.appendChild(script);
-    URL.revokeObjectURL(oldSrc);
-  }
+     * 更新app代码
+     * @param entryFile 入口文件代码字符串
+     */
+    const updateEntryFile = (entryFile) => {
+      const appSrcTag = document.querySelector('#appSrc');
+      const oldSrc = appSrcTag.getAttribute('src');
+      appSrcTag.remove();
+      const script = document.createElement('script');
+      script.src = URL.createObjectURL(
+        new Blob([entryFile], {
+          type: 'application/javascript',
+        }),
+      );
+      script.id = 'appSrc';
+      script.type = 'module';
+      document.body.appendChild(script);
+      //URL.revokeObjectURL(oldSrc);
+    }
 
-  const cssToJs = (path,code)=>{
-    const js = `
-      (() => {
-        let stylesheet = document.getElementById('${path}');
-        if (!stylesheet) {
-          stylesheet = document.createElement('style')
-          stylesheet.setAttribute('id', '${path}')
-          document.head.appendChild(stylesheet)
-        }
-        const styles = document.createTextNode(\`${code}\`)
-        stylesheet.innerHTML = ''
-        stylesheet.appendChild(styles)
-      })()`;
-    const url = URL.createObjectURL(
-      new Blob([js], {
-        type: "application/javascript"
-      })
-    );
-    return url
-  }
   </script>
 </head>
 <body>
 <script>
-  function run(files,entryFileName) {
+  function run(files, entryFileName) {
     const newFiles = JSON.parse(JSON.stringify(files));
     const compile = async (path) => {
       if (!newFiles[path]) {
@@ -83,19 +64,40 @@
       const code = newFiles[path];
 
       if (path.endsWith(".css")) {
-        const url = cssToJs(path,code)
+        const js = `
+		                (() => {
+		                  let stylesheet = document.getElementById('${path}');
+		                  if (!stylesheet) {
+		                    stylesheet = document.createElement('style')
+		                    stylesheet.setAttribute('id', '${path}')
+		                    document.head.appendChild(stylesheet)
+		                  }
+		                  const styles = document.createTextNode(\`${code}\`)
+		                  stylesheet.innerHTML = ''
+		                  stylesheet.appendChild(styles)
+		                })()
+		                `;
+        const url = URL.createObjectURL(
+          new Blob([js], {
+            type: "application/javascript"
+          })
+        );
         newFiles[path] = js;
         return url;
       } else {
         let comp = await esbuild.transform(code, {
           loader: path.split('.').pop()
         });
+        let draftCode = comp.code
+        if (!path.includes(entryFileName) && (path.endsWith('.tsx') || path.endsWith('.jsx'))) {
+          draftCode = `import React from 'react';\n${draftCode}`;
+        }
         const url = URL.createObjectURL(
-          new Blob([comp.code], {
+          new Blob([draftCode], {
             type: "application/javascript"
           })
         );
-        newFiles[path] = comp.code;
+        newFiles[path] = draftCode;
         return url;
       }
     };
@@ -111,18 +113,20 @@
     };
 
     const getUrlTaskList = [];
-
+    // TODO 需要递归替换模块里的引用
     Object.keys(newFiles).forEach(async (item) => {
       getUrlTaskList.push(getUrl(item));
     });
 
     Promise.all(getUrlTaskList).then((res) => {
+      console.log(res);
       // 替换代码中的自定义依赖包路径，'./Button.tsx'=>'blob:http://localhost:xxx'
       res.forEach((item) => {
         Object.keys(newFiles).forEach((f) => {
           if (f !== item.path) {
             newFiles[f] = newFiles[f].replace(
-              `./${item.path.replace(/\.[^.]+$/, "")}`,
+              //`./${item.path.replace(/\.[^.]+$/, "")}`,
+              `./${item.path}`,
               item.url
             );
           }
@@ -134,8 +138,8 @@
   }
 </script>
 
-  <script type="importmap"></script>
-  <script type="module" id="appSrc"></script>
-  <div id="root">Loading...</div>
+<script type="importmap"></script>
+<script type="module" id="appSrc"></script>
+<div id="root">Loading...</div>
 </body>
 </html>

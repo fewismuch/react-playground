@@ -1,65 +1,43 @@
-import { atou } from "./utils";
+import {atou} from "./utils";
+import main from "./components/Header/Download/template/src/main.jsx?raw";
+import App from "./components/Header/Download/template/src/App.jsx?raw";
+import indexCss from "./components/Header/Download/template/src/index.css?raw";
+import AppCss from "./components/Header/Download/template/src/App.css?raw";
+import importMap from "./components/Header/Download/template/import-map.json?raw";
 // 读取hash值 设置为files
 // TODO 校验
 let files;
 try {
-  files = JSON.parse(atou(window.location.hash?.split("#")[1]));
+  const hash = window.location.hash
+  if (hash) files = JSON.parse(atou(hash?.split("#")[1]));
 } catch (error) {
   console.error(error);
 }
 
 export const initFiles: any = files || {
+  "main.jsx": {
+    name: "main.jsx",
+    language: "javascript",
+    value: main,
+  },
   "App.jsx": {
     name: "App.jsx",
-    id: "100",
     language: "javascript",
-    value: `import { Button } from './Button'
-import { name } from './const'
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { round } from 'lodash'
-
-const App = () => {
-	console.log(round(1.567))
-	const [num, setNum] = React.useState(1)
-	return <>
-		<button onClick={() => setNum(num + 1)}>clickab</button>
-		<span>{num}</span>
-		<Button /> {name}
-	</>
-}
-ReactDOM.createRoot(document.getElementById('root')).render(
-	<React.StrictMode>
-		<App />
-	</React.StrictMode>,
-)
-`,
+    value: App,
   },
-  "Button.jsx": {
-    name: "Button.jsx",
-    id: "102",
-    language: "javascript",
-    value: `export const Button = () => {
-	return <button>abc</button>
-}`,
+  "App.css": {
+    name: "App.css",
+    language: "css",
+    value: AppCss,
   },
-  "const.js": {
-    name: "const.js",
-    id: "103",
-    language: "javascript",
-    value: `export const name = 'abc';
-export const age = 20;`,
+  "index.css": {
+    name: "index.css",
+    language: "css",
+    value: indexCss,
   },
   "import-map.json": {
     name: "import-map.json",
-    id: "104",
     language: "json",
-    value: `{
-  "imports": {
-    "react": "https://esm.sh/react",
-    "react-dom/client": "https://esm.sh/react-dom/client",
-    "lodash": "https://cdn.jsdelivr.net/npm/lodash-es@4.17.21/+esm"
-  }
-}`,
+    value: importMap,
   },
 };

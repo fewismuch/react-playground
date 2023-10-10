@@ -12,12 +12,13 @@ export const Tabs: React.FC<Props> = ({ onChange }) => {
     useContext(PlaygroundContext);
   const [pendingName, setPendingName] = useState("");
   const importMapFileName = "import-map.json";
-  const entryFileName = 'App.jsx'
+  const entryFileName = 'main.jsx'
   const tabs = Object.keys(files).filter((item) => item !== importMapFileName);
   const [selectedTabsItemName, setSelectedTabsItemName] = useState(entryFileName);
 
   const addTab = () => {
     if (pendingName) return;
+    // @ts-ignore
     addFile("Comp.jsx");
     setPendingName("Comp.jsx");
   };
@@ -44,7 +45,7 @@ export const Tabs: React.FC<Props> = ({ onChange }) => {
         >
           <TabsItem
             value={item}
-            omits={["App.jsx"]}
+            omits={["main.jsx"]}
             editing={pendingName === item}
             onOk={(val) => {
               // 修改名字
