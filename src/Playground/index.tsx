@@ -9,7 +9,6 @@ import {PlaygroundProvider} from "./PlaygroundContext.tsx";
 
 export const Playground = () => {
 
-
   return <PlaygroundProvider>
     <div style={{width: '100vw', height: '100vh'}}>
       <Header></Header>

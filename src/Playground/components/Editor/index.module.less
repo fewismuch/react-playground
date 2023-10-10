@@ -6,6 +6,17 @@
   border-bottom: 1px solid var(--border);
   background-color: var(--bg);
   color: var(--base);
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    height: 1px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: var(--border);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+  }
+
   .tabItem {
     display: inline-block;
     padding: 8px 10px 6px;
@@ -13,6 +24,7 @@
     cursor: pointer;
     font-size: 13px;
     border-bottom: 3px solid transparent;
+    flex-shrink: 0;
     &.activated {
       color: var(--color-branding);
       border-bottom: 3px solid var(--primary);
@@ -47,6 +59,6 @@
   background-color: var(--bg);
   flex-shrink: 0;
   .tabItem {
-    cursor: pointer!important;
+    cursor: pointer !important;
   }
 }

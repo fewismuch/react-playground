@@ -26,8 +26,8 @@ export const useEditor = () => {
   };
 
 
-  const doOpenEditor = (editor: any, input: any, model: any) => {
-    editor.setModel(model)
+  const doOpenEditor = (editor: any, input: any) => {
+    //editor.setModel(model)
     const selection = (input.options ? input.options.selection : null);
     if (selection) {
       if (typeof selection.endLineNumber === 'number' && typeof selection.endColumn === 'number') {

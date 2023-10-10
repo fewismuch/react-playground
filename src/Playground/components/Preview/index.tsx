@@ -1,21 +1,18 @@
-import React, {useContext, useRef} from "react";
-import iframe from './iframe.html?raw';
-import {useMount, useUpdateEffect} from "ahooks";
-import {PlaygroundContext} from "../../PlaygroundContext.tsx";
+import React, { useContext, useRef } from "react";
+import iframe from "./iframe.html?raw";
+import { useMount, useUpdateEffect } from "ahooks";
+import { PlaygroundContext } from "../../PlaygroundContext.tsx";
 
-const url = URL.createObjectURL(new Blob([iframe], {type: 'text/html'}));
+const url = URL.createObjectURL(new Blob([iframe], { type: "text/html" }));
 
 export const Preview: React.FC = () => {
-  const {files} = useContext(PlaygroundContext);
+  const { files } = useContext(PlaygroundContext);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  // compiler?.addEventListener('message', ({ data }) => {
-  //   if (data.type === 'UPDATE_CODE') {
-  //     iframeRef.current?.contentWindow?.postMessage(data);
-  //   }
-  // });
-
-  function mapValues(originalObject: Record<string, any>, modifierFunction: any) {
+  function mapValues(
+    originalObject: Record<string, any>,
+    modifierFunction: any,
+  ) {
     const modifiedObject = {};
     for (const key in originalObject) {
       if (originalObject.hasOwnProperty(key)) {
@@ -28,36 +25,41 @@ export const Preview: React.FC = () => {
   // TODO 防抖
   const changeCode = () => {
     iframeRef.current?.contentWindow?.postMessage({
-      type: 'UPDATE_CODE',
+      type: "UPDATE_CODE",
       data: {
-        imports: files['import-map.json'].value,
-        files: mapValues(files, o => {
-          if(['javascript','typescript'].includes(o.language)) return o.value
-        })
-      }
-    })
-  }
+        imports: files["import-map.json"].value,
+        files: mapValues(files, (o) => {
+          if (["javascript", "typescript"].includes(o.language)) return o.value;
+        }),
+        entryFileName: "App.jsx",
+      },
+    });
+  };
 
   useUpdateEffect(() => {
-    changeCode()
-  }, [files])
+    changeCode();
+  }, [files]);
 
   useMount(() => {
-    window.addEventListener('message', (msg) => {
-      if (msg.data.type === 'LOADED' && msg.data.data) {
-        changeCode()
-      }
-    }, false);
-  })
+    window.addEventListener(
+      "message",
+      (msg) => {
+        if (msg.data.type === "LOADED" && msg.data.data) {
+          changeCode();
+        }
+      },
+      false,
+    );
+  });
 
   return (
     <>
       <iframe
         ref={iframeRef}
         src={url}
-        style={{width: '100vw', height: '100vh', padding: 0, border: "none"}}
+        style={{ width: "100vw", height: "100vh", padding: 0, border: "none" }}
         sandbox="allow-popups-to-escape-sandbox allow-scripts allow-popups allow-forms allow-pointer-lock allow-top-navigation allow-modals allow-same-origin"
       />
     </>
   );
-}
+};

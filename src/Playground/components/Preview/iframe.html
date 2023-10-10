@@ -7,42 +7,33 @@
   <script src="https://cdn.jsdelivr.net/npm/esbuild-wasm"></script>
   <script src="https://cdn.jsdelivr.net/npm/react/umd/react.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/react-dom/umd/react-dom.production.min.js"></script>
-  <script>
+ <script>
     const WASM_URL = "https://cdn.jsdelivr.net/npm/esbuild-wasm@latest/esbuild.wasm"
-  </script>
-</head>
-<body>
-<script>
-  window.addEventListener('message', ({data}) => {
-    if (data.type === 'UPDATE_CODE') {
-      // update importmap
-      const importmapTag = document.querySelector(
-        'script[type="importmap"]',
-      );
-      importmapTag.innerHTML = data.data.imports
 
-      // update app code
-      run(data.data.files)
-    }
-  });
-</script>
-
-<script>
-  async function init() {
-    await esbuild.initialize({
+    esbuild.initialize({
       wasmURL: WASM_URL
-    });
-    return true
-  }
+    }).then(() => {
+      window.parent.postMessage({ type: 'LOADED', data: true }, window.parent.location.href);
+    })
 
-  init().then((loaded) => {
-    window.parent.postMessage({type: 'LOADED', data: loaded}, window.parent.location.href);
-  })
-</script>
-<script>
-  /**
+    // 监听代码更新
+    window.addEventListener('message', ({ data }) => {
+      if (data.type === 'UPDATE_CODE') {
+        // update importmap
+        const importmapTag = document.querySelector(
+          'script[type="importmap"]',
+        );
+        importmapTag.innerHTML = data.data.imports
+
+        // update app code
+        run(data.data.files, data.data.entryFileName)
+      }
+    });
+  </script>
+  <script>
+    /**
    * 更新app代码
-   * @param entryFile
+   * @param entryFile 入口文件代码字符串
    */
   const updateEntryFile = (entryFile) => {
     const appSrcTag = document.querySelector('#appSrc');
@@ -60,7 +51,31 @@
     URL.revokeObjectURL(oldSrc);
   }
 
-  function run(files) {
+  const cssToJs = (path,code)=>{
+    const js = `
+      (() => {
+        let stylesheet = document.getElementById('${path}');
+        if (!stylesheet) {
+          stylesheet = document.createElement('style')
+          stylesheet.setAttribute('id', '${path}')
+          document.head.appendChild(stylesheet)
+        }
+        const styles = document.createTextNode(\`${code}\`)
+        stylesheet.innerHTML = ''
+        stylesheet.appendChild(styles)
+      })()`;
+    const url = URL.createObjectURL(
+      new Blob([js], {
+        type: "application/javascript"
+      })
+    );
+    return url
+  }
+  </script>
+</head>
+<body>
+<script>
+  function run(files,entryFileName) {
     const newFiles = JSON.parse(JSON.stringify(files));
     const compile = async (path) => {
       if (!newFiles[path]) {
@@ -70,29 +85,12 @@
       const code = newFiles[path];
 
       if (path.endsWith(".css")) {
-        const js = `
-		                (() => {
-		                  let stylesheet = document.getElementById('${path}');
-		                  if (!stylesheet) {
-		                    stylesheet = document.createElement('style')
-		                    stylesheet.setAttribute('id', '${path}')
-		                    document.head.appendChild(stylesheet)
-		                  }
-		                  const styles = document.createTextNode(\`${code}\`)
-		                  stylesheet.innerHTML = ''
-		                  stylesheet.appendChild(styles)
-		                })()
-		                `;
-        const url = URL.createObjectURL(
-          new Blob([js], {
-            type: "application/javascript"
-          })
-        );
+        const url = cssToJs(path,code)
         newFiles[path] = js;
         return url;
       } else {
         let comp = await esbuild.transform(code, {
-          loader: "tsx"
+          loader: path.split('.').pop()
         });
         const url = URL.createObjectURL(
           new Blob([comp.code], {
@@ -113,6 +111,7 @@
         });
       });
     };
+
     const getUrlTaskList = [];
 
     Object.keys(newFiles).forEach(async (item) => {
@@ -132,15 +131,13 @@
         });
       });
 
-      console.log(newFiles);
-      updateEntryFile(newFiles["App.tsx"])
-
+      updateEntryFile(newFiles[entryFileName])
     });
   }
 </script>
 
-<script type="importmap"></script>
-<script type="module" id="appSrc"></script>
-<div id="root">Loading...</div>
+  <script type="importmap"></script>
+  <script type="module" id="appSrc"></script>
+  <div id="root">Loading...</div>
 </body>
 </html>
