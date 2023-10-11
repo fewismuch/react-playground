@@ -1,14 +1,39 @@
 import { zlibSync, unzlibSync, strToU8, strFromU8 } from "fflate";
+import { saveAs } from "file-saver";
+import index from "./template/index.html?raw";
+import pkg from "./template/package.json?raw";
+import config from "./template/vite.config.js?raw";
+import readme from "./template/README.md?raw";
 
-export function debounce(fn: Function, n = 100) {
-  let handle: any;
-  return (...args: any[]) => {
-    if (handle) clearTimeout(handle);
-    handle = setTimeout(() => {
-      fn(...args);
-    }, n);
-  };
+export async function downloadProject(files:any) {
+  if (!confirm("Download project files?")) {
+    return;
+  }
+
+  const { default: JSZip } = await import("jszip");
+  const zip = new JSZip();
+
+  // basic structure
+  zip.file("index.html", index);
+  zip.file("package.json", pkg);
+  zip.file("vite.config.js", config);
+  zip.file("README.md", readme);
+
+  // project src
+  const src = zip.folder("src")!;
+
+  Object.keys(files).forEach((name) => {
+    if (files[name].name !== "import-map.json") {
+      src.file(name, files[name].value);
+    } else {
+      zip.file(name, files[name].value);
+    }
+  });
+
+  const blob = await zip.generateAsync({ type: "blob" });
+  saveAs(blob, "react-project.zip");
 }
+
 
 // 编码
 export function utoa(data: string): string {

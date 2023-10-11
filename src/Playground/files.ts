@@ -1,9 +1,9 @@
 import { atou } from "./utils";
-import main from "./components/Header/Download/template/src/main.jsx?raw";
-import App from "./components/Header/Download/template/src/App.jsx?raw";
-import indexCss from "./components/Header/Download/template/src/index.css?raw";
-import AppCss from "./components/Header/Download/template/src/App.css?raw";
-import importMap from "./components/Header/Download/template/import-map.json?raw";
+import main from "./template/src/main.jsx?raw";
+import App from "./template/src/App.jsx?raw";
+import indexCss from "./template/src/index.css?raw";
+import AppCss from "./template/src/App.css?raw";
+import importMap from "./template/import-map.json?raw";
 
 // 读取hash值 设置为files
 let files;

@@ -22,11 +22,10 @@ export const Preview: React.FC = () => {
 
   useEffect(() => {
     compiler.postMessage(files);
-    // TODO 指定编译某个文件
     if (isJsView) {
       compiler.postMessage({
         view: "js",
-        data: files[selectedFileName],
+        data: files[selectedFileName].value,
         name: selectedFileName,
         files,
       });
@@ -50,13 +49,17 @@ export const Preview: React.FC = () => {
   };
 
   useEffect(() => {
-    if (isJsView && selectedFileName?.endsWith(".jsx")) {
-      compiler.postMessage({
-        view: "js",
-        data: files[selectedFileName].value,
-        name: selectedFileName,
-        files,
-      });
+    if (isJsView) {
+      if(selectedFileName?.endsWith(".jsx")) {
+        compiler.postMessage({
+          view: "js",
+          data: files[selectedFileName].value,
+          name: selectedFileName,
+          files,
+        });
+      } else {
+        setCompiledCode('');
+      }
     }
   }, [selectedFileName]);
 
@@ -71,14 +74,14 @@ export const Preview: React.FC = () => {
         >
           PREVIEW
         </div>
-        {/* <div
+        <div
           className={[styles.tabItem, isJsView ? styles.activated : ""].join(
             " ",
           )}
           onClick={() => setView("js")}
         >
           JS
-        </div> */}
+        </div>
       </div>
       <iframe
         ref={iframeRef}

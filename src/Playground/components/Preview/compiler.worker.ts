@@ -1,5 +1,5 @@
-import { transform } from "@babel/standalone";
-import { last } from "lodash";
+import {transform} from "@babel/standalone";
+import {last} from "lodash";
 
 const entryFileName = "main.jsx";
 
@@ -47,8 +47,10 @@ const babelTransform = (filename: string, code: string, tabs) => {
                   })()
                   `;
                   path.node.source.value = URL.createObjectURL(
-                    new Blob([js], { type: "application/javascript" }),
+                    new Blob([js], {type: "application/javascript"}),
                   );
+                } else if (_module.name.endsWith(".json")) {
+                  //  TODO json 转export
                 } else {
                   path.node.source.value = URL.createObjectURL(
                     new Blob(
@@ -71,10 +73,10 @@ const babelTransform = (filename: string, code: string, tabs) => {
 const compile = (tabs) => {
   const main = tabs[entryFileName];
   const compileCode = babelTransform(entryFileName, main.value, tabs);
-  return { compileCode };
+  return {compileCode};
 };
 
-self.addEventListener("message", async ({ data }) => {
+self.addEventListener("message", async ({data}) => {
   console.log("compile");
   if (data.view) {
     self.postMessage({
@@ -92,6 +94,6 @@ self.addEventListener("message", async ({ data }) => {
       data: compile(data),
     });
   } catch (e) {
-    self.postMessage({ event: "ERROR", error: e });
+    self.postMessage({event: "ERROR", error: e});
   }
 });

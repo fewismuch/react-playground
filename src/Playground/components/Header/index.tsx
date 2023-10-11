@@ -8,8 +8,7 @@ import ShareSvg from "@/assets/share.svg?raw";
 import { PlaygroundContext, Theme } from "../../PlaygroundContext.tsx";
 import { useMount } from "ahooks";
 import styles from "./index.module.less";
-import { downloadProject } from "./Download/index";
-import { utoa } from "../../utils";
+import { utoa,downloadProject } from "../../utils";
 
 const STORAGE_THEME = "react-playground-prefer-dark";
 
