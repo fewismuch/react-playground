@@ -14,6 +14,11 @@
           );
           importmapTag.innerHTML = data.data.importmap
 
+           const appStyleTags = document.querySelectorAll('style[id^="style_"]') ||[]
+        appStyleTags.forEach(div => {
+          div.remove();
+        });
+        
           const appSrcTag = document.querySelector('#appSrc');
           const oldSrc = appSrcTag.getAttribute('src');
           appSrcTag.remove();

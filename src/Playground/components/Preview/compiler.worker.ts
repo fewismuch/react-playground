@@ -32,12 +32,13 @@ const babelTransform = (filename: string, code: string, tabs) => {
               if (module.startsWith(".")) {
                 const _module = getInternalModule(tabs, module);
                 if (_module.name.endsWith(".css")) {
+                  // TODO 缺少移除
                   const js = `
                   (() => {
-                    let stylesheet = document.getElementById('${_module.name}');
+                    let stylesheet = document.getElementById('style_${_module.name}');
                     if (!stylesheet) {
                       stylesheet = document.createElement('style')
-                      stylesheet.setAttribute('id', '${_module.name}')
+                      stylesheet.setAttribute('id', 'style_${_module.name}')
                       document.head.appendChild(stylesheet)
                     }
                     const styles = document.createTextNode(\`${_module.value}\`)
@@ -80,6 +81,7 @@ self.addEventListener("message", async ({ data }) => {
       type: "UPDATE_CODE_JS",
       data: transform(data.data, {
         presets: ["react"],
+        retainLines: true,
       }).code,
     });
     return;

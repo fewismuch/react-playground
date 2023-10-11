@@ -47,6 +47,7 @@ export function TabsItem({
       return;
     }
 
+    // TODO 如果名称没有变化就不做任何事
     onOk(name);
     setPending(false);
   }
@@ -89,9 +90,12 @@ export function TabsItem({
                 e.stopPropagation();
                 onRemove(name);
               }}
-              style={{ marginLeft: 5 }}
+              style={{ marginLeft: 5, display: "flex" }}
             >
-              x
+              <svg class="icon" width="12" height="12" viewBox="0 0 24 24">
+                <line stroke="#999" x1="18" y1="6" x2="6" y2="18"></line>
+                <line stroke="#999" x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
             </span>
           )}
         </>

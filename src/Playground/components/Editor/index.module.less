@@ -20,7 +20,8 @@
   }
 
   .tabItem {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     padding: 8px 10px 6px;
     line-height: 20px;
     cursor: pointer;
@@ -28,12 +29,16 @@
     border-bottom: 3px solid transparent;
     flex-shrink: 0;
     &.activated {
-      color: var(--color-branding);
+      color: var(--primary);
       border-bottom: 3px solid var(--primary);
     }
 
     &:first-child {
       cursor: text;
+    }
+    .removeBtn {
+      margin-left: 5px;
+      display: flex;
     }
   }
   .add {

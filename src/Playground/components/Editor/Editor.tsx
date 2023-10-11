@@ -48,7 +48,7 @@ export const Editor: React.FC = () => {
       <Tabs onChange={handleTabsChange} />
       <MonacoEditor
         className={"editor"}
-        height="calc(100vh - 100px)"
+        height="calc(100vh - 88px)"
         theme={`vs-${theme}`}
         path={file.name}
         language={file.language}

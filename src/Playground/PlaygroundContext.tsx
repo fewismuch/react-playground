@@ -45,6 +45,7 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
     setFiles({ ...files });
   };
 
+  // TODO 根据文件名后缀匹配文件类型
   const updateFileName = (oldFieldName: string, newFieldName: string) => {
     if (
       !files.hasOwnProperty(oldFieldName) ||

@@ -6,6 +6,7 @@ import CompilerWorker from "./compiler.worker.ts?worker";
 import styles from "./index.module.less";
 import MonacoEditor, { Monaco } from "@monaco-editor/react";
 
+// 判断浏览器是否支持esm ，不支持的话引入 https://cdn.jsdelivr.net/npm/es-module-shims@1.8.0/dist/es-module-shims.min.js
 const url = URL.createObjectURL(new Blob([iframe], { type: "text/html" }));
 
 export const Preview: React.FC = () => {
@@ -49,7 +50,7 @@ export const Preview: React.FC = () => {
   };
 
   useEffect(() => {
-    if (isJsView) {
+    if (isJsView && selectedFileName?.endsWith(".jsx")) {
       compiler.postMessage({
         view: "js",
         data: files[selectedFileName].value,

@@ -1,23 +1,24 @@
-import {Header} from "./components/Header";
-import {Editor} from "./components/Editor/Editor.tsx";
-import {Preview} from "./components/Preview";
+import { Header } from "./components/Header";
+import { Editor } from "./components/Editor/Editor.tsx";
+import { Preview } from "./components/Preview";
+// 分割线颜色，其他分隔组件
 // @ts-ignore
-import {Allotment} from "allotment";
+import { Allotment } from "allotment";
 import "allotment/dist/style.css";
-import {PlaygroundProvider} from "./PlaygroundContext.tsx";
-
+import { PlaygroundProvider } from "./PlaygroundContext.tsx";
 
 export const Playground = () => {
-
-  return <PlaygroundProvider>
-    <div style={{width: '100vw', height: '100vh'}}>
-      <Header></Header>
-      <div style={{height: 'calc(100vh - 50px)'}}>
-        <Allotment>
-          <Editor/>
-          <Preview/>
-        </Allotment>
+  return (
+    <PlaygroundProvider>
+      <div style={{ width: "100vw", height: "100vh" }}>
+        <Header></Header>
+        <div style={{ height: "calc(100vh - 50px)" }}>
+          <Allotment>
+            <Editor />
+            <Preview />
+          </Allotment>
+        </div>
       </div>
-    </div>
-  </PlaygroundProvider>
-}
+    </PlaygroundProvider>
+  );
+};
