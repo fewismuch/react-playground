@@ -8,13 +8,14 @@ interface Props {
 }
 
 export const Tabs: React.FC<Props> = ({ onChange }) => {
-  const { files, removeFile, addFile, updateFileName } =
+  const { files, removeFile, addFile, updateFileName, setSelectedFileName } =
     useContext(PlaygroundContext);
   const [pendingName, setPendingName] = useState("");
   const importMapFileName = "import-map.json";
-  const entryFileName = 'main.jsx'
+  const entryFileName = "main.jsx";
   const tabs = Object.keys(files).filter((item) => item !== importMapFileName);
-  const [selectedTabsItemName, setSelectedTabsItemName] = useState(entryFileName);
+  const [selectedTabsItemName, setSelectedTabsItemName] =
+    useState(entryFileName);
 
   const addTab = () => {
     if (pendingName) return;
@@ -26,6 +27,7 @@ export const Tabs: React.FC<Props> = ({ onChange }) => {
   const handleClickTab = (fileName: string) => {
     onChange(fileName);
     setSelectedTabsItemName(fileName);
+    setSelectedFileName(fileName);
   };
 
   const editImportMap = () => {
@@ -66,7 +68,7 @@ export const Tabs: React.FC<Props> = ({ onChange }) => {
                 handleClickTab(entryFileName);
               }
             }}
-            noRemove={item===entryFileName}
+            noRemove={item === entryFileName}
           />
         </div>
       ))}

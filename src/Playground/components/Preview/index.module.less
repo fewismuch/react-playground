@@ -1,0 +1,24 @@
+.tabs {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 38px;
+  border-bottom: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--base);
+  box-sizing: border-box;
+
+  .tabItem {
+    display: inline-block;
+    padding: 8px 10px 6px;
+    line-height: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    border-bottom: 3px solid transparent;
+    flex-shrink: 0;
+    &.activated {
+      color: var(--color-branding);
+      border-bottom: 3px solid var(--primary);
+    }
+  }
+}

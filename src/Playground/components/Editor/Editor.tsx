@@ -1,17 +1,11 @@
-import React, {
-  useEffect,
-  useContext,
-  useRef,
-  useState,
-  useCallback,
-} from "react";
+import React, { useEffect, useContext, useRef, useState } from "react";
 import MonacoEditor, { Monaco } from "@monaco-editor/react";
 import "./userWoker.ts";
 import { useEditor } from "./useEditor.ts";
 import { Tabs } from "./Tabs.tsx";
 import { PlaygroundContext } from "../../PlaygroundContext.tsx";
 
-export const Editor: React.FC = (props) => {
+export const Editor: React.FC = () => {
   const { theme, files, setFiles } = useContext(PlaygroundContext);
   const editorRef = useRef<any>(null);
   const [fileName, setFileName] = useState("main.jsx");

@@ -9,12 +9,13 @@ export enum Theme {
 interface IPlaygroundProps {
   files: any;
   theme: Theme;
+  selectedFileName?: string;
+  setSelectedFileName?: () => void;
   setTheme?: (theme: Theme) => void;
   setFiles?: (files: any) => void;
   addFile?: () => void;
   removeFile?: () => void;
   updateFileName?: () => void;
-  downloadApp?: () => void;
 }
 
 const initialContext = {
@@ -29,6 +30,7 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
   const { children } = props;
   const [files, setFiles] = useState(initialContext.files);
   const [theme, setTheme] = useState(initialContext.theme);
+  const [selectedFileName, setSelectedFileName] = useState("");
 
   const addFile = (name: string) => {
     files[name] = {
@@ -63,19 +65,18 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
     });
   };
 
-  const downloadApp = () => {};
-
   return (
     <PlaygroundContext.Provider
       value={{
         theme,
         setTheme,
         files,
+        selectedFileName,
+        setSelectedFileName,
         setFiles,
         addFile,
         removeFile,
         updateFileName,
-        downloadApp,
       }}
     >
       {children}

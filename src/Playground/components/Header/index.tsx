@@ -76,7 +76,7 @@ export const Header: React.FC = () => {
         <button
           title="Download project files"
           dangerouslySetInnerHTML={{ __html: DownloadSvg }}
-          onClick={downloadProject}
+          onClick={()=>downloadProject(files)}
         />
 
         <a

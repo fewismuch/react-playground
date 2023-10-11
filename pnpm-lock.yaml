@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@babel/standalone': ^7.23.1
   '@monaco-editor/react': ^4.5.2
   '@types/file-saver': ^2.0.5
   '@types/react': ^18.2.15
@@ -27,6 +28,7 @@ specifiers:
   vite: ^4.4.5
 
 dependencies:
+  '@babel/standalone': 7.23.1
   '@monaco-editor/react': 4.5.2_h7yddfbvipnowhtsixytbwwz3i
   ahooks: 3.7.8_react@18.2.0
   allotment: 1.19.3_biqbaboplfbrettd7655fr4n2y
@@ -66,6 +68,11 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.0
+    dev: false
+
+  /@babel/standalone/7.23.1:
+    resolution: {integrity: sha512-a4muOYz1qUaSoybuUKwK90mRG4sf5rBeUbuzpuGLzG32ZDE/Y2YEebHDODFJN+BtyOKi19hrLfq2qbNyKMx0TA==}
+    engines: {node: '>=6.9.0'}
     dev: false
 
   /@esbuild/android-arm/0.18.20:

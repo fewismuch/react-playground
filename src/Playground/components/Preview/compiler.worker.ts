@@ -1,30 +1,26 @@
-/* eslint-disable func-names */
-/* eslint-disable no-lonely-if */
-import { type Tab } from '@/types';
-import { transform } from '@babel/standalone';
-import { last } from 'lodash';
+import { transform } from "@babel/standalone";
+import { last } from "lodash";
 
-const entryFileName = 'file:///main.tsx';
+const entryFileName = "main.jsx";
 
-const importmap: Record<string, string> = { react: `https://esm.sh/react` };
-
-const getInternalModule = (tabs: Tab[], moduleName: string): Tab => {
-  let _moduleName = last(moduleName.split('./'))!;
-  if (!_moduleName.includes('.')) {
-    _moduleName += '.tsx';
+const getInternalModule = (tabs, moduleName: string) => {
+  let _moduleName = last(moduleName.split("./"))!;
+  if (!_moduleName.includes(".")) {
+    _moduleName += ".jsx";
   }
 
-  return tabs.find(i => last(i.path.split('file:///')) === _moduleName)!;
+  return tabs[_moduleName];
 };
 
-const babelTransform = (filename: string, code: string, tabs: Tab[]) => {
+const babelTransform = (filename: string, code: string, tabs) => {
   let _code = code;
-  if (filename.endsWith('.tsx')) {
+  const regex = /import\s+React/g;
+  if (filename.endsWith(".jsx") && !regex.test(code)) {
     _code = `import React from 'react';\n${code}`;
   }
 
   return transform(_code, {
-    presets: ['react', 'typescript'],
+    presets: ["react"],
     filename,
     plugins: [
       // Babel plugin to get file import names
@@ -33,41 +29,34 @@ const babelTransform = (filename: string, code: string, tabs: Tab[]) => {
           visitor: {
             ImportDeclaration(path: any) {
               const module: string = path.node.source.value;
-              if (module.startsWith('.')) {
+              if (module.startsWith(".")) {
                 const _module = getInternalModule(tabs, module);
-                // handle style file
-                if (_module.path.endsWith('.css')) {
+                if (_module.name.endsWith(".css")) {
                   const js = `
                   (() => {
-                    let stylesheet = document.getElementById('${_module.path}');
+                    let stylesheet = document.getElementById('${_module.name}');
                     if (!stylesheet) {
                       stylesheet = document.createElement('style')
-                      stylesheet.setAttribute('id', '${_module.path}')
+                      stylesheet.setAttribute('id', '${_module.name}')
                       document.head.appendChild(stylesheet)
                     }
-                    const styles = document.createTextNode(\`${_module.content}\`)
+                    const styles = document.createTextNode(\`${_module.value}\`)
                     stylesheet.innerHTML = ''
                     stylesheet.appendChild(styles)
                   })()
                   `;
                   path.node.source.value = URL.createObjectURL(
-                    new Blob([js], { type: 'application/javascript' }),
+                    new Blob([js], { type: "application/javascript" }),
                   );
                 } else {
-                  // handle ts file
                   path.node.source.value = URL.createObjectURL(
                     new Blob(
-                      [babelTransform(_module.path, _module.content, tabs)],
+                      [babelTransform(_module.name, _module.value, tabs)],
                       {
-                        type: 'application/javascript',
+                        type: "application/javascript",
                       },
                     ),
                   );
-                }
-              } else {
-                // Third-party modules
-                if (!importmap[module]) {
-                  importmap[module] = `https://esm.sh/${module}`;
                 }
               }
             },
@@ -78,21 +67,29 @@ const babelTransform = (filename: string, code: string, tabs: Tab[]) => {
   }).code!;
 };
 
-const compile = (tabs: Tab[]) => {
-  const main = tabs.find(i => i.path === entryFileName)!;
-  const compileCode = babelTransform(entryFileName, main.content, tabs);
-  return { importmap, compileCode };
+const compile = (tabs) => {
+  const main = tabs[entryFileName];
+  const compileCode = babelTransform(entryFileName, main.value, tabs);
+  return { compileCode };
 };
 
-self.addEventListener('message', async ({ data }) => {
-  const tabs: Tab[] = data;
-
+self.addEventListener("message", async ({ data }) => {
+  console.log("compile");
+  if (data.view) {
+    self.postMessage({
+      type: "UPDATE_CODE_JS",
+      data: transform(data.data, {
+        presets: ["react"],
+      }).code,
+    });
+    return;
+  }
   try {
     self.postMessage({
-      type: 'UPDATE_CODE',
-      data: compile(tabs),
+      type: "UPDATE_CODE",
+      data: compile(data),
     });
   } catch (e) {
-    self.postMessage({ event: 'ERROR', error: e });
+    self.postMessage({ event: "ERROR", error: e });
   }
 });
