@@ -5,11 +5,7 @@ import pkg from "./template/package.json?raw";
 import config from "./template/vite.config.js?raw";
 import readme from "./template/README.md?raw";
 
-export async function downloadProject(files:any) {
-  if (!confirm("Download project files?")) {
-    return;
-  }
-
+export async function downloadFiles(files:any) {
   const { default: JSZip } = await import("jszip");
   const zip = new JSZip();
 
