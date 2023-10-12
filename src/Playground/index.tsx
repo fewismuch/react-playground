@@ -1,11 +1,11 @@
 import { Header } from "./components/Header";
-import { Editor } from "./components/Editor/Editor.tsx";
+import { Editor } from "./components/Editor";
 import { Preview } from "./components/Preview";
 // 分割线颜色，其他分隔组件
 // @ts-ignore
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
-import { PlaygroundProvider } from "./PlaygroundContext.tsx";
+import { PlaygroundProvider } from "./PlaygroundContext";
 
 export const Playground = () => {
   return (

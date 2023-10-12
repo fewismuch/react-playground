@@ -1,7 +1,6 @@
 import React, { useContext, useRef, useEffect, useState } from "react";
 import iframe from "./iframe.html?raw";
-import { useDebounce } from "ahooks";
-import { PlaygroundContext } from "../../PlaygroundContext.tsx";
+import { PlaygroundContext } from "../../PlaygroundContext";
 import CompilerWorker from "./compiler.worker.ts?worker";
 import styles from "./index.module.less";
 import MonacoEditor, { Monaco } from "@monaco-editor/react";
@@ -11,7 +10,6 @@ const url = URL.createObjectURL(new Blob([iframe], { type: "text/html" }));
 
 export const Preview: React.FC = () => {
   const { files, theme, selectedFileName } = useContext(PlaygroundContext);
-  const debouncedFiles = useDebounce(files, { wait: 200 });
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [view, setView] = useState("preview");
   const isPreview = view === "preview";
@@ -22,6 +20,7 @@ export const Preview: React.FC = () => {
 
   useEffect(() => {
     compiler.postMessage(files);
+    // TODO 错开时间发送
     if (isJsView) {
       compiler.postMessage({
         view: "js",
@@ -30,7 +29,7 @@ export const Preview: React.FC = () => {
         files,
       });
     }
-  }, [debouncedFiles]);
+  }, [files]);
 
   compiler?.addEventListener("message", ({ data }) => {
     console.log(data);
@@ -50,7 +49,7 @@ export const Preview: React.FC = () => {
 
   useEffect(() => {
     if (isJsView) {
-      if(selectedFileName?.endsWith(".jsx")) {
+      if (selectedFileName?.endsWith(".jsx")) {
         compiler.postMessage({
           view: "js",
           data: files[selectedFileName].value,
@@ -58,7 +57,7 @@ export const Preview: React.FC = () => {
           files,
         });
       } else {
-        setCompiledCode('');
+        setCompiledCode("");
       }
     }
   }, [selectedFileName]);

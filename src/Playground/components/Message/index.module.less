@@ -1,0 +1,61 @@
+.msg.err {
+  --color: #f56c6c;
+  --bg-color: #fef0f0;
+}
+
+.dark .msg.err {
+  --bg-color: #2b1d1d;
+}
+
+.msg.warn {
+  --color: #e6a23c;
+  --bg-color: #fdf6ec;
+}
+
+.dark .msg.warn {
+  --bg-color: #292218;
+}
+
+pre {
+  margin: 0;
+  padding: 12px 20px;
+  overflow: auto;
+}
+
+.msg {
+  position: absolute;
+  bottom: 0;
+  left: 8px;
+  right: 8px;
+  z-index: 10;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  font-family: var(--font-code);
+  white-space: pre-wrap;
+  margin-bottom: 8px;
+  max-height: calc(100% - 300px);
+  min-height: 40px;
+  display: flex;
+  align-items: stretch;
+  color: var(--color);
+  border-color: var(--color);
+  background-color: var(--bg-color);
+}
+
+.dismiss {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  border-radius: 9px;
+  text-align: center;
+  display: block;
+  font-size: 9px;
+  padding: 0;
+  color: var(--bg-color);
+  background-color: var(--color);
+  border: none;
+  cursor: pointer;
+}

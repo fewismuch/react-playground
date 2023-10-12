@@ -1,5 +1,6 @@
-import React, { createContext, useState } from "react";
-import { initFiles } from "./files.ts";
+import { createContext, useState, useEffect } from "react";
+import { initFiles } from "./files";
+import { utoa } from "./utils";
 
 export enum Theme {
   LIGHT = "light",
@@ -65,6 +66,10 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
       ...newFile,
     });
   };
+
+  useEffect(() => {
+    window.location.hash = utoa(JSON.stringify(files));
+  }, [files]);
 
   return (
     <PlaygroundContext.Provider

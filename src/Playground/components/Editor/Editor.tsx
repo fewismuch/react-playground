@@ -1,9 +1,9 @@
 import React, { useEffect, useContext, useRef, useState } from "react";
 import MonacoEditor, { Monaco } from "@monaco-editor/react";
 import "./userWoker.ts";
-import { useEditor } from "./useEditor.ts";
-import { Tabs } from "./Tabs.tsx";
-import { PlaygroundContext } from "../../PlaygroundContext.tsx";
+import { Tabs } from "./Tabs/index";
+import { PlaygroundContext } from "../../../PlaygroundContext";
+import { MonacoEditorConfig } from "./config";
 
 export const Editor: React.FC = () => {
   const { theme, files, setFiles } = useContext(PlaygroundContext);
@@ -55,26 +55,7 @@ export const Editor: React.FC = () => {
         value={file.value}
         onChange={handleEditorChange}
         onMount={handleEditorDidMount}
-        options={{
-          automaticLayout: true,
-          cursorBlinking: "smooth",
-          fontLigatures: true,
-          formatOnPaste: true,
-          formatOnType: true,
-          fontSize: 14,
-          showDeprecated: true,
-          showUnused: true,
-          showFoldingControls: "mouseover",
-          minimap: {
-            autohide: true,
-          },
-          smoothScrolling: true,
-          smartSelect: {
-            selectSubwords: true,
-            selectLeadingAndTrailingWhitespace: true,
-          },
-          tabSize: 2,
-        }}
+        options={MonacoEditorConfig}
       />
     </>
   );

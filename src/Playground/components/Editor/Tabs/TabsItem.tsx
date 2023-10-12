@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import styles from './index.module.less'
 
 export function TabsItem({
   omits = [],
@@ -48,7 +49,7 @@ export function TabsItem({
     }
 
     // TODO 如果名称没有变化就不做任何事
-    onOk(name);
+    if (name !== value) onOk(name);
     setPending(false);
   }
 
@@ -67,20 +68,16 @@ export function TabsItem({
   return (
     <>
       {pending ? (
-        <input
-          ref={inputRef}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          onBlur={doneNameFile}
-          onKeyDown={handleKeyDown}
-          style={{
-            width: 90,
-            outline: "none",
-            fontSize: 14,
-            border: "1px solid #ccc",
-            padding: "2px 0 2px 10px",
-          }}
-        />
+        <>
+          <input
+            ref={inputRef}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            onBlur={doneNameFile}
+            onKeyDown={handleKeyDown}
+          />
+          <div className={styles.inputMask}></div>
+        </>
       ) : (
         <>
           <span onDoubleClick={handleDoubleClick}>{name}</span>

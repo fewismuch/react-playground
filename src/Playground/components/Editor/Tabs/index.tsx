@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import styles from "./index.module.less";
-import { PlaygroundContext } from "../../PlaygroundContext.tsx";
+import { PlaygroundContext } from "../../../PlaygroundContext";
 import { TabsItem } from "./TabsItem";
 
 interface Props {
@@ -10,7 +10,6 @@ interface Props {
 export const Tabs: React.FC<Props> = ({ onChange }) => {
   const { files, removeFile, addFile, updateFileName, setSelectedFileName } =
     useContext(PlaygroundContext);
-  const [pendingName, setPendingName] = useState("");
   const importMapFileName = "import-map.json";
   const entryFileName = "main.jsx";
   const tabs = Object.keys(files).filter((item) => item !== importMapFileName);
@@ -20,8 +19,7 @@ export const Tabs: React.FC<Props> = ({ onChange }) => {
   const addTab = () => {
     if (pendingName) return;
     // @ts-ignore
-    addFile("Comp.jsx");
-    setPendingName("Comp.jsx");
+    //addFile("Comp.jsx");
   };
 
   const handleClickTab = (fileName: string) => {
@@ -48,18 +46,14 @@ export const Tabs: React.FC<Props> = ({ onChange }) => {
           <TabsItem
             value={item}
             omits={["main.jsx"]}
-            editing={pendingName === item}
             onOk={(val) => {
               // 修改名字
               updateFileName(item, val);
-              setPendingName("");
               setTimeout(() => {
                 handleClickTab(val);
               }, 0);
             }}
-            onCancel={() => {
-              if (pendingName) removeTabs(item);
-            }}
+            onCancel={() => {}}
             onError={(err) => console.error(err)}
             onRemove={(name) => {
               let result = confirm("你确定要执行此操作吗？");
@@ -68,7 +62,6 @@ export const Tabs: React.FC<Props> = ({ onChange }) => {
                 handleClickTab(entryFileName);
               }
             }}
-            noRemove={item === entryFileName}
           />
         </div>
       ))}

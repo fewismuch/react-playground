@@ -5,7 +5,7 @@ import pkg from "./template/package.json?raw";
 import config from "./template/vite.config.js?raw";
 import readme from "./template/README.md?raw";
 
-export async function downloadFiles(files:any) {
+export async function downloadFiles(files: any) {
   const { default: JSZip } = await import("jszip");
   const zip = new JSZip();
 
@@ -30,6 +30,15 @@ export async function downloadFiles(files:any) {
   saveAs(blob, "react-project.zip");
 }
 
+export function debounce(fn: Function, n = 100) {
+  let handle: any;
+  return (...args: any[]) => {
+    if (handle) clearTimeout(handle);
+    handle = setTimeout(() => {
+      fn(...args);
+    }, n);
+  };
+}
 
 // 编码
 export function utoa(data: string): string {
