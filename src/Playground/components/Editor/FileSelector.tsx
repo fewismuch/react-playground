@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import styles from "./index.module.less";
 import { PlaygroundContext } from "../../../PlaygroundContext";
-import { TabsItem } from "./TabsItem";
 
 interface Props {
   onChange: (fileName: string) => void;
@@ -16,7 +15,6 @@ export const Tabs: React.FC<Props> = ({ onChange }) => {
     Object.keys(files).filter((item) => item !== importMapFileName),
   );
   const [pendingName, setPendingeName] = useState("");
-
   const [selectedTabsItemName, setSelectedTabsItemName] =
     useState(entryFileName);
 

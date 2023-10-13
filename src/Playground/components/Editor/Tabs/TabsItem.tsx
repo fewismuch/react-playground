@@ -1,15 +1,14 @@
 import { useState, useRef, useEffect } from "react";
-import styles from './index.module.less'
+import styles from "./index.module.less";
 
 export function TabsItem({
-  omits = [],
+  readOnly = [],
   editing = false,
   value,
   onOk,
   onCancel,
   onErr,
   onRemove,
-  noRemove = false,
 }) {
   const inputRef = useRef(null);
   const [name, setName] = useState(value);
@@ -43,18 +42,19 @@ export function TabsItem({
     }
 
     // already exists
-    if (omits.includes(name)) {
+    if (readOnly.includes(name)) {
       onErr(`File "${name}" already exists.`);
       return;
     }
 
     // TODO 如果名称没有变化就不做任何事
-    if (name !== value) onOk(name);
+    if (name === value) return;
+    onOk(name);
     setPending(false);
   }
 
   const handleDoubleClick = () => {
-    if (noRemove) return;
+    if (readOnly.includes(name)) return;
     setPending(true);
     setTimeout(() => {
       inputRef?.current?.focus();
@@ -82,7 +82,7 @@ export function TabsItem({
       ) : (
         <>
           <span onDoubleClick={handleDoubleClick}>{name}</span>
-          {noRemove ? null : (
+          {readOnly.includes(name) ? null : (
             <span
               onClick={(e) => {
                 e.stopPropagation();
