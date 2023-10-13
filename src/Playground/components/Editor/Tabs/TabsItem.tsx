@@ -3,16 +3,18 @@ import styles from "./index.module.less";
 
 export function TabsItem({
   readOnly = [],
-  editing = false,
+  addModal = false,
+  tabs = [],
   value,
   onOk,
   onCancel,
-  onErr,
   onRemove,
+  actived,
+  onClick,
 }) {
   const inputRef = useRef(null);
   const [name, setName] = useState(value);
-  const [pending, setPending] = useState(editing);
+  const [pending, setPending] = useState(addModal);
 
   const handleKeyDown = (event) => {
     if (event.keyCode === 13) {
@@ -35,20 +37,23 @@ export function TabsItem({
   function doneNameFile() {
     if (!pending) return;
     if (!/\.(jsx|tsx|js|ts|css|json)$/.test(name)) {
-      onErr(
+      console.error(
         `Playground only supports *.jsx, *.tsx, *.js, *.ts, *.css, *.json files.`,
       );
       return;
     }
 
     // already exists
-    if (readOnly.includes(name)) {
-      onErr(`File "${name}" already exists.`);
+    if (tabs.includes(name) && name !== value) {
+      console.error(`File "${name}" already exists.`);
       return;
     }
 
-    // TODO 如果名称没有变化就不做任何事
-    if (name === value) return;
+    // 如果名称没有变化&是修改名称，就不做任何事
+    if (name === value && actived) {
+      setPending(false);
+      return;
+    }
     onOk(name);
     setPending(false);
   }
@@ -66,7 +71,10 @@ export function TabsItem({
   }, []);
 
   return (
-    <>
+    <div
+      className={[styles.tabItem, actived ? styles.activated : null].join(" ")}
+      onClick={onClick}
+    >
       {pending ? (
         <>
           <input
@@ -90,7 +98,7 @@ export function TabsItem({
               }}
               style={{ marginLeft: 5, display: "flex" }}
             >
-              <svg class="icon" width="12" height="12" viewBox="0 0 24 24">
+              <svg width="12" height="12" viewBox="0 0 24 24">
                 <line stroke="#999" x1="18" y1="6" x2="6" y2="18"></line>
                 <line stroke="#999" x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
@@ -98,6 +106,6 @@ export function TabsItem({
           )}
         </>
       )}
-    </>
+    </div>
   );
 }
