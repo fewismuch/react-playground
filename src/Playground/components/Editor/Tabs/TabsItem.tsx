@@ -71,6 +71,7 @@ export function TabsItem({
         <>
           <input
             ref={inputRef}
+            className={styles.tabsItemInput}
             value={name}
             onChange={(e) => setName(e.target.value)}
             onBlur={doneNameFile}

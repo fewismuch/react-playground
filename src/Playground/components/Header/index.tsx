@@ -15,15 +15,15 @@ export const Header: React.FC = () => {
   const { files, theme, setTheme } = useContext(PlaygroundContext);
 
   const changeTheme = (theme: Theme) => {
-    document.querySelector("body")?.setAttribute("class", theme);
     sessionStorage.setItem(STORAGE_THEME, String(theme === Theme.DARK));
+    document.querySelector("body")?.setAttribute("class", theme);
     setTheme?.(theme);
   };
 
-  async function copyLink() {
+  const copyLink = async () => {
     await navigator.clipboard.writeText(location.href);
     alert("Sharable URL has been copied to clipboard.");
-  }
+  };
 
   const downloadProject = () => {
     if (!confirm("Download project files?")) {
@@ -38,8 +38,7 @@ export const Header: React.FC = () => {
     )
       ? Theme.DARK
       : Theme.LIGHT;
-    document.querySelector("body")?.setAttribute("class", storageTheme);
-    setTheme?.(storageTheme);
+    changeTheme(storageTheme);
   }, []);
 
   return useMemo(

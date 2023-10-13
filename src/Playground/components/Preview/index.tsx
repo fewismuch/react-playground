@@ -3,7 +3,7 @@ import iframe from "./iframe.html?raw";
 import { PlaygroundContext } from "../../PlaygroundContext";
 import CompilerWorker from "./compiler.worker.ts?worker";
 import styles from "./index.module.less";
-import MonacoEditor, { Monaco } from "@monaco-editor/react";
+import { Editor as EditorR } from "../Editor/EditorR";
 
 // 判断浏览器是否支持esm ，不支持的话引入 https://cdn.jsdelivr.net/npm/es-module-shims@1.8.0/dist/es-module-shims.min.js
 const url = URL.createObjectURL(new Blob([iframe], { type: "text/html" }));
@@ -21,14 +21,14 @@ export const Preview: React.FC = () => {
   useEffect(() => {
     compiler.postMessage(files);
     // TODO 错开时间发送
-    if (isJsView) {
-      compiler.postMessage({
-        view: "js",
-        data: files[selectedFileName].value,
-        name: selectedFileName,
-        files,
-      });
-    }
+    // if (isJsView) {
+    //   compiler.postMessage({
+    //     view: "js",
+    //     data: files[selectedFileName].value,
+    //     name: selectedFileName,
+    //     files,
+    //   });
+    // }
   }, [files]);
 
   compiler?.addEventListener("message", ({ data }) => {
@@ -95,34 +95,10 @@ export const Preview: React.FC = () => {
         sandbox="allow-popups-to-escape-sandbox allow-scripts allow-popups allow-forms allow-pointer-lock allow-top-navigation allow-modals allow-same-origin"
       />
       <div style={{ display: isJsView ? "" : "none" }}>
-        <MonacoEditor
-          className={"editor"}
-          height="calc(100vh - 100px)"
-          theme={`vs-${theme}`}
-          language="javascript"
-          value={compiledCode}
-          onMount={handleEditorDidMount}
-          options={{
-            readOnly: true,
-            automaticLayout: true,
-            cursorBlinking: "smooth",
-            fontLigatures: true,
-            formatOnPaste: true,
-            formatOnType: true,
-            fontSize: 14,
-            showDeprecated: true,
-            showUnused: true,
-            showFoldingControls: "mouseover",
-            minimap: {
-              autohide: true,
-            },
-            smoothScrolling: true,
-            smartSelect: {
-              selectSubwords: true,
-              selectLeadingAndTrailingWhitespace: true,
-            },
-            tabSize: 2,
-          }}
+        <EditorR
+          theme={theme}
+          file={{ value: compiledCode }}
+          options={{ readOnly: true }}
         />
       </div>
     </>

@@ -40,24 +40,6 @@
       margin-left: 5px;
       display: flex;
     }
-    input {
-      width: 90;
-      outline: "none";
-      font-size: 14;
-      border: "1px solid #ccc";
-      padding: "2px 0 2px 10px";
-      z-index: 11;
-    }
-    .inputMask {
-      position: "absolute";
-      width: "100%";
-      height: "100%";
-      background-color: "rgba(0,0,0,.4)";
-      z-index: 10;
-      left: 0;
-      top: 0;
-      cursor: pointer;
-    }
   }
   .add {
     height: 100%;
@@ -73,6 +55,26 @@
       color: var(--primary);
     }
   }
+}
+
+.tabsItemInput {
+  width: 90px;
+  outline: none;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  padding: 2px 0 2px 10px;
+  z-index: 11;
+  border-radius: 4px;
+}
+.inputMask {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  left: 0;
+  top: 0;
+  cursor: pointer;
 }
 
 .import-map-wrapper {

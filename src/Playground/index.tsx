@@ -1,6 +1,6 @@
-import { Header } from "./components/Header";
-import { Editor } from "./components/Editor";
-import { Preview } from "./components/Preview";
+import { Header } from "./components/Header/index";
+import { Editor } from "./components/Editor/index";
+import { Preview } from "./components/Preview/index";
 // 分割线颜色，其他分隔组件
 // @ts-ignore
 import { Allotment } from "allotment";

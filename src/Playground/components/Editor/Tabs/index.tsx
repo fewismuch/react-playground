@@ -12,12 +12,14 @@ export const Tabs: React.FC<Props> = ({ onChange }) => {
     useContext(PlaygroundContext);
   const importMapFileName = "import-map.json";
   const entryFileName = "main.jsx";
-  const tabs = Object.keys(files).filter((item) => item !== importMapFileName);
+  const [tabs, setTabs] = useState(
+    Object.keys(files).filter((item) => item !== importMapFileName),
+  );
   const [selectedTabsItemName, setSelectedTabsItemName] =
     useState(entryFileName);
 
   const addTab = () => {
-    if (pendingName) return;
+    setTabs([...tabs, "Comp.jsx"]);
     // @ts-ignore
     //addFile("Comp.jsx");
   };
