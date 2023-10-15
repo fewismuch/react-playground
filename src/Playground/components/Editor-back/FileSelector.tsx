@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import styles from "./index.module.less";
-import { PlaygroundContext } from "../../../PlaygroundContext";
+import { PlaygroundContext } from "../../PlaygroundContext";
 
 interface Props {
   onChange: (fileName: string) => void;

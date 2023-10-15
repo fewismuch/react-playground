@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import styles from "./index.module.less";
+import classnames from "classnames";
 
 export function TabsItem({
   readOnly = [],
@@ -72,7 +73,7 @@ export function TabsItem({
 
   return (
     <div
-      className={[styles.tabItem, actived ? styles.activated : null].join(" ")}
+      className={classnames(styles.tabItem, actived ? styles.activated : null)}
       onClick={onClick}
     >
       {pending ? (

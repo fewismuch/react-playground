@@ -4,6 +4,7 @@ import { PlaygroundContext } from "../../PlaygroundContext";
 import CompilerWorker from "./compiler.worker.ts?worker";
 import styles from "./index.module.less";
 import { Editor as EditorR } from "../Editor/EditorR";
+import classnames from 'classnames'
 
 // 判断浏览器是否支持esm ，不支持的话引入 https://cdn.jsdelivr.net/npm/es-module-shims@1.8.0/dist/es-module-shims.min.js
 const url = URL.createObjectURL(new Blob([iframe], { type: "text/html" }));
@@ -63,20 +64,16 @@ export const Preview: React.FC = () => {
   }, [selectedFileName]);
 
   return (
-    <>
+    <div style={{display:'flex',flexDirection:'column'}}>
       <div className={styles.tabs}>
         <div
-          className={[styles.tabItem, isPreview ? styles.activated : ""].join(
-            " ",
-          )}
+          className={classnames(styles.tabItem, isPreview ? styles.activated : "")}
           onClick={() => setView("preview")}
         >
           PREVIEW
         </div>
         <div
-          className={[styles.tabItem, isJsView ? styles.activated : ""].join(
-            " ",
-          )}
+          className={classnames(styles.tabItem, isJsView ? styles.activated : "")}
           onClick={() => setView("js")}
         >
           JS
@@ -87,7 +84,7 @@ export const Preview: React.FC = () => {
         src={url}
         style={{
           width: "100%",
-          height: "calc(100% - 38px)",
+          height: "100vh",
           padding: 0,
           border: "none",
           display: isPreview ? "" : "none",
@@ -101,6 +98,6 @@ export const Preview: React.FC = () => {
           options={{ readOnly: true }}
         />
       </div>
-    </>
+    </div>
   );
 };

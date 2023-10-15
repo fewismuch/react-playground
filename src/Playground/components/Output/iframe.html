@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Preview</title>
+  <!-- es-module-shims -->
+</head>
+<body>
+<script>
+  console.log(new Date().getTime())
+  window.addEventListener('message', ({data}) => {
+    if (data.type === 'UPDATE_FILES') {
+      const importmapTag = document.querySelector(
+        'script[type="importmap"]',
+      );
+      importmapTag.innerHTML = data.data.importmap
+
+      // 即将要清除的样式
+      const appStyleTags = document.querySelectorAll('style[id^="style_"]') || []
+
+      // 清除旧app
+      const appSrcTag = document.querySelector('#appSrc');
+      const oldSrc = appSrcTag.getAttribute('src');
+      appSrcTag.remove();
+
+      // 插入新app
+      const script = document.createElement('script');
+      const newSrc = URL.createObjectURL(
+        new Blob([data.data.compileCode], {
+          type: 'application/javascript',
+        }),
+      );
+      script.src = newSrc;
+      script.id = 'appSrc';
+      script.type = 'module';
+      script.onload = ()=>{
+        // 防止先移除样式后页面闪烁
+        appStyleTags.forEach(div => {
+          div.remove();
+        });
+      }
+      document.body.appendChild(script);
+      URL.revokeObjectURL(oldSrc);
+    }
+  });
+
+</script>
+<script type="importmap"></script>
+<script type="module" id="appSrc"></script>
+<div id="root">Loading...</div>
+</body>
+</html>

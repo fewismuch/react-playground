@@ -20,13 +20,13 @@ export const Editor: React.FC = () => {
   };
 
   return (
-    <>
+    <div style={{display:'flex',flexDirection:'column'}}>
       <Tabs onChange={handleTabsChange} />
       <EditorR
         theme={theme}
         onChange={handleEditorChange}
         file={file}
       />
-    </>
+    </div>
   );
 };

@@ -1,21 +1,31 @@
-import { Header } from "./components/Header/index";
-import { Editor } from "./components/Editor/index";
-import { Preview } from "./components/Preview/index";
-// 分割线颜色，其他分隔组件
+import {Header} from "./components/Header/index";
+import {Output} from "./components/Output";
 // @ts-ignore
-import { Allotment } from "allotment";
+import {Allotment} from "allotment";
 import "allotment/dist/style.css";
-import { PlaygroundProvider } from "./PlaygroundContext";
+import {PlaygroundProvider} from "./PlaygroundContext";
+import {EditorContainer} from "./components/EditorContainer";
+import React from "react";
 
-export const Playground = () => {
+// <Repl onUrlChange={(url)=>{}} imports={} showCompileOutput={} files={}/>
+
+interface IProps {
+  onUrlChange?: (url: string) => void
+  importmap?: { imports: Record<string, string> }
+  files?: any
+  showCompileOutput?: boolean
+}
+
+export const Playground: React.FC<IProps> = (props) => {
+  const {onUrlChange, importmap, files, showCompileOutput} = props
   return (
     <PlaygroundProvider>
-      <div style={{ width: "100vw", height: "100vh" }}>
+      <div style={{width: "100vw", height: "100vh"}}>
         <Header></Header>
-        <div style={{ height: "calc(100vh - 50px)" }}>
-          <Allotment>
-            <Editor />
-            <Preview />
+        <div style={{height: "calc(100vh - 50px)"}}>
+          <Allotment defaultSizes={[100, 100]}>
+            <EditorContainer/>
+            <Output/>
           </Allotment>
         </div>
       </div>

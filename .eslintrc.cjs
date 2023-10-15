@@ -1,7 +1,33 @@
 module.exports = {
+  env: {
+    browser: true,
+    es2021: true
+  },
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended'
+  ],
+  overrides: [
+    {
+      env: {
+        node: true
+      },
+      files: ['.eslintrc.{js,cjs}'],
+      parserOptions: {
+        sourceType: 'script'
+      }
+    }
+  ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module'
+  },
+  plugins: ['@typescript-eslint', 'react'],
   rules: {
-    "max-lines-per-function": ["error", { max: 600 }],
-    "import/no-unused-modules": 0,
+    'react/react-in-jsx-scope': 'off',
+    "max-lines-per-function": ["error", { max: 500 }],
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-explicit-any": "off", //关闭any类型警告
     "import/prefer-default-export": "off",
@@ -10,10 +36,7 @@ module.exports = {
     "no-empty": 0,
     "react-hooks/exhaustive-deps": 0,
     "import/extensions": 0,
-    "import/no-unused-modules": "off",
     "import/no-default-export": "off",
-    "max-lines": "off",
-    "prefer-promise-reject-errors": "off",
-    "max-lines-per-function": "off",
+    'react/jsx-no-target-blank':0
   },
 };

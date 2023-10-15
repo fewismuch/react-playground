@@ -1,20 +1,25 @@
 export const MonacoEditorConfig = {
   automaticLayout: true,
-  cursorBlinking: "smooth",
+  cursorBlinking: 'smooth',
   fontLigatures: true,
   formatOnPaste: true,
   formatOnType: true,
   fontSize: 14,
   showDeprecated: true,
   showUnused: true,
-  showFoldingControls: "mouseover",
+  showFoldingControls: 'mouseover',
+  scrollBeyondLastLine: false,
   minimap: {
-    autohide: true,
+    enabled: false
   },
+  inlineSuggest: {
+    enabled: false
+  },
+  fixedOverflowWidgets: true,
   smoothScrolling: true,
   smartSelect: {
     selectSubwords: true,
-    selectLeadingAndTrailingWhitespace: true,
+    selectLeadingAndTrailingWhitespace: true
   },
-  tabSize: 2,
-};
+  tabSize: 2
+}

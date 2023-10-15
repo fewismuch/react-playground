@@ -1,24 +1,16 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import ReactSvg from "@/assets/react.svg";
 import SunSvg from "@/assets/sun.svg?raw";
 import MoonSvg from "@/assets/moon.svg?raw";
 import DownloadSvg from "@/assets/download.svg?raw";
 import GithubSvg from "@/assets/github.svg?raw";
 import ShareSvg from "@/assets/share.svg?raw";
-import { PlaygroundContext, Theme } from "../../PlaygroundContext";
+import {PlaygroundContext, Theme} from "../../PlaygroundContext";
 import styles from "./index.module.less";
 import { downloadFiles } from "../../utils";
 
-const STORAGE_THEME = "react-playground-prefer-dark";
-
 export const Header: React.FC = () => {
-  const { files, theme, setTheme } = useContext(PlaygroundContext);
-
-  const changeTheme = (theme: Theme) => {
-    sessionStorage.setItem(STORAGE_THEME, String(theme === Theme.DARK));
-    document.querySelector("body")?.setAttribute("class", theme);
-    setTheme?.(theme);
-  };
+  const { files, theme,changeTheme } = useContext(PlaygroundContext);
 
   const copyLink = async () => {
     await navigator.clipboard.writeText(location.href);
@@ -29,21 +21,12 @@ export const Header: React.FC = () => {
     if (!confirm("Download project files?")) {
       return;
     }
-    downloadFiles(files);
+    downloadFiles(files).then(() => console.log('download success'));
   };
-
-  useEffect(() => {
-    const storageTheme = JSON.parse(
-      sessionStorage.getItem(STORAGE_THEME) || "false",
-    )
-      ? Theme.DARK
-      : Theme.LIGHT;
-    changeTheme(storageTheme);
-  }, []);
 
   return useMemo(
     () => (
-      <nav className={styles.box}>
+      <nav className={styles.header}>
         <div className={styles.logo}>
           <img alt="logo" src={ReactSvg} />
           <span>React Playground</span>

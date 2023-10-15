@@ -1,12 +1,18 @@
-export const Message = ({ type, context }) => {
+import React, {useState} from "react";
+
+interface Props {
+  type: 'error' | 'warn'
+  context: string
+}
+
+export const Message: React.FC<Props> = (props) => {
+  const {type, context} = props
   const [dismissed, setDismissed] = useState(true);
 
   return (
-    <div
-      class="msg err"
-    >
-      <pre>abc</pre>
-      <button class="dismiss" >✕</button>
+    <div className="msg err">
+      <pre>{context}</pre>
+      <button className="dismiss">✕</button>
     </div>
   );
 };

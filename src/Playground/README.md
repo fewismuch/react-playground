@@ -1,11 +1,17 @@
-export const pc = () => {
+# TODO
+
+编译器替换为esbuild
+
+封装一个沙盒，接口如下
+```jsx
+export const Sandpack = () => {
   return (
     <Sandpack
-    theme={}
-       customSetup={{
+      theme={}
+      customSetup={{
         entry: "/index.js",
-        importmap:{}}
-    }}
+        importmap: {}
+      }}
       options={{
         externalResources: ["https://cdn.tailwindcss.com"]
         visibleFiles: ["/App.js", "/button.js", "/index.js"],
@@ -18,11 +24,8 @@ export const pc = () => {
       }}
       files={{
         "/Wrapper.js": `export default () => "";`,
-
         "/Button.js": {
-          code: `export default () => {
-  return <button>Hello</button>
-};`,
+          code: ``,
           readOnly: true, // Set as non-editable, defaults to `false`
           active: true, // Set as main file, defaults to `false`
           hidden: false, // Tab visibility, defaults to `false`
@@ -31,3 +34,6 @@ export const pc = () => {
     />
   );
 };
+
+
+```
