@@ -1,7 +1,6 @@
 {
   "imports": {
     "react": "https://cdn.jsdelivr.net/npm/react@18.2.0/+esm",
-    "react-dom/client": "https://cdn.jsdelivr.net/npm/react-dom@18.2.0/+esm",
-    "lodash": "https://cdn.jsdelivr.net/npm/lodash-es@4.17.21/+esm"
+    "react-dom/client": "https://cdn.jsdelivr.net/npm/react-dom@18.2.0/+esm"
   }
 }

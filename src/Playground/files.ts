@@ -1,43 +1,43 @@
-import { atou } from "./utils";
-import main from "./template/src/main.jsx?raw";
-import App from "./template/src/App.jsx?raw";
-import indexCss from "./template/src/index.css?raw";
-import AppCss from "./template/src/App.css?raw";
-import importMap from "./template/import-map.json?raw";
+import { atou } from './utils'
+import main from './template/src/main.jsx?raw'
+import App from './template/src/App.jsx?raw'
+import indexCss from './template/src/index.css?raw'
+import AppCss from './template/src/App.css?raw'
+import importMap from './template/import-map.json?raw'
 
 // 读取hash值 设置为files
-let files;
+let files
 try {
-  const hash = window.location.hash;
-  if (hash) files = JSON.parse(atou(hash?.split("#")[1]));
+  const hash = window.location.hash
+  if (hash) files = JSON.parse(atou(hash?.split('#')[1]))
 } catch (error) {
-  console.error(error);
+  console.error(error)
 }
 
 export const initFiles: any = files || {
-  "main.jsx": {
-    name: "main.jsx",
-    language: "javascript",
-    value: main,
+  'main.jsx': {
+    name: 'main.jsx',
+    language: 'javascript',
+    value: main
   },
-  "App.jsx": {
-    name: "App.jsx",
-    language: "javascript",
-    value: App,
+  'App.jsx': {
+    name: 'App.jsx',
+    language: 'javascript',
+    value: App
   },
-  "App.css": {
-    name: "App.css",
-    language: "css",
-    value: AppCss,
+  'App.css': {
+    name: 'App.css',
+    language: 'css',
+    value: AppCss
   },
-  "index.css": {
-    name: "index.css",
-    language: "css",
-    value: indexCss,
+  'index.css': {
+    name: 'index.css',
+    language: 'css',
+    value: indexCss
   },
-  "import-map.json": {
-    name: "import-map.json",
-    language: "json",
-    value: importMap,
-  },
-};
+  'import-map.json': {
+    name: 'import-map.json',
+    language: 'json',
+    value: importMap
+  }
+}
