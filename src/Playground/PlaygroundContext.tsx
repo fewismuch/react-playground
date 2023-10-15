@@ -37,7 +37,7 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
 
   const [files, setFiles] = useState(initialContext.files)
   const [theme, setTheme] = useState(initialContext.theme)
-  const [selectedFileName, setSelectedFileName] = useState('')
+  const [selectedFileName, setSelectedFileName] = useState(initialContext.selectedFileName)
   const [filesHash, setFilesHash] = useState('')
 
   const addFile = (name: string) => {

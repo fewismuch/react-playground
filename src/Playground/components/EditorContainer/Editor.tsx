@@ -16,6 +16,12 @@ export const Editor: React.FC<Props> = ({ file, theme, onChange, options }) => {
 
   const handleEditorDidMount = (editor: any, monaco: Monaco) => {
     editorRef.current = editor
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
+      // ignore save event
+    })
+    // setTimeout(() => {
+    //   editor.getAction('editor.action.formatDocument').run()
+    // }, 300)
   }
 
   function handleEditorValidation(markers: { message: string }[]) {

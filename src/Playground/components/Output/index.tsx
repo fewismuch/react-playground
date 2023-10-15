@@ -10,6 +10,8 @@ interface Props {
   simple?: boolean
 }
 
+const viewTypes = ['PREVIEW', 'JS']
+
 export const Output: React.FC<Props> = props => {
   const { simple } = props
   const { files, theme, selectedFileName } = useContext(PlaygroundContext)
@@ -40,6 +42,7 @@ export const Output: React.FC<Props> = props => {
   }, [activedType])
 
   useEffect(() => {
+    // TODO 排除css文件
     if (isJsView) {
       compiler.current?.postMessage(files[selectedFileName].value)
     }
@@ -65,7 +68,12 @@ export const Output: React.FC<Props> = props => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <ViewSelector hidden={simple} value={activedType} onChange={handleViewChange} />
+      <ViewSelector
+        items={viewTypes}
+        value={activedType}
+        onChange={handleViewChange}
+        hidden={simple}
+      />
 
       <Preview data={previewData} hidden={activedType !== 'PREVIEW'} />
       <CompiledCode hidden={activedType !== 'JS'} theme={theme} value={compiledData} />

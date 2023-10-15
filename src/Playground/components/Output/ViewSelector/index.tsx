@@ -4,18 +4,17 @@ import styles from './index.module.less'
 
 interface Props {
   onChange: (viewType: string) => void
+  items: string[]
   value?: string
   hidden?: boolean
 }
 
-const viewTypes = ['PREVIEW', 'JS']
-
 export const ViewSelector: React.FC<Props> = props => {
-  const { onChange, value = viewTypes[0], hidden } = props
+  const { onChange, items, value = items[0], hidden } = props
 
   return (
     <div className={styles.tabs} style={{ display: hidden ? 'none' : '' }}>
-      {viewTypes.map(name => (
+      {items.map(name => (
         <div
           key={name}
           className={classnames(styles.tabItem, value === name ? styles.activated : '')}
