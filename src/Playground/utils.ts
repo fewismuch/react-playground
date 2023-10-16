@@ -4,7 +4,7 @@ import index from './template/index.html?raw'
 import pkg from './template/package.json?raw'
 import config from './template/vite.config.js?raw'
 import readme from './template/README.md?raw'
-import { Files } from './types.ts'
+import { Files } from './types'
 
 export async function downloadFiles(files: Files) {
   const { default: JSZip } = await import('jszip')

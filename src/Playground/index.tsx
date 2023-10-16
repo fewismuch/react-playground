@@ -19,13 +19,13 @@ const Layout = (props: Props) => {
     width = '100vw',
     height = '100vh',
     theme = 'light',
-    onUrlChange,
     importmap,
     files,
     showCompileOutput = true,
     showHeader = true,
     showFileSelector = true,
-    fileSelectorReadOnly = false
+    fileSelectorReadOnly = false,
+    onUrlChange,
   } = props
   const { filesHash, changeTheme, setFiles } = useContext(PlaygroundContext)
   const options = Object.assign(defaultCodeSandboxOptions, props.options || {})
