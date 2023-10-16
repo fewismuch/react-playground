@@ -3,7 +3,7 @@ import { Output } from './components/Output'
 // @ts-ignore
 import { Allotment } from 'allotment'
 import 'allotment/dist/style.css'
-import { PlaygroundProvider, Theme, PlaygroundContext } from './PlaygroundContext'
+import { PlaygroundProvider, PlaygroundContext } from './PlaygroundContext'
 import { EditorContainer } from './components/EditorContainer'
 import React, { useEffect, useContext } from 'react'
 import { PlaygroundProps, EditorContainerProps, OutputProps } from './types'
@@ -18,7 +18,7 @@ const Layout = (props: Props) => {
   const {
     width = '100vw',
     height = '100vh',
-    theme,
+    theme = 'light',
     onUrlChange,
     importmap,
     files,
