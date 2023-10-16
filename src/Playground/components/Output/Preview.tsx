@@ -16,6 +16,7 @@ const iframeUrl = getIframeUrl()
 export const Preview: React.FC<Props> = props => {
   const { hidden, data } = props
   const iframeRef = useRef<HTMLIFrameElement>(null)
+
   useEffect(() => {
     iframeRef.current?.contentWindow?.postMessage(data)
   }, [data])

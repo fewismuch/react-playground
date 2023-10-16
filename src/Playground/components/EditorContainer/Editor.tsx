@@ -3,6 +3,7 @@ import MonacoEditor, { Monaco } from '@monaco-editor/react'
 import './userWoker.ts'
 import { MonacoEditorConfig } from './config'
 import { Theme } from '../../PlaygroundContext'
+import styles from './index.module.less'
 
 interface Props {
   file: any
@@ -37,7 +38,7 @@ export const Editor: React.FC<Props> = ({ file, theme, onChange, options }) => {
   return useMemo(
     () => (
       <MonacoEditor
-        className={'editor'}
+        className={styles.editor}
         height='100%'
         theme={`vs-${theme}`}
         path={file.name}
@@ -52,6 +53,6 @@ export const Editor: React.FC<Props> = ({ file, theme, onChange, options }) => {
         }}
       />
     ),
-    [file]
+    [file,theme]
   )
 }

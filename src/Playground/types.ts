@@ -9,3 +9,25 @@ export interface File {
 export interface Files {
   [key: string]: File
 }
+
+export interface EditorContainerProps {
+  showFileSelector?: boolean
+  fileSelectorReadOnly?: boolean
+  options?: any
+}
+
+export interface OutputProps {
+  showCompileOutput?: boolean
+}
+
+
+export interface PlaygroundProps {
+  width?: string | number
+  height?: string | number
+  theme?: Theme
+  onUrlChange?: (url: string) => void
+  importmap?: { imports: Record<string, string> }
+  files?: Files
+  options?: any
+  showHeader?: boolean
+}

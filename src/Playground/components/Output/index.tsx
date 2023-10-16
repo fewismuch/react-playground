@@ -5,15 +5,12 @@ import { CompiledCode } from './CompiledCode'
 import { Preview } from './Preview.tsx'
 import { PlaygroundContext } from '../../PlaygroundContext.tsx'
 import CompilerWorker from './compiler.worker.ts?worker'
-
-interface Props {
-  simple?: boolean
-}
+import type { OutputProps } from '../../types'
 
 const viewTypes = ['PREVIEW', 'JS']
 
-export const Output: React.FC<Props> = props => {
-  const { simple } = props
+export const Output: React.FC<OutputProps> = props => {
+  const { showCompileOutput = true } = props
   const { files, theme, selectedFileName } = useContext(PlaygroundContext)
   const [activedType, setActivedType] = useState('PREVIEW')
   const compiler = useRef<any>(null)
@@ -72,11 +69,13 @@ export const Output: React.FC<Props> = props => {
         items={viewTypes}
         value={activedType}
         onChange={handleViewChange}
-        hidden={simple}
+        hidden={!showCompileOutput}
       />
 
-      <Preview data={previewData} hidden={activedType !== 'PREVIEW'} />
-      <CompiledCode hidden={activedType !== 'JS'} theme={theme} value={compiledData} />
+      <Preview hidden={activedType !== 'PREVIEW'} data={previewData} />
+      {showCompileOutput ? (
+        <CompiledCode hidden={activedType !== 'JS'} theme={theme} value={compiledData} />
+      ) : null}
     </div>
   )
 }

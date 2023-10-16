@@ -1,8 +1,9 @@
-import {Playground} from "./Playground";
+import { Playground } from './Playground/index'
 
 function App() {
   return (
-    <Playground/>
+    //<Playground/>
+    <Playground options={{ lineNumbers: 'off' }} />
   )
 }
 

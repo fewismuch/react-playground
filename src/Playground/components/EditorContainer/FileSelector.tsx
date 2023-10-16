@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import classnames from 'classnames'
 import styles from './index.module.less'
 import { PlaygroundContext } from '../../PlaygroundContext'
 import { TabsItem } from './Tabs/TabsItem'
@@ -45,8 +46,9 @@ export const Tabs: React.FC<Props> = ({ onChange }) => {
       {tabs.map((item, index) => (
         <div
           key={item + index}
-          className={[styles.tabItem, selectedTabsItemName === item ? styles.activated : null].join(
-            ' '
+          className={classnames(
+            styles.tabItem,
+            selectedTabsItemName === item ? styles.activated : null
           )}
           onClick={() => handleClickTab(item)}
         >

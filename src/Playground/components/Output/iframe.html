@@ -8,7 +8,6 @@
 </head>
 <body>
 <script>
-  console.log(new Date().getTime())
   window.addEventListener('message', ({data}) => {
     if (data.type === 'UPDATE_FILES') {
       const importmapTag = document.querySelector(

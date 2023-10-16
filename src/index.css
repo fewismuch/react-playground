@@ -24,9 +24,3 @@ body.dark {
 
     --primary: #00d8fe;
 }
-
-.editor{
-    overflow: hidden;
-    height: 100%;
-    background-color: var(--border);
-}

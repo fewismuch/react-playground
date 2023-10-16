@@ -3,14 +3,10 @@ import { Tabs } from './Tabs'
 import { PlaygroundContext } from '../../PlaygroundContext'
 import { Editor } from './Editor'
 import { debounce } from '../../utils'
+import type {EditorContainerProps} from '../../types'
 
-interface IProps {
-  simple?: boolean
-  options?: any
-}
-
-export const EditorContainer: React.FC<IProps> = props => {
-  const { simple, options = {} } = props
+export const EditorContainer: React.FC<EditorContainerProps> = props => {
+  const { showFileSelector, fileSelectorReadOnly, options = {} } = props
   const { theme, files, setFiles } = useContext(PlaygroundContext)
   const [fileName, setFileName] = useState('App.jsx')
   const file = files[fileName] || {}
@@ -26,7 +22,9 @@ export const EditorContainer: React.FC<IProps> = props => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <Tabs onChange={handleTabsChange} readOnly={simple} />
+      {showFileSelector ? (
+        <Tabs onChange={handleTabsChange} readOnly={fileSelectorReadOnly} />
+      ) : null}
       <Editor theme={theme} onChange={handleEditorChange} file={file} options={options} />
     </div>
   )
