@@ -12,7 +12,7 @@ interface IProps {
 export const EditorContainer: React.FC<IProps> = props => {
   const { simple, options = {} } = props
   const { theme, files, setFiles } = useContext(PlaygroundContext)
-  const [fileName, setFileName] = useState('main.jsx')
+  const [fileName, setFileName] = useState('App.jsx')
   const file = files[fileName] || {}
 
   const handleEditorChange = debounce((value: string) => {

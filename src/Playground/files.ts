@@ -1,7 +1,6 @@
 import { atou } from './utils'
 import main from './template/src/main.jsx?raw'
 import App from './template/src/App.jsx?raw'
-import indexCss from './template/src/index.css?raw'
 import AppCss from './template/src/App.css?raw'
 import importMap from './template/import-map.json?raw'
 
@@ -29,11 +28,6 @@ export const initFiles: any = files || {
     name: 'App.css',
     language: 'css',
     value: AppCss
-  },
-  'index.css': {
-    name: 'index.css',
-    language: 'css',
-    value: indexCss
   },
   'import-map.json': {
     name: 'import-map.json',

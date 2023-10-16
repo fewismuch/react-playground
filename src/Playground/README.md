@@ -8,9 +8,12 @@ export const Sandpack = () => {
   return (
     <Sandpack
       theme={}
-      customSetup={{
+       customSetup={{
         entry: "/index.js",
-        importmap: {}
+        importmap:{},
+        dependencies: { 
+          "react-markdown": "latest" 
+        }
       }}
       options={{
         externalResources: ["https://cdn.tailwindcss.com"]
@@ -21,6 +24,7 @@ export const Sandpack = () => {
         showLineNumbers: false,
         autoReload: false,
         rtl: true, // default false
+        editorWidthPercentage: 60, // default - 50
       }}
       files={{
         "/Wrapper.js": `export default () => "";`,

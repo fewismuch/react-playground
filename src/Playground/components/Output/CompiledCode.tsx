@@ -1,6 +1,6 @@
 import React from 'react'
 import { Editor } from '../EditorContainer/Editor'
-import { Theme } from '../../PlaygroundContext.tsx'
+import { Theme } from '../../PlaygroundContext'
 
 interface Props {
   hidden: boolean

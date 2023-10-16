@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react'
 import MonacoEditor, { Monaco } from '@monaco-editor/react'
 import './userWoker.ts'
 import { MonacoEditorConfig } from './config'
-import { Theme } from '../../PlaygroundContext.tsx'
+import { Theme } from '../../PlaygroundContext'
 
 interface Props {
   file: any

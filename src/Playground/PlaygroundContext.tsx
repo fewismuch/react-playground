@@ -25,7 +25,7 @@ interface PlaygroundProps {
 const initialContext = {
   files: initFiles,
   theme: Theme.DARK,
-  selectedFileName: 'main.jsx'
+  selectedFileName: 'App.jsx'
 }
 
 const STORAGE_DARK_THEME = 'react-playground-prefer-dark'
