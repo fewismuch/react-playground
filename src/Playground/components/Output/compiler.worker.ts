@@ -1,5 +1,6 @@
-import { transform } from '@babel/standalone'
+//import { transform } from '@babel/standalone'
 import { Files, File } from '../../types.ts'
+importScripts('https://cdn.staticfile.org/babel-standalone/7.23.2/babel.min.js')
 
 // TODO 改
 const entryFileName = 'main.jsx'
@@ -67,7 +68,7 @@ const babelTransform = (filename: string, code: string, files: Files) => {
     _code = `import React from 'react';\n${code}`
   }
 
-  return transform(_code, {
+  return Babel.transform(_code, {
     presets: ['react'],
     filename,
     plugins: [customResolver(files)]
@@ -84,7 +85,7 @@ self.addEventListener('message', async ({ data }) => {
   if (typeof data === 'string') {
     self.postMessage({
       type: 'UPDATE_FILE',
-      data: transform(data, {
+      data: Babel.transform(data, {
         presets: ['react'],
         retainLines: true
       }).code

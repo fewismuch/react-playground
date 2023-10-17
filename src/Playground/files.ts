@@ -3,6 +3,7 @@ import main from './template/src/main.jsx?raw'
 import App from './template/src/App.jsx?raw'
 import AppCss from './template/src/App.css?raw'
 import importMap from './template/import-map.json?raw'
+import { Files } from './types'
 
 // 读取hash值 设置为files
 let files
@@ -13,7 +14,7 @@ try {
   console.error(error)
 }
 
-export const initFiles: any = files || {
+export const initFiles: Files = files || {
   'main.jsx': {
     name: 'main.jsx',
     language: 'javascript',

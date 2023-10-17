@@ -26,4 +26,8 @@ self.MonacoEnvironment = {
 
 loader.config({ monaco })
 
-loader.init().then(() => {})
+// loader.config({
+//   paths: {
+//     vs: 'https://cdn.staticfile.org/monaco-editor/0.43.0/min/vs'
+//   }
+// })

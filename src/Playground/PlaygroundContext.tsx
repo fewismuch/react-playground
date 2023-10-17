@@ -76,13 +76,13 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
   }, [files])
 
   const changeTheme = (theme: Theme) => {
-    sessionStorage.setItem(STORAGE_DARK_THEME, String(theme === Theme.DARK))
+    localStorage.setItem(STORAGE_DARK_THEME, String(theme === Theme.DARK))
     document.querySelector('body')?.setAttribute('class', theme)
     setTheme(theme)
   }
 
   useEffect(() => {
-    const isDarkTheme = JSON.parse(sessionStorage.getItem(STORAGE_DARK_THEME) || 'false')
+    const isDarkTheme = JSON.parse(localStorage.getItem(STORAGE_DARK_THEME) || 'false')
     changeTheme(isDarkTheme ? Theme.DARK : Theme.LIGHT)
   }, [])
 
