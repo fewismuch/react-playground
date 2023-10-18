@@ -21,13 +21,11 @@ const maxSequenceNumber = (tabs: string[]) => {
 }
 
 export const Tabs: React.FC<Props> = ({ onChange, readOnly = false }) => {
-  const { files, removeFile, addFile, updateFileName, setSelectedFileName } =
+  const { files, removeFile, addFile, updateFileName, selectedFileName, setSelectedFileName } =
     useContext(PlaygroundContext)
   const importMapFileName = 'import-map.json'
   const entryFileName = 'App.jsx'
   const [tabs, setTabs] = useState([''])
-
-  const [selectedTabsItemName, setSelectedTabsItemName] = useState(entryFileName)
   const [isAddModal, setisAddModal] = useState(false)
 
   const addTab = () => {
@@ -46,7 +44,6 @@ export const Tabs: React.FC<Props> = ({ onChange, readOnly = false }) => {
   const handleClickTab = (fileName: string) => {
     if (isAddModal) return
     onChange(fileName)
-    setSelectedTabsItemName(fileName)
     setSelectedFileName(fileName)
   }
 
@@ -64,7 +61,7 @@ export const Tabs: React.FC<Props> = ({ onChange, readOnly = false }) => {
         <TabsItem
           key={item + index}
           value={item}
-          actived={selectedTabsItemName === item}
+          actived={selectedFileName === item}
           addModal={isAddModal}
           tabs={tabs}
           readOnly={readOnly ? tabs : ['App.jsx']}

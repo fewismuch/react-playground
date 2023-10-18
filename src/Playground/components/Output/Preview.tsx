@@ -1,14 +1,12 @@
 import React, { useEffect, useRef } from 'react'
 import { getIframeUrl } from './utils.ts'
 
-interface PreviewData {
-  compileCode: string
-  importmap: string
-}
-
 interface Props {
   hidden: boolean
-  data: PreviewData
+  data: {
+    compileCode: string
+    importmap: string
+  }
 }
 
 const iframeUrl = getIframeUrl()

@@ -3,13 +3,13 @@ import { Tabs } from './Tabs'
 import { PlaygroundContext } from '../../PlaygroundContext'
 import { Editor } from './Editor'
 import { debounce } from '../../utils'
-import type {EditorContainerProps} from '../../types'
+import type { EditorContainerProps } from '../../types'
 
 export const EditorContainer: React.FC<EditorContainerProps> = props => {
   const { showFileSelector, fileSelectorReadOnly, options = {} } = props
-  const { theme, files, setFiles } = useContext(PlaygroundContext)
-  const [fileName, setFileName] = useState('App.jsx')
-  const file = files[fileName] || {}
+  const { theme, files, setFiles, selectedFileName, setSelectedFileName } =
+    useContext(PlaygroundContext)
+  const file = files[selectedFileName] || {}
 
   const handleEditorChange = debounce((value: string) => {
     files[file.name].value = value
@@ -17,7 +17,7 @@ export const EditorContainer: React.FC<EditorContainerProps> = props => {
   }, 250)
 
   const handleTabsChange = (fileName: string) => {
-    setFileName(fileName)
+    setSelectedFileName(fileName)
   }
 
   return (
@@ -25,7 +25,13 @@ export const EditorContainer: React.FC<EditorContainerProps> = props => {
       {showFileSelector ? (
         <Tabs onChange={handleTabsChange} readOnly={fileSelectorReadOnly} />
       ) : null}
-      <Editor theme={theme} onChange={handleEditorChange} file={file} options={options} />
+      <Editor
+        theme={theme}
+        onChange={handleEditorChange}
+        file={file}
+        options={options}
+        selectFile={handleTabsChange}
+      />
     </div>
   )
 }

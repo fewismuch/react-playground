@@ -6,7 +6,7 @@ export const getIframeUrl = () => {
     typeof import.meta === 'undefined'
       ? iframeRaw.replace(
           '<!-- es-module-shims -->',
-          '<script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1.8.0/dist/es-module-shims.min.js"></script>'
+          '<script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>'
         )
       : iframeRaw
   return URL.createObjectURL(new Blob([newIframeRaw], { type: 'text/html' }))

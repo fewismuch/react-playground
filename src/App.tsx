@@ -1,10 +1,7 @@
 import { Playground } from './Playground/index'
 
 function App() {
-  return (
-    //<Playground/>
-    <Playground options={{ lineNumbers: 'off' }} />
-  )
+  return <Playground />
 }
 
 export default App

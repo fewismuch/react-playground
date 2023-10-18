@@ -20,7 +20,6 @@ export interface OutputProps {
   showCompileOutput?: boolean
 }
 
-
 export interface PlaygroundProps {
   width?: string | number
   height?: string | number

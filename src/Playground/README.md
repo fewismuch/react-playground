@@ -1,8 +1,8 @@
 # TODO
 
-编译器替换为esbuild
+- 编译器替换为esbuild
 
-封装一个沙盒，接口如下
+- 封装成沙盒组件，接口如下，参考sandpack
 ```jsx
 export const Sandpack = () => {
   return (
