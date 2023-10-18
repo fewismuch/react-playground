@@ -6,7 +6,7 @@ import { Theme, PlaygroundContext } from '../../PlaygroundContext'
 import styles from './index.module.less'
 import { useEditor } from './useEditor'
 import { getWorker, MonacoJsxSyntaxHighlight } from 'monaco-jsx-syntax-highlight'
-import './jsx-highlight.less'
+//import './jsx-highlight.less'
 interface Props {
   file: any
   theme: Theme
@@ -49,18 +49,6 @@ export const Editor: React.FC<Props> = ({ file, theme, onChange, options }) => {
         doOpenEditor(editor, input)
       }
     }
-
-    const monacoJsxSyntaxHighlight = new MonacoJsxSyntaxHighlight(getWorker(), monaco)
-
-    // editor is the result of monaco.editor.create
-    const { highlighter, dispose } = monacoJsxSyntaxHighlight.highlighterBuilder({
-      editor: editor
-    })
-    // init highlight
-    highlighter()
-    jsxSyntaxHighlight.current.highlighter = highlighter
-
-    return dispose
   }
 
   function handleEditorValidation(markers: { message: string }[]) {
@@ -76,7 +64,7 @@ export const Editor: React.FC<Props> = ({ file, theme, onChange, options }) => {
   return useMemo(
     () => (
       <MonacoEditor
-        className={styles.editor}
+        className='editor'
         height='100%'
         theme={`vs-${theme}`}
         path={file.name}
