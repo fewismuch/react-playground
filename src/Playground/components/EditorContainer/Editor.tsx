@@ -5,7 +5,8 @@ import { MonacoEditorConfig } from './config'
 import { Theme, PlaygroundContext } from '../../PlaygroundContext'
 import styles from './index.module.less'
 import { useEditor } from './useEditor'
-
+import { getWorker, MonacoJsxSyntaxHighlight } from 'monaco-jsx-syntax-highlight'
+import './jsx-highlight.less'
 interface Props {
   file: any
   theme: Theme
@@ -15,14 +16,19 @@ interface Props {
 
 export const Editor: React.FC<Props> = ({ file, theme, onChange, options }) => {
   const editorRef = useRef<any>(null)
-  const { doOpenEditor } = useEditor()
+  const { doOpenEditor, loadJsxSyntaxHighlight } = useEditor()
   const { files, setSelectedFileName } = useContext(PlaygroundContext)
+  const jsxSyntaxHighlight = useRef<any>({ highlighter: null })
 
   const handleEditorDidMount = (editor: any, monaco: Monaco) => {
     editorRef.current = editor
     editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
       // ignore save event
     })
+
+    // setTimeout(() => {
+    //   editor.getAction('editor.action.formatDocument').run()
+    // }, 300)
 
     // 初始化文件model
     Object.entries(files).forEach(([key, item]) => {
@@ -43,25 +49,18 @@ export const Editor: React.FC<Props> = ({ file, theme, onChange, options }) => {
         doOpenEditor(editor, input)
       }
     }
-    // setTimeout(() => {
-    //   editor.getAction('editor.action.formatDocument').run()
-    // }, 300)
 
-    // const monacoJsxSyntaxHighlight = new MonacoJsxSyntaxHighlight(
-    //   getWorker(),
-    //   monaco
-    // );
+    const monacoJsxSyntaxHighlight = new MonacoJsxSyntaxHighlight(getWorker(), monaco)
 
-    // // editor is the result of monaco.editor.create
-    // const {
-    //   highlighter,
-    //   dispose
-    // } = monacoJsxSyntaxHighlight.highlighterBuilder({
-    //   editor: editor
-    // });
-    // // init highlight
-    // highlighter();
-    // jsxSyntaxHighlight.current.highlighter = highlighter
+    // editor is the result of monaco.editor.create
+    const { highlighter, dispose } = monacoJsxSyntaxHighlight.highlighterBuilder({
+      editor: editor
+    })
+    // init highlight
+    highlighter()
+    jsxSyntaxHighlight.current.highlighter = highlighter
+
+    return dispose
   }
 
   function handleEditorValidation(markers: { message: string }[]) {
