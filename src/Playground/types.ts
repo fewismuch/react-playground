@@ -20,7 +20,8 @@ export interface OutputProps {
   showCompileOutput?: boolean
 }
 
-export interface PlaygroundProps {
+
+export type PlaygroundProps = {
   width?: string | number
   height?: string | number
   theme?: Theme
@@ -29,4 +30,4 @@ export interface PlaygroundProps {
   files?: Files
   options?: any
   showHeader?: boolean
-}
+} & EditorContainerProps & OutputProps

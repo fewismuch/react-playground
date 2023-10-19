@@ -12,8 +12,8 @@ interface Props {
 export const ViewSelector: React.FC<Props> = props => {
   const { onChange, items, value = items[0], hidden } = props
 
-  return (
-    <div className={styles.tabs} style={{ display: hidden ? 'none' : '' }}>
+  return hidden ? null : (
+    <div className={styles.tabs}>
       {items.map(name => (
         <div
           key={name}

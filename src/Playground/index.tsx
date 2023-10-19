@@ -6,15 +6,13 @@ import 'allotment/dist/style.css'
 import { PlaygroundProvider, PlaygroundContext } from './PlaygroundContext'
 import { EditorContainer } from './components/EditorContainer'
 import React, { useEffect, useContext } from 'react'
-import { PlaygroundProps, EditorContainerProps, OutputProps } from './types'
-
-type Props = PlaygroundProps & EditorContainerProps & OutputProps
+import { PlaygroundProps } from './types'
 
 const defaultCodeSandboxOptions = {
   editorHeight: '100vh'
 }
 
-const Layout = (props: Props) => {
+const Layout = (props: PlaygroundProps) => {
   const {
     width = '100vw',
     height = '100vh',
@@ -25,7 +23,7 @@ const Layout = (props: Props) => {
     showHeader = true,
     showFileSelector = true,
     fileSelectorReadOnly = false,
-    onUrlChange,
+    onUrlChange
   } = props
   const { filesHash, changeTheme, setFiles } = useContext(PlaygroundContext)
   const options = Object.assign(defaultCodeSandboxOptions, props.options || {})
@@ -63,7 +61,7 @@ const Layout = (props: Props) => {
   )
 }
 
-export const Playground: React.FC<Props> = props => {
+export const Playground: React.FC<PlaygroundProps> = props => {
   return (
     <PlaygroundProvider>
       <Layout {...props} />
