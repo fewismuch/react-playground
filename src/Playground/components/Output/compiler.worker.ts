@@ -1,6 +1,12 @@
-//import { transform } from '@babel/standalone'
+import { transform } from '@babel/standalone'
 import { Files, File } from '../../types.ts'
-importScripts('https://cdn.staticfile.org/babel-standalone/7.23.2/babel.min.js')
+
+const Babel: any = { transform: null }
+if (!import.meta.env.DEV) {
+  importScripts(`https://cdn.staticfile.org/babel-standalone/${__babel_standalone__}/babel.min.js`)
+} else {
+  Babel.transform = transform
+}
 
 // TODO 改
 const entryFileName = 'main.jsx'

@@ -16,5 +16,8 @@ export default defineConfig({
     alias: {
       '@': '/src'
     }
+  },
+  define: {
+    '__babel_standalone__': JSON.stringify(packageJson.dependencies['@babel/standalone']),
   }
 })

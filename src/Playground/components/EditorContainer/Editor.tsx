@@ -1,12 +1,11 @@
-import React, { useEffect, useMemo, useRef, useContext } from 'react'
+import React, { useEffect, useMemo, useRef, useContext, useCallback } from 'react'
 import MonacoEditor, { Monaco } from '@monaco-editor/react'
 import './userWoker.ts'
 import { MonacoEditorConfig } from './config'
 import { Theme, PlaygroundContext } from '../../PlaygroundContext'
-import styles from './index.module.less'
 import { useEditor } from './useEditor'
-import { getWorker, MonacoJsxSyntaxHighlight } from 'monaco-jsx-syntax-highlight'
-//import './jsx-highlight.less'
+import './jsx-highlight.less'
+
 interface Props {
   file: any
   theme: Theme
@@ -16,11 +15,11 @@ interface Props {
 
 export const Editor: React.FC<Props> = ({ file, theme, onChange, options }) => {
   const editorRef = useRef<any>(null)
-  const { doOpenEditor, loadJsxSyntaxHighlight } = useEditor()
+  const { doOpenEditor, loadJsxSyntaxHighlight, initExtraLibs } = useEditor()
   const { files, setSelectedFileName } = useContext(PlaygroundContext)
   const jsxSyntaxHighlight = useRef<any>({ highlighter: null })
 
-  const handleEditorDidMount = (editor: any, monaco: Monaco) => {
+  const handleEditorDidMount = useCallback((editor: any, monaco: Monaco) => {
     editorRef.current = editor
     editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
       // ignore save event
@@ -32,7 +31,7 @@ export const Editor: React.FC<Props> = ({ file, theme, onChange, options }) => {
 
     // 初始化文件model
     Object.entries(files).forEach(([key, item]) => {
-      if (!monaco?.editor?.getModel(`file:///${key}`)) {
+      if (!monaco?.editor?.getModel(monaco.Uri.parse(`file:///${key}`))) {
         monaco?.editor?.createModel(
           files[key].value,
           item.language,
@@ -50,18 +49,14 @@ export const Editor: React.FC<Props> = ({ file, theme, onChange, options }) => {
       }
     }
 
-    monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
-      target: monaco.languages.typescript.ScriptTarget.ES2016,
-      allowNonTsExtensions: true,
-      moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
-      module: monaco.languages.typescript.ModuleKind.CommonJS,
-      noEmit: true,
-      typeRoots: ['node_modules/@types'],
-      jsx: monaco.languages.typescript.JsxEmit.React,
-      jsxFactory: 'React.createElement',
-      jsxFragmentFactory: 'React.Fragment'
-    })
-  }
+    // 加载 类型定义文件
+    initExtraLibs(monaco)
+
+    // 初始化jsx高亮线程
+    jsxSyntaxHighlight.current = loadJsxSyntaxHighlight(editor, monaco)
+    jsxSyntaxHighlight.current?.highlighter()
+    return jsxSyntaxHighlight.current?.dispose
+  }, [])
 
   function handleEditorValidation(markers: { message: string }[]) {
     markers.forEach(marker => {
@@ -71,6 +66,7 @@ export const Editor: React.FC<Props> = ({ file, theme, onChange, options }) => {
 
   useEffect(() => {
     editorRef.current?.focus()
+    jsxSyntaxHighlight?.current?.highlighter?.()
   }, [file.name])
 
   return useMemo(

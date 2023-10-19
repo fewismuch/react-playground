@@ -40,12 +40,18 @@ export const useEditor = () => {
   }
 
   const loadJsxSyntaxHighlight = (editor: any, monaco: any) => {
+    monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+      jsx: monaco.languages.typescript.JsxEmit.Preserve,
+      target: monaco.languages.typescript.ScriptTarget.ES2020,
+      esModuleInterop: true
+    })
+
     const monacoJsxSyntaxHighlight = new MonacoJsxSyntaxHighlight(getWorker(), monaco)
 
     // editor is the result of monaco.editor.create
     return monacoJsxSyntaxHighlight.highlighterBuilder({
       editor: editor
-    })
+    }) as { highlighter:any, dispose:any } 
   }
 
   return {
