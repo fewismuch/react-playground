@@ -26,23 +26,23 @@ export const Tabs: React.FC<Props> = ({ onChange, readOnly = false }) => {
   const importMapFileName = 'import-map.json'
   const entryFileName = 'App.jsx'
   const [tabs, setTabs] = useState([''])
-  const [isAddModal, setisAddModal] = useState(false)
+  const [creating, setCreating] = useState(false)
 
   const addTab = () => {
     setTabs([...tabs, `Comp${maxSequenceNumber(tabs)}.jsx`])
-    setisAddModal(true)
+    setCreating(true)
   }
 
   const handleCancel = () => {
-    if (isAddModal) {
+    if (creating) {
       tabs.pop()
       setTabs([...tabs])
-      setisAddModal(false)
+      setCreating(false)
     }
   }
 
   const handleClickTab = (fileName: string) => {
-    if (isAddModal) return
+    if (creating) return
     onChange(fileName)
     setSelectedFileName(fileName)
   }
@@ -52,24 +52,24 @@ export const Tabs: React.FC<Props> = ({ onChange, readOnly = false }) => {
   }
 
   useEffect(() => {
-    setTabs(Object.keys(files).filter(item => item !== importMapFileName && item !== 'main.jsx'))
+    setTabs(Object.keys(files).filter(item => ![importMapFileName, 'main.jsx'].includes(item)))
   }, [files])
 
   return (
     <div className={styles.tabsBox}>
       {tabs.map((item, index) => (
         <TabsItem
-          key={item + index}
+          key={index + item}
           value={item}
           actived={selectedFileName === item}
-          addModal={isAddModal}
+          creating={creating}
           tabs={tabs}
           readOnly={readOnly ? tabs : ['App.jsx']}
           onOk={val => {
             // 修改名字
-            if (isAddModal) {
+            if (creating) {
               addFile(val)
-              setisAddModal(false)
+              setCreating(false)
             } else {
               updateFileName(item, val)
             }

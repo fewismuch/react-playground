@@ -1,7 +1,11 @@
 # TODO
 
+- 代码整理，包括代码规范配置
+- 开源工程须知项，文档编写
+- 发包并开源
 - 编译器替换为esbuild
-
+- 支持ts
+- 支持自动导入ts类型定义
 - 封装成沙盒组件，接口如下，参考sandpack
 ```jsx
 export const Sandpack = () => {
@@ -38,6 +42,4 @@ export const Sandpack = () => {
     />
   );
 };
-
-
 ```
