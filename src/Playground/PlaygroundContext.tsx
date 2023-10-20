@@ -1,12 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { initFiles } from './files'
 import { utoa } from './utils'
-import { Files } from './types.ts'
-
-export enum Theme {
-  DARK = 'dark',
-  LIGHT = 'light'
-}
+import { Files ,Theme} from './types.ts'
 
 interface PlaygroundProps {
   files: Files
@@ -22,9 +17,9 @@ interface PlaygroundProps {
   changeTheme: (theme: Theme) => void
 }
 
-const initialContext = {
+const initialContext:Partial<PlaygroundProps> = {
   files: initFiles,
-  theme: Theme.DARK,
+  theme: 'dark',
   selectedFileName: 'App.jsx'
 }
 
@@ -35,9 +30,9 @@ export const PlaygroundContext = createContext<PlaygroundProps>(initialContext a
 export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
   const { children } = props
 
-  const [files, setFiles] = useState(initialContext.files)
-  const [theme, setTheme] = useState(initialContext.theme)
-  const [selectedFileName, setSelectedFileName] = useState(initialContext.selectedFileName)
+  const [files, setFiles] = useState(initialContext.files!)
+  const [theme, setTheme] = useState(initialContext.theme!)
+  const [selectedFileName, setSelectedFileName] = useState(initialContext.selectedFileName!)
   const [filesHash, setFilesHash] = useState('')
 
   const addFile = (name: string) => {
@@ -76,14 +71,14 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
   }, [files])
 
   const changeTheme = (theme: Theme) => {
-    localStorage.setItem(STORAGE_DARK_THEME, String(theme === Theme.DARK))
+    localStorage.setItem(STORAGE_DARK_THEME, String(theme === 'dark'))
     document.querySelector('body')?.setAttribute('class', theme)
     setTheme(theme)
   }
 
   useEffect(() => {
     const isDarkTheme = JSON.parse(localStorage.getItem(STORAGE_DARK_THEME) || 'false')
-    changeTheme(isDarkTheme ? Theme.DARK : Theme.LIGHT)
+    changeTheme(isDarkTheme ? 'dark' : 'light')
   }, [])
 
   return (

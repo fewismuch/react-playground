@@ -5,7 +5,7 @@ import MoonSvg from './icons/moon.svg?raw'
 import DownloadSvg from './icons/download.svg?raw'
 import GithubSvg from './icons/github.svg?raw'
 import ShareSvg from './icons/share.svg?raw'
-import { PlaygroundContext, Theme } from '../../PlaygroundContext'
+import { PlaygroundContext } from '../../PlaygroundContext'
 import styles from './index.module.less'
 import { downloadFiles } from '../../utils'
 
@@ -32,20 +32,20 @@ export const Header: React.FC = () => {
           <span>React Playground</span>
         </div>
         <div className={styles.links}>
-          {theme === Theme.LIGHT && (
+          {theme === 'light' && (
             <button
               title='Toggle dark mode'
               className={styles.theme}
               dangerouslySetInnerHTML={{ __html: SunSvg }}
-              onClick={() => changeTheme(Theme.DARK)}
+              onClick={() => changeTheme('dark')}
             />
           )}
-          {theme === Theme.DARK && (
+          {theme === 'dark' && (
             <button
               title='Toggle light mode'
               className={styles.theme}
               dangerouslySetInnerHTML={{ __html: MoonSvg }}
-              onClick={() => changeTheme(Theme.LIGHT)}
+              onClick={() => changeTheme('light')}
             />
           )}
 
