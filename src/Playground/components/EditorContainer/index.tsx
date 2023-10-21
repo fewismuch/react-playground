@@ -1,8 +1,10 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
+
+import { Editor } from './Editor'
 import { Tabs } from './Tabs'
 import { PlaygroundContext } from '../../PlaygroundContext'
-import { Editor } from './Editor'
 import { debounce } from '../../utils'
+
 import type { EditorContainerProps } from '../../types'
 
 export const EditorContainer: React.FC<EditorContainerProps> = props => {

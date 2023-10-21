@@ -1,12 +1,15 @@
-import { Header } from './components/Header/index'
-import { Output } from './components/Output'
 // @ts-ignore
 import { Allotment } from 'allotment'
-import 'allotment/dist/style.css'
-import { PlaygroundProvider, PlaygroundContext } from './PlaygroundContext'
+import React, { useContext, useEffect } from 'react'
+
 import { EditorContainer } from './components/EditorContainer'
-import React, { useEffect, useContext } from 'react'
-import { PlaygroundProps } from './types'
+import { Header } from './components/Header'
+import { Output } from './components/Output'
+import { PlaygroundContext, PlaygroundProvider } from './PlaygroundContext'
+
+import 'allotment/dist/style.css'
+
+import type { PlaygroundProps } from './types'
 
 const defaultCodeSandboxOptions = {
   editorHeight: '100vh'
@@ -45,7 +48,7 @@ const Layout = (props: PlaygroundProps) => {
   }, [importmap])
 
   return (
-    <div style={{ width, height }}>
+    <div className='yutian-react-playground' style={{ width, height }}>
       {showHeader ? <Header /> : null}
       <div style={{ height: `calc(100% - ${showHeader ? 50 : 0}px)` }}>
         <Allotment defaultSizes={[100, 100]}>

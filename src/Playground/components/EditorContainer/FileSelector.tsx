@@ -1,8 +1,10 @@
-import React, { useContext, useState } from 'react'
 import classnames from 'classnames'
-import styles from './index.module.less'
-import { PlaygroundContext } from '../../PlaygroundContext'
+import React, { useContext, useState } from 'react'
+
 import { TabsItem } from './Tabs/TabsItem'
+import { PlaygroundContext } from '../../PlaygroundContext'
+
+import styles from './index.module.less'
 
 interface Props {
   onChange: (fileName: string) => void
@@ -21,7 +23,7 @@ export const Tabs: React.FC<Props> = ({ onChange }) => {
     setPendingeName('Comp.jsx')
     setTabs([...tabs, 'Comp.jsx'])
     // @ts-ignore
-    //addFile("Comp.jsx");
+    // addFile("Comp.jsx");
   }
 
   const handleCancelAdd = () => {

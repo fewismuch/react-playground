@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-import styles from './index.module.less'
-import { PlaygroundContext } from '../../../PlaygroundContext'
+
 import { TabsItem } from './TabsItem'
+import { PlaygroundContext } from '../../../PlaygroundContext'
+
+import styles from './index.module.less'
 
 interface Props {
   onChange: (fileName: string) => void
@@ -56,7 +58,7 @@ export const Tabs: React.FC<Props> = ({ onChange, readOnly = false }) => {
   }, [files])
 
   return (
-    <div className={styles.tabsBox}>
+    <div className={styles.tabs}>
       {tabs.map((item, index) => (
         <TabsItem
           key={index + item}

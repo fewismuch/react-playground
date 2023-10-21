@@ -1,7 +1,8 @@
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
+
 import { initFiles } from './files'
+import { Files, Theme } from './types.ts'
 import { utoa } from './utils'
-import { Files ,Theme} from './types.ts'
 
 interface PlaygroundProps {
   files: Files
@@ -17,7 +18,7 @@ interface PlaygroundProps {
   changeTheme: (theme: Theme) => void
 }
 
-const initialContext:Partial<PlaygroundProps> = {
+const initialContext: Partial<PlaygroundProps> = {
   files: initFiles,
   theme: 'dark',
   selectedFileName: 'App.jsx'
@@ -72,7 +73,7 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
 
   const changeTheme = (theme: Theme) => {
     localStorage.setItem(STORAGE_DARK_THEME, String(theme === 'dark'))
-    document.querySelector('body')?.setAttribute('class', theme)
+    document.querySelector('.yutian-react-playground')?.setAttribute('class', theme)
     setTheme(theme)
   }
 

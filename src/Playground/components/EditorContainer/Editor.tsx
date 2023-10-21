@@ -1,10 +1,12 @@
-import React, { useEffect, useMemo, useRef, useContext, useCallback } from 'react'
 import MonacoEditor, { Monaco } from '@monaco-editor/react'
+import React, { useEffect, useMemo, useRef, useContext, useCallback } from 'react'
+
+import './jsx-highlight.less'
 import './userWoker.ts'
 import { MonacoEditorConfig } from './config'
-import { Theme, PlaygroundContext } from '../../PlaygroundContext'
 import { useEditor } from './useEditor'
-import './jsx-highlight.less'
+import { PlaygroundContext } from '../../PlaygroundContext'
+import { Theme } from '../../types.ts'
 
 interface Props {
   file: any
@@ -58,7 +60,7 @@ export const Editor: React.FC<Props> = ({ file, theme, onChange, options }) => {
     return jsxSyntaxHighlight.current?.dispose
   }, [])
 
-  function handleEditorValidation(markers: { message: string }[]) {
+  const handleEditorValidation = (markers: { message: string }[]) => {
     markers.forEach(marker => {
       console.log('onValidate:', marker.message)
     })

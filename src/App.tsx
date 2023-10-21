@@ -1,4 +1,4 @@
-import { Playground } from './Playground/index'
+import { Playground } from './Playground'
 
 function App() {
   return <Playground />

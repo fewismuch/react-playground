@@ -1,13 +1,15 @@
 import React, { useContext, useMemo } from 'react'
-import ReactSvg from './icons/react.svg'
-import SunSvg from './icons/sun.svg?raw'
-import MoonSvg from './icons/moon.svg?raw'
+
 import DownloadSvg from './icons/download.svg?raw'
 import GithubSvg from './icons/github.svg?raw'
+import MoonSvg from './icons/moon.svg?raw'
+import ReactSvg from './icons/react.svg'
 import ShareSvg from './icons/share.svg?raw'
+import SunSvg from './icons/sun.svg?raw'
 import { PlaygroundContext } from '../../PlaygroundContext'
-import styles from './index.module.less'
 import { downloadFiles } from '../../utils'
+
+import styles from './index.module.less'
 
 export const Header: React.FC = () => {
   const { files, theme, changeTheme } = useContext(PlaygroundContext)

@@ -17,45 +17,45 @@
 }
 
 pre {
-  margin: 0;
   padding: 12px 20px;
+  margin: 0;
   overflow: auto;
 }
 
 .msg {
   position: absolute;
+  right: 8px;
   bottom: 0;
   left: 8px;
-  right: 8px;
   z-index: 10;
-  border: 2px solid transparent;
-  border-radius: 6px;
-  font-family: var(--font-code);
-  white-space: pre-wrap;
-  margin-bottom: 8px;
+  display: flex;
   max-height: calc(100% - 300px);
   min-height: 40px;
-  display: flex;
-  align-items: stretch;
+  margin-bottom: 8px;
+  font-family: var(--font-code);
   color: var(--color);
-  border-color: var(--color);
+  white-space: pre-wrap;
   background-color: var(--bg-color);
+  border: 2px solid transparent;
+  border-radius: 6px;
+  align-items: stretch;
+  border-color: var(--color);
 }
 
 .dismiss {
   position: absolute;
   top: 2px;
   right: 2px;
+  display: block;
   width: 18px;
   height: 18px;
-  line-height: 18px;
-  border-radius: 9px;
-  text-align: center;
-  display: block;
-  font-size: 9px;
   padding: 0;
+  font-size: 9px;
+  line-height: 18px;
   color: var(--bg-color);
+  text-align: center;
+  cursor: pointer;
   background-color: var(--color);
   border: none;
-  cursor: pointer;
+  border-radius: 9px;
 }

@@ -1,8 +1,10 @@
 import { transform } from '@babel/standalone'
+
 import { Files, File } from '../../types.ts'
 
 const Babel: any = { transform: null }
 if (!import.meta.env.DEV) {
+  // eslint-disable-next-line camelcase
   importScripts(`https://cdn.staticfile.org/babel-standalone/${__babel_standalone__}/babel.min.js`)
 } else {
   Babel.transform = transform

@@ -1,10 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useMount, useUpdateEffect } from 'ahooks'
-import { ViewSelector } from './ViewSelector'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+
 import { CompiledCode } from './CompiledCode'
-import { Preview } from './Preview.tsx'
-import { PlaygroundContext } from '../../PlaygroundContext.tsx'
 import CompilerWorker from './compiler.worker.ts?worker'
+import { Preview } from './Preview.tsx'
+import { ViewSelector } from './ViewSelector'
+import { PlaygroundContext } from '../../PlaygroundContext.tsx'
+
 import type { OutputProps } from '../../types'
 
 const viewTypes = ['PREVIEW', 'JS']

@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react'
-import styles from './index.module.less'
 import classnames from 'classnames'
+import React, { useState, useRef, useEffect } from 'react'
+
+import styles from './index.module.less'
 
 interface Props {
   readOnly: any
@@ -16,11 +17,11 @@ interface Props {
 
 export const TabsItem: React.FC<Props> = props => {
   const { readOnly = [''], tabs = [], value, onOk, onCancel, onRemove, actived, onClick } = props
-  const inputRef = useRef(null)
+  const inputRef = useRef<any>(null)
   const [name, setName] = useState(value)
   const [creating, setCreating] = useState(props.creating)
 
-  const handleKeyDown = event => {
+  const handleKeyDown = (event: any) => {
     if (event.keyCode === 13) {
       // enter key
       event.preventDefault()
@@ -41,7 +42,7 @@ export const TabsItem: React.FC<Props> = props => {
   function doneNameFile() {
     if (!creating) return
     if (!/\.(jsx|tsx|js|ts|css|json)$/.test(name)) {
-      console.error(`Playground only supports *.jsx, *.tsx, *.js, *.ts, *.css, *.json files.`)
+      console.error('Playground only supports *.jsx, *.tsx, *.js, *.ts, *.css, *.json files.')
       return
     }
 
@@ -74,20 +75,20 @@ export const TabsItem: React.FC<Props> = props => {
 
   return (
     <div
-      className={classnames(styles.tabItem, actived ? styles.activated : null)}
+      className={classnames(styles['tab-item'], actived ? styles.activated : null)}
       onClick={onClick}
     >
       {creating ? (
         <>
           <input
             ref={inputRef}
-            className={styles.tabsItemInput}
+            className={styles['tabs-item-input']}
             value={name}
             onChange={e => setName(e.target.value)}
             onBlur={doneNameFile}
             onKeyDown={handleKeyDown}
           />
-          <div className={styles.inputMask}></div>
+          <div className={styles['input-mask']}></div>
         </>
       ) : (
         <>

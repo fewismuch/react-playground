@@ -20,7 +20,6 @@ export interface OutputProps {
   showCompileOutput?: boolean
 }
 
-
 export type PlaygroundProps = {
   width?: string | number
   height?: string | number
@@ -30,4 +29,5 @@ export type PlaygroundProps = {
   files?: Files
   options?: any
   showHeader?: boolean
-} & EditorContainerProps & OutputProps
+} & EditorContainerProps &
+  OutputProps

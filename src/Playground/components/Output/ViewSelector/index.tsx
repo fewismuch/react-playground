@@ -1,5 +1,6 @@
-import React from 'react'
 import classnames from 'classnames'
+import React from 'react'
+
 import styles from './index.module.less'
 
 interface Props {
@@ -17,7 +18,7 @@ export const ViewSelector: React.FC<Props> = props => {
       {items.map(name => (
         <div
           key={name}
-          className={classnames(styles.tabItem, value === name ? styles.activated : '')}
+          className={classnames(styles['tab-item'], value === name ? styles.activated : '')}
           onClick={() => onChange(name)}
         >
           {name}

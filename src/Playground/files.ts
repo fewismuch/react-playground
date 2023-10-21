@@ -1,9 +1,10 @@
-import { atou } from './utils'
-import main from './template/src/main.jsx?raw'
-import App from './template/src/App.jsx?raw'
-import AppCss from './template/src/App.css?raw'
 import importMap from './template/import-map.json?raw'
-import { Files } from './types'
+import AppCss from './template/src/App.css?raw'
+import App from './template/src/App.jsx?raw'
+import main from './template/src/main.jsx?raw'
+import { atou } from './utils'
+
+import type { Files } from './types'
 
 // 读取hash值 设置为files
 let files
