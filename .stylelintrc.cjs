@@ -17,6 +17,7 @@ module.exports = {
         "message": "Expected class selector to be kebab-case"
       }
     ],
+    'no-descending-specificity': null, // 禁止在具有较高优先级的选择器后出现被其覆盖的较低优先级的选择器
     // 规则顺序
     "order/properties-order": [
       "position",
