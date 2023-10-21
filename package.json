@@ -7,8 +7,6 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "npm run lint:style",
-    "lint:style": "stylelint --fix \"src/**/*.{css,less,scss,sass}\"",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -61,10 +59,10 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [
-      "eslint --max-warnings 0 --fix"
+      "eslint --max-warnings 0"
     ],
     "src/**/*.{css,less,scss}": [
-      "stylelint --fix"
+      "stylelint --max-warnings 0"
     ]
   }
 }
