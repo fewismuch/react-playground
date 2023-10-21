@@ -8,7 +8,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "npm run lint:style",
-    "lint:style": "stylelint --fix 'src/**/*.{css,less,scss,sass}'",
+    "lint:style": "stylelint --fix \"src/**/*.{css,less,scss,sass}\"",
     "prepare": "husky install"
   },
   "dependencies": {
