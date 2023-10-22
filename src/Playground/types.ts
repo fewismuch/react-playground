@@ -55,17 +55,18 @@ export interface PreviewData {
 
 export interface FileSelectorProps {
   onChange: (fileName: string) => void
+  onError: (msg: string) => void
   readOnly?: boolean
 }
 
 export interface TabsItemProps {
   readOnlyTabs: string[]
   creating: boolean
-  tabs: string[]
   value: string
   actived: boolean
   onOk: (name: string) => void
   onCancel: () => void
   onRemove: (name: string) => void
   onClick: () => void
+  onValidate: (newName: string, oldName: string) => boolean
 }

@@ -1,17 +1,16 @@
 import { transform } from '@babel/standalone'
 
+import { ENTRY_FILE_NAME } from '../../files.ts'
 import { Files, File } from '../../types.ts'
 
 const Babel: any = { transform: null }
 if (!import.meta.env.DEV) {
-  // eslint-disable-next-line camelcase
-  importScripts(`https://cdn.staticfile.org/babel-standalone/${__babel_standalone__}/babel.min.js`)
+  importScripts(
+    `https://cdn.staticfile.org/babel-standalone/${babelStandaloneVersion}/babel.min.js`
+  )
 } else {
   Babel.transform = transform
 }
-
-// TODO 改
-const entryFileName = 'main.jsx'
 
 const getInternalModule = (files: Files, moduleName: string) => {
   let _moduleName = moduleName.split('./').pop() || ''
@@ -51,6 +50,7 @@ const customResolver = (files: Files) => {
         const module: string = path.node.source.value
         if (module.startsWith('.')) {
           const _module = getInternalModule(files, module)
+          if (!_module) return
           if (_module.name.endsWith('.css')) {
             path.node.source.value = transformCss(_module)
           } else if (_module.name.endsWith('.json')) {
@@ -84,8 +84,8 @@ const babelTransform = (filename: string, code: string, files: Files) => {
 }
 
 const compile = (files: Files) => {
-  const main = files[entryFileName]
-  const compileCode = babelTransform(entryFileName, main.value, files)
+  const main = files[ENTRY_FILE_NAME]
+  const compileCode = babelTransform(ENTRY_FILE_NAME, main.value, files)
   return { compileCode }
 }
 
@@ -106,6 +106,6 @@ self.addEventListener('message', async ({ data }) => {
       data: compile(data)
     })
   } catch (e) {
-    self.postMessage({ event: 'ERROR', error: e })
+    self.postMessage({ type: 'ERROR', error: e })
   }
 })

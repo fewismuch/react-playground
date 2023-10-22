@@ -1,7 +1,7 @@
 import { zlibSync, unzlibSync, strToU8, strFromU8 } from 'fflate'
 import { saveAs } from 'file-saver'
 
-import { importMapFileName, reactTemplateFiles } from './files.ts'
+import { IMPORT_MAP_FILE_NAME, reactTemplateFiles } from './files.ts'
 import index from './template/index.html?raw'
 import pkg from './template/package.json?raw'
 import readme from './template/README.md?raw'
@@ -24,7 +24,7 @@ export async function downloadFiles(files: Files) {
   const src = zip.folder('src')!
 
   Object.keys(files).forEach(name => {
-    if (files[name].name !== importMapFileName) {
+    if (files[name].name !== IMPORT_MAP_FILE_NAME) {
       src.file(name, files[name].value)
     } else {
       zip.file(name, files[name].value)
@@ -88,8 +88,8 @@ export const getMergedCustomFiles = (files?: Files, importMap?: ImportMap) => {
     return {
       ...reactTemplateFiles,
       ...files,
-      [importMapFileName]: {
-        name: importMapFileName,
+      [IMPORT_MAP_FILE_NAME]: {
+        name: IMPORT_MAP_FILE_NAME,
         language: 'json',
         value: JSON.stringify(importMap, null, 2)
       }
@@ -100,4 +100,27 @@ export const getMergedCustomFiles = (files?: Files, importMap?: ImportMap) => {
       ...files
     }
   }
+}
+
+// 从url hash中获取files
+export const getFilesFromUrl = () => {
+  let files: Files | undefined
+  try {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash
+      if (hash) files = JSON.parse(atou(hash?.split('#')[1]))
+    }
+  } catch (error) {
+    console.error(error)
+  }
+  return files
+}
+
+// 根据文件名后缀匹配文件类型
+export const fileName2Language = (name: string) => {
+  const suffix = name.split('.').pop() || ''
+  if (['js', 'jsx', 'json'].includes(suffix)) return 'javascript'
+  if (['ts', 'tsx'].includes(suffix)) return 'typescript'
+  if (['css'].includes(suffix)) return 'css'
+  return 'javascript'
 }

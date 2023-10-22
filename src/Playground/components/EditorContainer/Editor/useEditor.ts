@@ -1,6 +1,7 @@
 import { getWorker, MonacoJsxSyntaxHighlight } from 'monaco-jsx-syntax-highlight'
 
 export const useEditor = () => {
+  // 加载react类型定义文件
   const initExtraLibs = (monaco: any) => {
     const types = import.meta.glob(
       [
@@ -14,12 +15,9 @@ export const useEditor = () => {
       monaco.languages.typescript.typescriptDefaults.addExtraLib(types[path], `file://${path}`)
       monaco.languages.typescript.javascriptDefaults.addExtraLib(types[path], `file://${path}`)
     })
-
-    // 可匹配到.d.ts文件，但是没内容
-    // const uri = monaco.Uri.file("dir/lodash.d.ts");
-    // monaco.languages.typescript.typescriptDefaults.addExtraLib(`declare module 'lodash' {}`,uri);
   }
 
+  // 点击变量跳转文件
   const doOpenEditor = (editor: any, input: any) => {
     const selection = input.options ? input.options.selection : null
     if (selection) {
@@ -38,6 +36,7 @@ export const useEditor = () => {
     console.log('触发鼠标+ctrl点击', input.resource, selection)
   }
 
+  // 加载jsx高亮
   const loadJsxSyntaxHighlight = (editor: any, monaco: any) => {
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
       jsx: monaco.languages.typescript.JsxEmit.Preserve,
@@ -47,11 +46,13 @@ export const useEditor = () => {
 
     const monacoJsxSyntaxHighlight = new MonacoJsxSyntaxHighlight(getWorker(), monaco)
 
-    // editor is the result of monaco.editor.create
     return monacoJsxSyntaxHighlight.highlighterBuilder({
       editor
     }) as { highlighter: any; dispose: any }
   }
+
+  // TODO 加载第三方包的类型定义文件
+  // ...
 
   return {
     initExtraLibs,

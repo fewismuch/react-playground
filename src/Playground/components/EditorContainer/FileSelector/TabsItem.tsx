@@ -8,13 +8,13 @@ import styles from './index.module.less'
 export const TabsItem: React.FC<TabsItemProps> = props => {
   const {
     readOnlyTabs = [''],
-    tabs = [],
     value,
     actived = false,
     onOk,
     onCancel,
     onRemove,
-    onClick
+    onClick,
+    onValidate
   } = props
   const inputRef = useRef<HTMLInputElement>(null)
   const [name, setName] = useState(value)
@@ -38,18 +38,9 @@ export const TabsItem: React.FC<TabsItemProps> = props => {
 
   function doneNameFile() {
     if (!creating) return
-    if (!/\.(jsx|tsx|js|ts|css|json)$/.test(name)) {
-      console.error('Playground only supports *.jsx, *.tsx, *.js, *.ts, *.css, *.json files.')
-      return
-    }
+    if (!onValidate(name, value)) return
 
-    // already exists
-    if (tabs.includes(name) && name !== value) {
-      console.error(`File "${name}" already exists.`)
-      return
-    }
-
-    // 如果名称没有变化且是修改状态，就不做任何事
+    // 如果name没有变化且是修改状态
     if (name === value && actived) {
       setCreating(false)
       return

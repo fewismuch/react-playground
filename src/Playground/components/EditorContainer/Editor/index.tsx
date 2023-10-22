@@ -50,10 +50,10 @@ export const Editor: React.FC<Props> = ({ file, onChange, options }) => {
       }
     }
 
-    // 加载 类型定义文件
+    // 加载react类型定义文件
     initExtraLibs(monaco)
 
-    // 初始化jsx高亮线程
+    // 加载jsx高亮
     jsxSyntaxHighlight.current = loadJsxSyntaxHighlight(editor, monaco)
     jsxSyntaxHighlight.current?.highlighter()
     return jsxSyntaxHighlight.current?.dispose

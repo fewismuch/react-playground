@@ -3,13 +3,14 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import { TabsItem } from './TabsItem'
 import { maxSequenceTabName } from './utils.ts'
-import { importMapFileName, mainFileName } from '../../../files.ts'
+import { ENTRY_FILE_NAME, IMPORT_MAP_FILE_NAME, MAIN_FILE_NAME } from '../../../files.ts'
 import { PlaygroundContext } from '../../../PlaygroundContext'
 import { FileSelectorProps } from '../../../types.ts'
 
 import styles from './index.module.less'
 
-export const FileSelector: React.FC<FileSelectorProps> = ({ onChange, readOnly = false }) => {
+export const FileSelector: React.FC<FileSelectorProps> = props => {
+  const { onChange, onError, readOnly = false } = props
   const { files, removeFile, addFile, updateFileName, selectedFileName, setSelectedFileName } =
     useContext(PlaygroundContext)
   const [tabs, setTabs] = useState([''])
@@ -35,7 +36,7 @@ export const FileSelector: React.FC<FileSelectorProps> = ({ onChange, readOnly =
   }
 
   const editImportMap = () => {
-    onChange(importMapFileName)
+    onChange(IMPORT_MAP_FILE_NAME)
   }
 
   const handleSaveTab = (val: string, item: string) => {
@@ -51,8 +52,25 @@ export const FileSelector: React.FC<FileSelectorProps> = ({ onChange, readOnly =
     }, 0)
   }
 
+  const handleValidateTab = (newName: string, oldName: string) => {
+    if (!/\.(jsx|tsx|js|ts|css|json)$/.test(newName)) {
+      onError('Playground only supports *.jsx, *.tsx, *.js, *.ts, *.css, *.json files.')
+      return false
+    }
+
+    // name已存在
+    if (tabs.includes(newName) && newName !== oldName) {
+      onError(`File "${newName}" already exists.`)
+      return false
+    }
+    onError('')
+    return true
+  }
+
   useEffect(() => {
-    setTabs(Object.keys(files).filter(item => ![importMapFileName, 'main.jsx'].includes(item)))
+    setTabs(
+      Object.keys(files).filter(item => ![IMPORT_MAP_FILE_NAME, ENTRY_FILE_NAME].includes(item))
+    )
   }, [files])
 
   return (
@@ -63,15 +81,15 @@ export const FileSelector: React.FC<FileSelectorProps> = ({ onChange, readOnly =
           value={item}
           actived={selectedFileName === item}
           creating={creating}
-          tabs={tabs}
-          readOnlyTabs={readOnly ? tabs : [mainFileName]}
+          readOnlyTabs={readOnly ? tabs : [MAIN_FILE_NAME]}
+          onValidate={handleValidateTab}
           onOk={(name: string) => handleSaveTab(name, item)}
           onCancel={handleCancel}
           onRemove={(name: string) => {
             const result = confirm(`你确定要删除 ${name} 吗？`)
             if (result) {
               removeFile(name)
-              handleClickTab(mainFileName)
+              handleClickTab(MAIN_FILE_NAME)
             }
           }}
           onClick={() => handleClickTab(item)}
@@ -87,7 +105,7 @@ export const FileSelector: React.FC<FileSelectorProps> = ({ onChange, readOnly =
             <div
               className={classnames(
                 styles['tab-item'],
-                selectedFileName === importMapFileName ? styles.actived : null
+                selectedFileName === IMPORT_MAP_FILE_NAME ? styles.actived : null
               )}
               onClick={editImportMap}
             >

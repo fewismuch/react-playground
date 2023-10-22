@@ -2,30 +2,25 @@ import importMap from './template/import-map.json?raw'
 import AppCss from './template/src/App.css?raw'
 import App from './template/src/App.jsx?raw'
 import main from './template/src/main.jsx?raw'
-import { atou } from './utils'
+import { getFilesFromUrl } from './utils'
 
 import type { Files } from './types'
 
-// 读取hash值 设置为files
-let files
-try {
-  const hash = window.location.hash
-  if (hash) files = JSON.parse(atou(hash?.split('#')[1]))
-} catch (error) {
-  console.error(error)
-}
+// app文件名
+export const MAIN_FILE_NAME = 'App.jsx'
+// esm模块映射文件名
+export const IMPORT_MAP_FILE_NAME = 'import-map.json'
+// app入口文件名
+export const ENTRY_FILE_NAME = 'main.jsx'
 
-export const mainFileName = 'App.jsx'
-export const importMapFileName = 'import-map.json'
-
-export const initFiles: Files = files || {
-  'main.jsx': {
-    name: 'main.jsx',
+export const initFiles: Files = getFilesFromUrl() || {
+  [ENTRY_FILE_NAME]: {
+    name: ENTRY_FILE_NAME,
     language: 'javascript',
     value: main
   },
-  [mainFileName]: {
-    name: mainFileName,
+  [MAIN_FILE_NAME]: {
+    name: MAIN_FILE_NAME,
     language: 'javascript',
     value: App
   },
@@ -34,21 +29,21 @@ export const initFiles: Files = files || {
     language: 'css',
     value: AppCss
   },
-  [importMapFileName]: {
-    name: importMapFileName,
+  [IMPORT_MAP_FILE_NAME]: {
+    name: IMPORT_MAP_FILE_NAME,
     language: 'json',
     value: importMap
   }
 }
 
 export const reactTemplateFiles = {
-  'main.jsx': {
-    name: 'main.jsx',
+  [ENTRY_FILE_NAME]: {
+    name: ENTRY_FILE_NAME,
     language: 'javascript',
     value: main
   },
-  [importMapFileName]: {
-    name: importMapFileName,
+  [IMPORT_MAP_FILE_NAME]: {
+    name: IMPORT_MAP_FILE_NAME,
     language: 'json',
     value: importMap
   }

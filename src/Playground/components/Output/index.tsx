@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import CompilerWorker from './compiler.worker.ts?worker'
 import { Preview } from './Preview'
 import { ViewSelector } from './ViewSelector'
-import { importMapFileName } from '../../files.ts'
+import { IMPORT_MAP_FILE_NAME } from '../../files.ts'
 import { PlaygroundContext } from '../../PlaygroundContext'
 import { PreviewData } from '../../types'
 import { MonacoEditorConfig } from '../EditorContainer/Editor/monacoConfig'
@@ -37,7 +37,7 @@ export const Output: React.FC<OutputProps> = props => {
       compilerRef.current = new CompilerWorker()
       compilerRef.current.addEventListener('message', ({ data }: any) => {
         if (data.type === 'UPDATE_FILES') {
-          data.data.importmap = files[importMapFileName].value
+          data.data.importmap = files[IMPORT_MAP_FILE_NAME].value
           setCompiledFiles(data)
         } else if (data.type === 'UPDATE_FILE') {
           setCompiledCode(data.data)

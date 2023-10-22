@@ -5,7 +5,7 @@ import React, { useContext, useEffect } from 'react'
 import { EditorContainer } from './components/EditorContainer'
 import { Header } from './components/Header'
 import { Output } from './components/Output'
-import { mainFileName } from './files.ts'
+import { MAIN_FILE_NAME } from './files.ts'
 // eslint-disable-next-line import/order
 import { PlaygroundContext, PlaygroundProvider } from './PlaygroundContext'
 
@@ -37,9 +37,9 @@ const Layout = (props: PlaygroundProps) => {
   const options = Object.assign(defaultCodeSandboxOptions, props.options || {})
 
   useEffect(() => {
-    if (files && !files?.[mainFileName]) {
+    if (files && !files?.[MAIN_FILE_NAME]) {
       throw new Error(
-        `Missing required property : '${mainFileName}' is a mandatory property for 'files'`
+        `Missing required property : '${MAIN_FILE_NAME}' is a mandatory property for 'files'`
       )
     } else {
       const newFiles = getMergedCustomFiles(files, importMap)

@@ -1,13 +1,13 @@
 import React, { createContext, useEffect, useState } from 'react'
 
-import { initFiles, mainFileName } from './files'
+import { initFiles, MAIN_FILE_NAME } from './files'
 import { PlaygroundContextProps, Theme } from './types.ts'
-import { getPlaygroundTheme, setPlaygroundTheme, utoa } from './utils'
+import { fileName2Language, getPlaygroundTheme, setPlaygroundTheme, utoa } from './utils'
 
 const initialContext: Partial<PlaygroundContextProps> = {
   files: initFiles,
   theme: 'dark',
-  selectedFileName: mainFileName
+  selectedFileName: MAIN_FILE_NAME
 }
 
 export const PlaygroundContext = createContext<PlaygroundContextProps>(
@@ -22,11 +22,10 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
   const [selectedFileName, setSelectedFileName] = useState(initialContext.selectedFileName!)
   const [filesHash, setFilesHash] = useState('')
 
-  // TODO 根据文件名后缀匹配文件类型
   const addFile = (name: string) => {
     files[name] = {
       name,
-      language: 'javascript',
+      language: fileName2Language(name),
       value: ''
     }
     setFiles({ ...files })
@@ -71,10 +70,10 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
       value={{
         theme,
         filesHash,
-        setTheme,
-        changeTheme,
         files,
         selectedFileName,
+        setTheme,
+        changeTheme,
         setSelectedFileName,
         setFiles,
         addFile,

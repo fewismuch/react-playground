@@ -19,6 +19,6 @@ export default defineConfig({
     }
   },
   define: {
-    __babel_standalone__: JSON.stringify(packageJson.dependencies['@babel/standalone'])
+    babelStandaloneVersion: JSON.stringify(packageJson.dependencies['@babel/standalone'])
   }
 })
