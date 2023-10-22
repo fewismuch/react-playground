@@ -6,7 +6,6 @@ import { fileName2Language, getPlaygroundTheme, setPlaygroundTheme, utoa } from 
 
 const initialContext: Partial<PlaygroundContextProps> = {
   files: initFiles,
-  theme: 'dark',
   selectedFileName: MAIN_FILE_NAME
 }
 
@@ -57,8 +56,9 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
   }
 
   useEffect(() => {
-    window.location.hash = utoa(JSON.stringify(files))
-    setFilesHash(window.location.hash)
+    const hash = utoa(JSON.stringify(files))
+    window.location.hash = hash
+    setFilesHash(hash)
   }, [files])
 
   useEffect(() => {

@@ -1,26 +1,23 @@
-// @ts-ignore
-import { Allotment } from 'allotment'
 import React, { useContext, useEffect } from 'react'
 
 import { EditorContainer } from './components/EditorContainer'
 import { Header } from './components/Header'
 import { Output } from './components/Output'
+import { SplitPane } from './components/SplitPane'
 import { MAIN_FILE_NAME } from './files.ts'
-// eslint-disable-next-line import/order
 import { PlaygroundContext, PlaygroundProvider } from './PlaygroundContext'
+import { getMergedCustomFiles } from './utils'
 
-import 'allotment/dist/style.css'
 import './index.less'
-
-import { getMergedCustomFiles } from './utils.ts'
 
 import type { PlaygroundProps } from './types'
 
 const defaultCodeSandboxOptions = {
+  theme: 'dark',
   editorHeight: '100vh'
 }
 
-const Layout = (props: PlaygroundProps) => {
+const ReactPlayground = (props: PlaygroundProps) => {
   const {
     width = '100vw',
     height = '100vh',
@@ -59,14 +56,14 @@ const Layout = (props: PlaygroundProps) => {
     <div id='react-playground' style={{ width, height }}>
       {showHeader ? <Header /> : null}
       <div style={{ height: `calc(100% - ${showHeader ? 50 : 0}px)` }}>
-        <Allotment defaultSizes={[100, 100]}>
+        <SplitPane>
           <EditorContainer
             options={options}
             showFileSelector={showFileSelector}
             fileSelectorReadOnly={fileSelectorReadOnly}
           />
           <Output showCompileOutput={showCompileOutput} />
-        </Allotment>
+        </SplitPane>
       </div>
     </div>
   )
@@ -75,7 +72,7 @@ const Layout = (props: PlaygroundProps) => {
 export const Playground: React.FC<PlaygroundProps> = props => {
   return (
     <PlaygroundProvider>
-      <Layout {...props} />
+      <ReactPlayground {...props} />
     </PlaygroundProvider>
   )
 }

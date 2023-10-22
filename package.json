@@ -1,7 +1,7 @@
 {
   "name": "react-playground",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,7 +12,6 @@
   "dependencies": {
     "@babel/standalone": "^7.23.1",
     "@monaco-editor/react": "^4.5.2",
-    "ahooks": "^3.7.8",
     "allotment": "^1.19.3",
     "classnames": "^2.3.2",
     "fflate": "^0.8.1",
