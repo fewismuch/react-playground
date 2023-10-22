@@ -1,11 +1,13 @@
-import { useMount, useUpdateEffect } from 'ahooks'
+import MonacoEditor from '@monaco-editor/react'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 
-import { CompiledCode } from './CompiledCode'
 import CompilerWorker from './compiler.worker.ts?worker'
-import { Preview } from './Preview.tsx'
+import { Preview } from './Preview'
 import { ViewSelector } from './ViewSelector'
-import { PlaygroundContext } from '../../PlaygroundContext.tsx'
+import { importMapFileName } from '../../files.ts'
+import { PlaygroundContext } from '../../PlaygroundContext'
+import { PreviewData } from '../../types'
+import { MonacoEditorConfig } from '../EditorContainer/Editor/monacoConfig'
 
 import type { OutputProps } from '../../types'
 
@@ -15,55 +17,50 @@ export const Output: React.FC<OutputProps> = props => {
   const { showCompileOutput = true } = props
   const { files, theme, selectedFileName } = useContext(PlaygroundContext)
   const [activedType, setActivedType] = useState('PREVIEW')
-  const compiler = useRef<any>(null)
-  const [previewData, setPreviewData] = useState({})
-  const [compiledData, setCompiledData] = useState('')
-  const isJsView = activedType === 'JS'
-  const isPreviewView = activedType === 'PREVIEW'
+  const compilerRef = useRef<any>(null)
+  const [compiledFiles, setCompiledFiles] = useState<PreviewData>()
+  const [compiledCode, setCompiledCode] = useState('')
 
   const handleViewChange = (type: string) => {
     setActivedType(type)
   }
 
-  const comp = () => {
-    if (isPreviewView) compiler.current?.postMessage(files)
-    if (isJsView) {
-      compiler.current?.postMessage(files[selectedFileName].value)
+  const sendCompiledCode = () => {
+    if (activedType === 'PREVIEW') compilerRef.current?.postMessage(files)
+    if (activedType === 'JS') {
+      compilerRef.current?.postMessage(files[selectedFileName].value)
     }
   }
 
-  useUpdateEffect(() => {
-    comp()
-  }, [files])
-
   useEffect(() => {
-    comp()
-  }, [activedType])
-
-  useEffect(() => {
-    // TODO 排除css文件
-    if (isJsView) {
-      compiler.current?.postMessage(files[selectedFileName].value)
-    }
-  }, [selectedFileName])
-
-  useMount(() => {
-    if (!compiler.current) {
-      compiler.current = new CompilerWorker()
-      compiler.current.addEventListener('message', ({ data }) => {
+    if (!compilerRef.current) {
+      compilerRef.current = new CompilerWorker()
+      compilerRef.current.addEventListener('message', ({ data }: any) => {
         if (data.type === 'UPDATE_FILES') {
-          data.data.importmap = files['import-map.json'].value
-          setPreviewData(data)
+          data.data.importmap = files[importMapFileName].value
+          setCompiledFiles(data)
         } else if (data.type === 'UPDATE_FILE') {
-          // 更新js视图
-          console.log(data.data)
-          setCompiledData(data.data)
+          setCompiledCode(data.data)
+        } else if (data.type === 'ERROR') {
+          console.log(data)
         }
       })
 
-      compiler.current.postMessage(files)
+      compilerRef.current.postMessage(files)
     }
-  })
+  }, [])
+
+  useEffect(() => {
+    sendCompiledCode()
+  }, [activedType, files])
+
+  useEffect(() => {
+    if (['javascript', 'typescript'].includes(files[selectedFileName].language)) {
+      compilerRef.current?.postMessage(files[selectedFileName].value)
+    } else {
+      compilerRef.current?.postMessage('')
+    }
+  }, [selectedFileName])
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -74,9 +71,21 @@ export const Output: React.FC<OutputProps> = props => {
         hidden={!showCompileOutput}
       />
 
-      <Preview hidden={activedType !== 'PREVIEW'} data={previewData} />
+      <Preview hidden={activedType !== 'PREVIEW'} data={compiledFiles} />
       {showCompileOutput ? (
-        <CompiledCode hidden={activedType !== 'JS'} theme={theme} value={compiledData} />
+        <div style={{ display: activedType !== 'JS' ? 'none' : '', height: '100%' }}>
+          <MonacoEditor
+            className='react-playground-editor'
+            height='100%'
+            theme={`vs-${theme}`}
+            value={compiledCode}
+            language='javascript'
+            options={{
+              ...MonacoEditorConfig,
+              readOnly: true
+            }}
+          />
+        </div>
       ) : null}
     </div>
   )

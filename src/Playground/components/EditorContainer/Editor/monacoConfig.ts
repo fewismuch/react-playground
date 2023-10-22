@@ -1,4 +1,6 @@
-export const MonacoEditorConfig = {
+import { editor } from 'monaco-editor'
+
+export const MonacoEditorConfig: editor.IStandaloneEditorConstructionOptions = {
   automaticLayout: true,
   cursorBlinking: 'smooth',
   fontLigatures: true,

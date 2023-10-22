@@ -1,33 +1,30 @@
 import classnames from 'classnames'
 import React, { useState, useRef, useEffect } from 'react'
 
+import { TabsItemProps } from '../../../types'
+
 import styles from './index.module.less'
 
-interface Props {
-  readOnly: any
-  creating: boolean
-  tabs: any
-  value: string
-  onOk: any
-  onCancel: any
-  onRemove: any
-  actived: any
-  onClick: any
-}
-
-export const TabsItem: React.FC<Props> = props => {
-  const { readOnly = [''], tabs = [], value, onOk, onCancel, onRemove, actived, onClick } = props
-  const inputRef = useRef<any>(null)
+export const TabsItem: React.FC<TabsItemProps> = props => {
+  const {
+    readOnlyTabs = [''],
+    tabs = [],
+    value,
+    actived = false,
+    onOk,
+    onCancel,
+    onRemove,
+    onClick
+  } = props
+  const inputRef = useRef<HTMLInputElement>(null)
   const [name, setName] = useState(value)
   const [creating, setCreating] = useState(props.creating)
 
-  const handleKeyDown = (event: any) => {
-    if (event.keyCode === 13) {
-      // enter key
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Entry') {
       event.preventDefault()
       doneNameFile()
-    } else if (event.keyCode === 27) {
-      // esc key
+    } else if (event.key === 'Escape') {
       event.preventDefault()
       cancelNameFile()
     }
@@ -52,7 +49,7 @@ export const TabsItem: React.FC<Props> = props => {
       return
     }
 
-    // 如果名称没有变化&是修改名称，就不做任何事
+    // 如果名称没有变化且是修改状态，就不做任何事
     if (name === value && actived) {
       setCreating(false)
       return
@@ -62,7 +59,7 @@ export const TabsItem: React.FC<Props> = props => {
   }
 
   const handleDoubleClick = () => {
-    if (readOnly.includes(name)) return
+    if (readOnlyTabs.includes(name)) return
     setCreating(true)
     setTimeout(() => {
       inputRef?.current?.focus()
@@ -75,7 +72,7 @@ export const TabsItem: React.FC<Props> = props => {
 
   return (
     <div
-      className={classnames(styles['tab-item'], actived ? styles.activated : null)}
+      className={classnames(styles['tab-item'], actived ? styles.actived : null)}
       onClick={onClick}
     >
       {creating ? (
@@ -93,7 +90,7 @@ export const TabsItem: React.FC<Props> = props => {
       ) : (
         <>
           <span onDoubleClick={handleDoubleClick}>{name}</span>
-          {readOnly.includes(name) ? null : (
+          {readOnlyTabs.includes(name) ? null : (
             <span
               onClick={e => {
                 e.stopPropagation()

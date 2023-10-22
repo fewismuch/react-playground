@@ -21,7 +21,6 @@ export const useEditor = () => {
   }
 
   const doOpenEditor = (editor: any, input: any) => {
-    //editor.setModel(model)
     const selection = input.options ? input.options.selection : null
     if (selection) {
       if (typeof selection.endLineNumber === 'number' && typeof selection.endColumn === 'number') {
@@ -50,8 +49,8 @@ export const useEditor = () => {
 
     // editor is the result of monaco.editor.create
     return monacoJsxSyntaxHighlight.highlighterBuilder({
-      editor: editor
-    }) as { highlighter:any, dispose:any } 
+      editor
+    }) as { highlighter: any; dispose: any }
   }
 
   return {

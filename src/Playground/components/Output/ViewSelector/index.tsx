@@ -18,7 +18,7 @@ export const ViewSelector: React.FC<Props> = props => {
       {items.map(name => (
         <div
           key={name}
-          className={classnames(styles['tab-item'], value === name ? styles.activated : '')}
+          className={classnames(styles['tab-item'], value === name ? styles.actived : '')}
           onClick={() => onChange(name)}
         >
           {name}

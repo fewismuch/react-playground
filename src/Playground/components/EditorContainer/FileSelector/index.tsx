@@ -1,37 +1,22 @@
+import classnames from 'classnames'
 import React, { useContext, useEffect, useState } from 'react'
 
 import { TabsItem } from './TabsItem'
+import { maxSequenceTabName } from './utils.ts'
+import { importMapFileName, mainFileName } from '../../../files.ts'
 import { PlaygroundContext } from '../../../PlaygroundContext'
+import { FileSelectorProps } from '../../../types.ts'
 
 import styles from './index.module.less'
 
-interface Props {
-  onChange: (fileName: string) => void
-  readOnly?: boolean
-}
-
-const maxSequenceNumber = (tabs: string[]) => {
-  const result = tabs.reduce((max, fileName) => {
-    const match = fileName.match(/Comp(\d+)\.jsx/)
-    if (match) {
-      const sequenceNumber = parseInt(match[1], 10)
-      return Math.max(max, sequenceNumber)
-    }
-    return max
-  }, 0)
-  return result + 1
-}
-
-export const Tabs: React.FC<Props> = ({ onChange, readOnly = false }) => {
+export const FileSelector: React.FC<FileSelectorProps> = ({ onChange, readOnly = false }) => {
   const { files, removeFile, addFile, updateFileName, selectedFileName, setSelectedFileName } =
     useContext(PlaygroundContext)
-  const importMapFileName = 'import-map.json'
-  const entryFileName = 'App.jsx'
   const [tabs, setTabs] = useState([''])
   const [creating, setCreating] = useState(false)
 
   const addTab = () => {
-    setTabs([...tabs, `Comp${maxSequenceNumber(tabs)}.jsx`])
+    setTabs([...tabs, maxSequenceTabName(tabs)])
     setCreating(true)
   }
 
@@ -53,6 +38,19 @@ export const Tabs: React.FC<Props> = ({ onChange, readOnly = false }) => {
     onChange(importMapFileName)
   }
 
+  const handleSaveTab = (val: string, item: string) => {
+    // 修改名字
+    if (creating) {
+      addFile(val)
+      setCreating(false)
+    } else {
+      updateFileName(item, val)
+    }
+    setTimeout(() => {
+      handleClickTab(val)
+    }, 0)
+  }
+
   useEffect(() => {
     setTabs(Object.keys(files).filter(item => ![importMapFileName, 'main.jsx'].includes(item)))
   }, [files])
@@ -66,25 +64,14 @@ export const Tabs: React.FC<Props> = ({ onChange, readOnly = false }) => {
           actived={selectedFileName === item}
           creating={creating}
           tabs={tabs}
-          readOnly={readOnly ? tabs : ['App.jsx']}
-          onOk={val => {
-            // 修改名字
-            if (creating) {
-              addFile(val)
-              setCreating(false)
-            } else {
-              updateFileName(item, val)
-            }
-            setTimeout(() => {
-              handleClickTab(val)
-            }, 0)
-          }}
+          readOnlyTabs={readOnly ? tabs : [mainFileName]}
+          onOk={(name: string) => handleSaveTab(name, item)}
           onCancel={handleCancel}
-          onRemove={name => {
-            const result = confirm('你确定要执行此操作吗？')
+          onRemove={(name: string) => {
+            const result = confirm(`你确定要删除 ${name} 吗？`)
             if (result) {
               removeFile(name)
-              handleClickTab(entryFileName)
+              handleClickTab(mainFileName)
             }
           }}
           onClick={() => handleClickTab(item)}
@@ -97,7 +84,13 @@ export const Tabs: React.FC<Props> = ({ onChange, readOnly = false }) => {
             +
           </div>
           <div className={styles['import-map-wrapper']}>
-            <div className={styles.tabItem} onClick={editImportMap}>
+            <div
+              className={classnames(
+                styles['tab-item'],
+                selectedFileName === importMapFileName ? styles.actived : null
+              )}
+              onClick={editImportMap}
+            >
               Import Map
             </div>
           </div>

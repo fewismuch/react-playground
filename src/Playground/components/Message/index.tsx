@@ -1,4 +1,7 @@
-import React from 'react'
+import classnames from 'classnames'
+import React, { useEffect, useState } from 'react'
+
+import styles from './index.module.less'
 
 interface Props {
   type: 'error' | 'warn'
@@ -7,13 +10,18 @@ interface Props {
 
 export const Message: React.FC<Props> = props => {
   const { type, context } = props
-  // const [dismissed, setDismissed] = useState(true)
-  console.log(type)
+  const [visible, setVisible] = useState(false)
 
-  return (
-    <div className='msg err'>
-      <pre>{context}</pre>
-      <button className='dismiss'>✕</button>
+  useEffect(() => {
+    setVisible(!!context)
+  }, [context])
+
+  return visible ? (
+    <div className={classnames(styles.msg, styles[type])}>
+      <pre dangerouslySetInnerHTML={{ __html: context }}></pre>
+      <button className={styles.dismiss} onClick={() => setVisible(false)}>
+        ✕
+      </button>
     </div>
-  )
+  ) : null
 }

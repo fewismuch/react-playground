@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 
 import { Editor } from './Editor'
-import { Tabs } from './Tabs'
+import { FileSelector } from './FileSelector'
 import { PlaygroundContext } from '../../PlaygroundContext'
 import { debounce } from '../../utils'
 
@@ -9,8 +9,7 @@ import type { EditorContainerProps } from '../../types'
 
 export const EditorContainer: React.FC<EditorContainerProps> = props => {
   const { showFileSelector, fileSelectorReadOnly, options = {} } = props
-  const { theme, files, setFiles, selectedFileName, setSelectedFileName } =
-    useContext(PlaygroundContext)
+  const { files, setFiles, selectedFileName, setSelectedFileName } = useContext(PlaygroundContext)
   const file = files[selectedFileName] || {}
 
   const handleEditorChange = debounce((value: string) => {
@@ -25,10 +24,10 @@ export const EditorContainer: React.FC<EditorContainerProps> = props => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       {showFileSelector ? (
-        <Tabs onChange={handleTabsChange} readOnly={fileSelectorReadOnly} />
+        <FileSelector onChange={handleTabsChange} readOnly={fileSelectorReadOnly} />
       ) : null}
+
       <Editor
-        theme={theme}
         onChange={handleEditorChange}
         file={file}
         options={options}

@@ -2,23 +2,22 @@ import MonacoEditor, { Monaco } from '@monaco-editor/react'
 import React, { useEffect, useMemo, useRef, useContext, useCallback } from 'react'
 
 import './jsx-highlight.less'
-import './userWoker.ts'
-import { MonacoEditorConfig } from './config'
+import './useEditorWoker'
+import { MonacoEditorConfig } from './monacoConfig'
 import { useEditor } from './useEditor'
-import { PlaygroundContext } from '../../PlaygroundContext'
-import { Theme } from '../../types.ts'
+import { PlaygroundContext } from '../../../PlaygroundContext'
 
 interface Props {
   file: any
-  theme: Theme
   onChange?: () => void
   options?: any
+  selectFile?: (fileName: string) => void
 }
 
-export const Editor: React.FC<Props> = ({ file, theme, onChange, options }) => {
+export const Editor: React.FC<Props> = ({ file, onChange, options }) => {
+  const { theme, files, setSelectedFileName } = useContext(PlaygroundContext)
   const editorRef = useRef<any>(null)
   const { doOpenEditor, loadJsxSyntaxHighlight, initExtraLibs } = useEditor()
-  const { files, setSelectedFileName } = useContext(PlaygroundContext)
   const jsxSyntaxHighlight = useRef<any>({ highlighter: null })
 
   const handleEditorDidMount = useCallback((editor: any, monaco: Monaco) => {
@@ -62,7 +61,7 @@ export const Editor: React.FC<Props> = ({ file, theme, onChange, options }) => {
 
   const handleEditorValidation = (markers: { message: string }[]) => {
     markers.forEach(marker => {
-      console.log('onValidate:', marker.message)
+      console.log(marker.message)
     })
   }
 
@@ -74,7 +73,7 @@ export const Editor: React.FC<Props> = ({ file, theme, onChange, options }) => {
   return useMemo(
     () => (
       <MonacoEditor
-        className='editor'
+        className='react-playground-editor'
         height='100%'
         theme={`vs-${theme}`}
         path={file.name}

@@ -1,27 +1,3 @@
-.msg.err {
-  --color: #f56c6c;
-  --bg-color: #fef0f0;
-}
-
-.dark .msg.err {
-  --bg-color: #2b1d1d;
-}
-
-.msg.warn {
-  --color: #e6a23c;
-  --bg-color: #fdf6ec;
-}
-
-.dark .msg.warn {
-  --bg-color: #292218;
-}
-
-pre {
-  padding: 12px 20px;
-  margin: 0;
-  overflow: auto;
-}
-
 .msg {
   position: absolute;
   right: 8px;
@@ -40,6 +16,23 @@ pre {
   border-radius: 6px;
   align-items: stretch;
   border-color: var(--color);
+
+  &.error {
+    --color: #f56c6c;
+    --bg-color: #fef0f0;
+  }
+
+  &.warn {
+    --color: #e6a23c;
+    --bg-color: #fdf6ec;
+  }
+}
+
+pre {
+  padding: 12px 20px;
+  margin: 0;
+  overflow: auto;
+  white-space: break-spaces;
 }
 
 .dismiss {

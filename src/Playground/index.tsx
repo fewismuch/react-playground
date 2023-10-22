@@ -5,9 +5,14 @@ import React, { useContext, useEffect } from 'react'
 import { EditorContainer } from './components/EditorContainer'
 import { Header } from './components/Header'
 import { Output } from './components/Output'
+import { mainFileName } from './files.ts'
+// eslint-disable-next-line import/order
 import { PlaygroundContext, PlaygroundProvider } from './PlaygroundContext'
 
 import 'allotment/dist/style.css'
+import './index.less'
+
+import { getMergedCustomFiles } from './utils.ts'
 
 import type { PlaygroundProps } from './types'
 
@@ -19,8 +24,8 @@ const Layout = (props: PlaygroundProps) => {
   const {
     width = '100vw',
     height = '100vh',
-    theme = 'light',
-    importmap,
+    theme,
+    importMap,
     files,
     showCompileOutput = true,
     showHeader = true,
@@ -32,23 +37,26 @@ const Layout = (props: PlaygroundProps) => {
   const options = Object.assign(defaultCodeSandboxOptions, props.options || {})
 
   useEffect(() => {
-    onUrlChange?.(filesHash)
-  }, [filesHash])
+    if (files && !files?.[mainFileName]) {
+      throw new Error(
+        `Missing required property : '${mainFileName}' is a mandatory property for 'files'`
+      )
+    } else {
+      const newFiles = getMergedCustomFiles(files, importMap)
+      if (newFiles) setFiles(newFiles)
+    }
+  }, [files])
 
   useEffect(() => {
     if (theme) changeTheme(theme)
   }, [theme])
 
   useEffect(() => {
-    if (files?.length) setFiles(files)
-  }, [files])
-
-  useEffect(() => {
-    // 更新importmap文件内容
-  }, [importmap])
+    onUrlChange?.(filesHash)
+  }, [filesHash])
 
   return (
-    <div className='yutian-react-playground' style={{ width, height }}>
+    <div id='react-playground' style={{ width, height }}>
       {showHeader ? <Header /> : null}
       <div style={{ height: `calc(100% - ${showHeader ? 50 : 0}px)` }}>
         <Allotment defaultSizes={[100, 100]}>

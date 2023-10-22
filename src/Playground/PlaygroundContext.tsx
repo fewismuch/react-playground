@@ -1,32 +1,18 @@
 import React, { createContext, useEffect, useState } from 'react'
 
-import { initFiles } from './files'
-import { Files, Theme } from './types.ts'
-import { utoa } from './utils'
+import { initFiles, mainFileName } from './files'
+import { PlaygroundContextProps, Theme } from './types.ts'
+import { getPlaygroundTheme, setPlaygroundTheme, utoa } from './utils'
 
-interface PlaygroundProps {
-  files: Files
-  filesHash: string
-  theme: Theme
-  selectedFileName: string
-  setSelectedFileName: (fileName: string) => void
-  setTheme: (theme: Theme) => void
-  setFiles: (files: Files) => void
-  addFile: (fileName: string) => void
-  removeFile: (fileName: string) => void
-  updateFileName: (oldFieldName: string, newFieldName: string) => void
-  changeTheme: (theme: Theme) => void
-}
-
-const initialContext: Partial<PlaygroundProps> = {
+const initialContext: Partial<PlaygroundContextProps> = {
   files: initFiles,
   theme: 'dark',
-  selectedFileName: 'App.jsx'
+  selectedFileName: mainFileName
 }
 
-const STORAGE_DARK_THEME = 'react-playground-prefer-dark'
-
-export const PlaygroundContext = createContext<PlaygroundProps>(initialContext as PlaygroundProps)
+export const PlaygroundContext = createContext<PlaygroundContextProps>(
+  initialContext as PlaygroundContextProps
+)
 
 export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
   const { children } = props
@@ -36,6 +22,7 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
   const [selectedFileName, setSelectedFileName] = useState(initialContext.selectedFileName!)
   const [filesHash, setFilesHash] = useState('')
 
+  // TODO 根据文件名后缀匹配文件类型
   const addFile = (name: string) => {
     files[name] = {
       name,
@@ -50,7 +37,6 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
     setFiles({ ...files })
   }
 
-  // TODO 根据文件名后缀匹配文件类型
   const updateFileName = (oldFieldName: string, newFieldName: string) => {
     if (!files[oldFieldName] || newFieldName === undefined || newFieldName === null) return
     const { [oldFieldName]: value, ...rest } = files
@@ -66,20 +52,18 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
     })
   }
 
+  const changeTheme = (theme: Theme) => {
+    setPlaygroundTheme(theme)
+    setTheme(theme)
+  }
+
   useEffect(() => {
     window.location.hash = utoa(JSON.stringify(files))
     setFilesHash(window.location.hash)
   }, [files])
 
-  const changeTheme = (theme: Theme) => {
-    localStorage.setItem(STORAGE_DARK_THEME, String(theme === 'dark'))
-    document.querySelector('.yutian-react-playground')?.setAttribute('class', theme)
-    setTheme(theme)
-  }
-
   useEffect(() => {
-    const isDarkTheme = JSON.parse(localStorage.getItem(STORAGE_DARK_THEME) || 'false')
-    changeTheme(isDarkTheme ? 'dark' : 'light')
+    changeTheme(getPlaygroundTheme())
   }, [])
 
   return (

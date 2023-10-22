@@ -30,9 +30,9 @@ module.exports = {
     'react/jsx-no-target-blank': 0,
     // 方法后跟一个空格
     "space-before-function-paren": 0,
-
-    // ?
     'multiline-ternary': 0,
+    "no-new": 0,
+
     'import/order': [
       'error',
       {

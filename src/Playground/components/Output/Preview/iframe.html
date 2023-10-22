@@ -8,6 +8,10 @@
 </head>
 <body>
 <script>
+  window.addEventListener('error', (e) => {
+    window.parent.postMessage(e.message)
+  })
+
   window.addEventListener('message', ({data}) => {
     if (data.type === 'UPDATE_FILES') {
       const importmapTag = document.querySelector(
@@ -33,7 +37,7 @@
       script.src = newSrc;
       script.id = 'appSrc';
       script.type = 'module';
-      script.onload = ()=>{
+      script.onload = () => {
         // 防止先移除样式后页面闪烁
         appStyleTags.forEach(div => {
           div.remove();
@@ -43,7 +47,6 @@
       URL.revokeObjectURL(oldSrc);
     }
   });
-
 </script>
 <script type="importmap"></script>
 <script type="module" id="appSrc"></script>

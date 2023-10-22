@@ -15,14 +15,17 @@ try {
   console.error(error)
 }
 
+export const mainFileName = 'App.jsx'
+export const importMapFileName = 'import-map.json'
+
 export const initFiles: Files = files || {
   'main.jsx': {
     name: 'main.jsx',
     language: 'javascript',
     value: main
   },
-  'App.jsx': {
-    name: 'App.jsx',
+  [mainFileName]: {
+    name: mainFileName,
     language: 'javascript',
     value: App
   },
@@ -31,8 +34,21 @@ export const initFiles: Files = files || {
     language: 'css',
     value: AppCss
   },
-  'import-map.json': {
-    name: 'import-map.json',
+  [importMapFileName]: {
+    name: importMapFileName,
+    language: 'json',
+    value: importMap
+  }
+}
+
+export const reactTemplateFiles = {
+  'main.jsx': {
+    name: 'main.jsx',
+    language: 'javascript',
+    value: main
+  },
+  [importMapFileName]: {
+    name: importMapFileName,
     language: 'json',
     value: importMap
   }

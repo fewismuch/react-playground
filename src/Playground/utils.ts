@@ -1,10 +1,12 @@
 import { zlibSync, unzlibSync, strToU8, strFromU8 } from 'fflate'
 import { saveAs } from 'file-saver'
 
+import { importMapFileName, reactTemplateFiles } from './files.ts'
 import index from './template/index.html?raw'
 import pkg from './template/package.json?raw'
 import readme from './template/README.md?raw'
 import config from './template/vite.config.js?raw'
+import { ImportMap, Theme } from './types'
 
 import type { Files } from './types'
 
@@ -22,7 +24,7 @@ export async function downloadFiles(files: Files) {
   const src = zip.folder('src')!
 
   Object.keys(files).forEach(name => {
-    if (files[name].name !== 'import-map.json') {
+    if (files[name].name !== importMapFileName) {
       src.file(name, files[name].value)
     } else {
       zip.file(name, files[name].value)
@@ -65,4 +67,37 @@ export function atou(base64: string): string {
   // old unicode hacks for backward compatibility
   // https://base64.guru/developers/javascript/examples/unicode-strings
   return decodeURIComponent(escape(binary))
+}
+
+const STORAGE_DARK_THEME = 'react-playground-prefer-dark'
+
+export const setPlaygroundTheme = (theme: Theme) => {
+  localStorage.setItem(STORAGE_DARK_THEME, String(theme === 'dark'))
+  document.querySelector('#react-playground')?.setAttribute('class', theme)
+}
+
+export const getPlaygroundTheme = () => {
+  const isDarkTheme = JSON.parse(localStorage.getItem(STORAGE_DARK_THEME) || 'false')
+  return isDarkTheme ? 'dark' : 'light'
+}
+
+// 合并用户自定义files和importMap
+export const getMergedCustomFiles = (files?: Files, importMap?: ImportMap) => {
+  if (!files) return null
+  if (importMap) {
+    return {
+      ...reactTemplateFiles,
+      ...files,
+      [importMapFileName]: {
+        name: importMapFileName,
+        language: 'json',
+        value: JSON.stringify(importMap, null, 2)
+      }
+    }
+  } else {
+    return {
+      ...reactTemplateFiles,
+      ...files
+    }
+  }
 }
