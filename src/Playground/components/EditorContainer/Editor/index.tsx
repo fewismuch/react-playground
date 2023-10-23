@@ -85,7 +85,10 @@ export const Editor: React.FC<Props> = ({ file, onChange, options }) => {
         onValidate={handleEditorValidation}
         options={{
           ...MonacoEditorConfig,
-          ...options
+          ...{
+            ...options,
+            theme: undefined
+          }
         }}
       />
     ),

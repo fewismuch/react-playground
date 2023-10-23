@@ -2,6 +2,8 @@
 `React-Playground` 是一个用于在React项目中创建交互式演示的组件，它提供了一个隔离的环境，允许你在线编辑代码并实时预览渲染效果。
 > UI和功能参考 Vue SFC Playground 完成
 
+[查看示例](https://fewismuch.github.io/react-playground) 
+
 # 特点
 - 可以在线编辑代码,提供实时交互式演示
 - 代码自动保存到 URL 上, 分享网址即可分享代码
