@@ -1,8 +1,25 @@
 {
   "name": "react-playground",
+  "description": "react playground",
   "private": true,
   "version": "0.0.1",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fewismuch/react-playground.git"
+  },
+  "keywords": [
+    "react",
+    "react-playground",
+    "playground",
+    "react-live",
+    "live-editor",
+    "codeSandbox",
+    "sandbox",
+    "live"
+  ],
+  "author": "fewismuch",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
