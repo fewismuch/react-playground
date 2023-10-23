@@ -1,5 +1,3 @@
-import { transform } from '@babel/standalone'
-
 import { ENTRY_FILE_NAME } from '../../files'
 import { Files, File } from '../../types'
 
@@ -9,7 +7,9 @@ if (!import.meta.env.DEV) {
     `https://cdn.staticfile.org/babel-standalone/${babelStandaloneVersion}/babel.min.js`
   )
 } else {
-  Babel.transform = transform
+  const babel = await import('@babel/standalone')
+  Babel.transform = babel.transform
+  self.postMessage({ type: 'INITED' })
 }
 
 const getInternalModule = (files: Files, moduleName: string) => {
