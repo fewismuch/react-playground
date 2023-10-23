@@ -64,7 +64,7 @@ export const Header: React.FC = () => {
           />
 
           <a
-            href='https://github.com/vuejs/core/tree/main/packages/sfc-playground'
+            href='https://github.com/fewismuch/react-playground'
             target='_blank'
             title='View on GitHub'
           >
