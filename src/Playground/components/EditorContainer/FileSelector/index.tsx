@@ -54,7 +54,7 @@ export const FileSelector: React.FC<FileSelectorProps> = props => {
 
   const handleValidateTab = (newName: string, oldName: string) => {
     if (!/\.(jsx|tsx|js|ts|css|json)$/.test(newName)) {
-      onError('Playground only supports *.jsx, *.tsx, *.js, *.ts, *.css, *.json files.')
+      onError('Playground only supports *.jsx, *.js, *.css, *.json files.')
       return false
     }
 
