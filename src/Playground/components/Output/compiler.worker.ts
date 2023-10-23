@@ -1,16 +1,7 @@
+import { transform } from '@babel/standalone'
+
 import { ENTRY_FILE_NAME } from '../../files'
 import { Files, File } from '../../types'
-
-const Babel: any = { transform: null }
-if (!import.meta.env.DEV) {
-  importScripts(
-    `https://cdn.staticfile.org/babel-standalone/${babelStandaloneVersion}/babel.min.js`
-  )
-} else {
-  const babel = await import('@babel/standalone')
-  Babel.transform = babel.transform
-  self.postMessage({ type: 'INITED' })
-}
 
 const getInternalModule = (files: Files, moduleName: string) => {
   let _moduleName = moduleName.split('./').pop() || ''
@@ -76,7 +67,7 @@ const babelTransform = (filename: string, code: string, files: Files) => {
     _code = `import React from 'react';\n${code}`
   }
 
-  return Babel.transform(_code, {
+  return transform(_code, {
     presets: ['react'],
     filename,
     plugins: [customResolver(files)]
@@ -93,7 +84,7 @@ self.addEventListener('message', async ({ data }) => {
   if (typeof data === 'string') {
     self.postMessage({
       type: 'UPDATE_FILE',
-      data: Babel.transform(data, {
+      data: transform(data, {
         presets: ['react'],
         retainLines: true
       }).code
