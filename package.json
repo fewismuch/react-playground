@@ -1,6 +1,6 @@
 {
   "name": "react-playground",
-  "description": "react playground",
+  "description": "react playground 可在线编辑和创建代码并实时预览渲染效果",
   "private": true,
   "version": "0.0.1",
   "type": "module",
