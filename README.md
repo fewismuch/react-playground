@@ -1,7 +1,7 @@
 # React-Playground
 `React-Playground` 是一个用于在React项目中创建交互式演示的组件，它提供了一个隔离的环境，允许你在线编辑代码并实时预览渲染效果。
 
-![本地图片](https://github.com/fewismuch/react-playground/tree/main/src/example/index.png)
+![截图](https://raw.githubusercontent.com/fewismuch/react-playground/main/src/example/index.png)
 
 [查看示例](https://fewismuch.github.io/react-playground) 
 
