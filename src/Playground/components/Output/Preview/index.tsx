@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 
-import { getIframeUrl } from './utils.ts'
+import { getIframeUrl } from './utils'
 import { Message } from '../../Message'
 
-import type { PreviewData } from '../../../types.ts'
+import type { PreviewData } from '../../../types'
 
 interface Props {
   hidden: boolean

@@ -4,7 +4,7 @@ import { EditorContainer } from './components/EditorContainer'
 import { Header } from './components/Header'
 import { Output } from './components/Output'
 import { SplitPane } from './components/SplitPane'
-import { MAIN_FILE_NAME } from './files.ts'
+import { MAIN_FILE_NAME } from './files'
 import { PlaygroundContext, PlaygroundProvider } from './PlaygroundContext'
 import { getMergedCustomFiles } from './utils'
 

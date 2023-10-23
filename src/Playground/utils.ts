@@ -1,7 +1,7 @@
 import { zlibSync, unzlibSync, strToU8, strFromU8 } from 'fflate'
 import { saveAs } from 'file-saver'
 
-import { IMPORT_MAP_FILE_NAME, reactTemplateFiles } from './files.ts'
+import { IMPORT_MAP_FILE_NAME, reactTemplateFiles } from './files'
 import index from './template/index.html?raw'
 import pkg from './template/package.json?raw'
 import readme from './template/README.md?raw'

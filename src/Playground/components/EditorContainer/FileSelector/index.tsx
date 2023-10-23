@@ -2,10 +2,10 @@ import classnames from 'classnames'
 import React, { useContext, useEffect, useState } from 'react'
 
 import { TabsItem } from './TabsItem'
-import { maxSequenceTabName } from './utils.ts'
-import { ENTRY_FILE_NAME, IMPORT_MAP_FILE_NAME, MAIN_FILE_NAME } from '../../../files.ts'
+import { maxSequenceTabName } from './utils'
+import { ENTRY_FILE_NAME, IMPORT_MAP_FILE_NAME, MAIN_FILE_NAME } from '../../../files'
 import { PlaygroundContext } from '../../../PlaygroundContext'
-import { FileSelectorProps } from '../../../types.ts'
+import { FileSelectorProps } from '../../../types'
 
 import styles from './index.module.less'
 

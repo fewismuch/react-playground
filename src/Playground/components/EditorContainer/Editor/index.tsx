@@ -1,11 +1,12 @@
 import MonacoEditor, { Monaco } from '@monaco-editor/react'
 import React, { useEffect, useMemo, useRef, useContext, useCallback } from 'react'
 
-import './jsx-highlight.less'
-import './useEditorWoker'
 import { MonacoEditorConfig } from './monacoConfig'
 import { useEditor } from './useEditor'
 import { PlaygroundContext } from '../../../PlaygroundContext'
+
+import './jsx-highlight.less'
+import './useEditorWoker'
 
 interface Props {
   file: any

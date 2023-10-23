@@ -1,7 +1,7 @@
 import { transform } from '@babel/standalone'
 
-import { ENTRY_FILE_NAME } from '../../files.ts'
-import { Files, File } from '../../types.ts'
+import { ENTRY_FILE_NAME } from '../../files'
+import { Files, File } from '../../types'
 
 const Babel: any = { transform: null }
 if (!import.meta.env.DEV) {

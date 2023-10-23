@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
 
 import { initFiles, MAIN_FILE_NAME } from './files'
-import { PlaygroundContextProps, Theme } from './types.ts'
+import { PlaygroundContextProps, Theme } from './types'
 import { fileName2Language, getPlaygroundTheme, setPlaygroundTheme, utoa } from './utils'
 
 const initialContext: Partial<PlaygroundContextProps> = {
