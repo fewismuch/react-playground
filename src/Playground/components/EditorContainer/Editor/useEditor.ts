@@ -1,8 +1,9 @@
+import { Monaco } from '@monaco-editor/react'
 import { getWorker, MonacoJsxSyntaxHighlight } from 'monaco-jsx-syntax-highlight'
 
 export const useEditor = () => {
   // 加载react类型定义文件
-  const initExtraLibs = (monaco: any) => {
+  const initExtraLibs = (monaco: Monaco) => {
     const types = import.meta.glob(
       [
         '/node_modules/{react,react-dom}/**/*.{d.ts,json}',
@@ -37,7 +38,7 @@ export const useEditor = () => {
   }
 
   // 加载jsx高亮
-  const loadJsxSyntaxHighlight = (editor: any, monaco: any) => {
+  const loadJsxSyntaxHighlight = (editor: any, monaco: Monaco) => {
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
       jsx: monaco.languages.typescript.JsxEmit.Preserve,
       target: monaco.languages.typescript.ScriptTarget.ES2020,

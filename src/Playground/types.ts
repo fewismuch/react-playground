@@ -1,3 +1,5 @@
+import { editor } from 'monaco-editor'
+
 export type Theme = 'light' | 'dark'
 
 export interface File {
@@ -10,10 +12,12 @@ export interface Files {
   [key: string]: File
 }
 
+export type EditorOptions = editor.IStandaloneEditorConstructionOptions
+
 export interface EditorContainerProps {
   showFileSelector?: boolean
   fileSelectorReadOnly?: boolean
-  options?: any
+  options?: EditorOptions
 }
 
 export interface OutputProps {
@@ -28,7 +32,7 @@ export type PlaygroundProps = {
   theme?: Theme
   importMap?: ImportMap
   files?: Files
-  options?: any
+  options?: EditorOptions
   showHeader?: boolean
   onUrlChange?: (url: string) => void
 } & EditorContainerProps &

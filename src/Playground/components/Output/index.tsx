@@ -17,7 +17,7 @@ export const Output: React.FC<OutputProps> = props => {
   const { showCompileOutput = true } = props
   const { files, theme, selectedFileName } = useContext(PlaygroundContext)
   const [activedType, setActivedType] = useState('PREVIEW')
-  const compilerRef = useRef<any>(null)
+  const compilerRef = useRef<Worker | null>(null)
   const [compiledFiles, setCompiledFiles] = useState<PreviewData>()
   const [compiledCode, setCompiledCode] = useState('')
 
@@ -36,7 +36,7 @@ export const Output: React.FC<OutputProps> = props => {
   useEffect(() => {
     if (!compilerRef.current) {
       compilerRef.current = new CompilerWorker()
-      compilerRef.current.addEventListener('message', ({ data }: any) => {
+      compilerRef.current.addEventListener('message', ({ data }: { data: any }) => {
         if (data.type === 'UPDATE_FILES') {
           data.data.importmap = files[IMPORT_MAP_FILE_NAME].value
           setCompiledFiles(data)

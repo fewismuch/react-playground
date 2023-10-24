@@ -6,7 +6,7 @@ import { useEditor } from './useEditor'
 import { PlaygroundContext } from '../../../PlaygroundContext'
 import { debounce } from '../../../utils.ts'
 
-import type { File } from '../../../types.ts'
+import type { EditorOptions, File } from '../../../types.ts'
 
 import './jsx-highlight.less'
 import './useEditorWoker'
@@ -14,7 +14,7 @@ import './useEditorWoker'
 interface Props {
   file: File
   onChange?: () => void
-  options?: any
+  options?: EditorOptions
   selectFile?: (fileName: string) => void
 }
 
