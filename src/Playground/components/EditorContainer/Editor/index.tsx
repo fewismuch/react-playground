@@ -4,12 +4,15 @@ import React, { useEffect, useMemo, useRef, useContext, useCallback } from 'reac
 import { MonacoEditorConfig } from './monacoConfig'
 import { useEditor } from './useEditor'
 import { PlaygroundContext } from '../../../PlaygroundContext'
+import { debounce } from '../../../utils.ts'
+
+import type { File } from '../../../types.ts'
 
 import './jsx-highlight.less'
 import './useEditorWoker'
 
 interface Props {
-  file: any
+  file: File
   onChange?: () => void
   options?: any
   selectFile?: (fileName: string) => void
@@ -66,10 +69,18 @@ export const Editor: React.FC<Props> = ({ file, onChange, options }) => {
     })
   }
 
+  const highlight = debounce(() => {
+    jsxSyntaxHighlight?.current?.highlighter?.()
+  }, 200)
+
   useEffect(() => {
     editorRef.current?.focus()
-    jsxSyntaxHighlight?.current?.highlighter?.()
+    highlight()
   }, [file.name])
+
+  useEffect(() => {
+    highlight()
+  }, [file.value])
 
   return useMemo(
     () => (

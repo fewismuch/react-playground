@@ -21,7 +21,7 @@ export const TabsItem: React.FC<TabsItemProps> = props => {
   const [creating, setCreating] = useState(props.creating)
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Entry') {
+    if (event.key === 'Enter') {
       event.preventDefault()
       doneNameFile()
     } else if (event.key === 'Escape') {
