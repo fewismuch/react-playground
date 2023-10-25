@@ -16,7 +16,7 @@ export const EditorContainer: React.FC<EditorContainerProps> = props => {
 
   const handleEditorChange = debounce((value: string) => {
     files[file.name].value = value
-    setFiles?.({ ...files })
+    setFiles({ ...files })
   }, 250)
 
   const handleTabsChange = (fileName: string) => {

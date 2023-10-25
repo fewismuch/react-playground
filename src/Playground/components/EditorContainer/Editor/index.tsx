@@ -1,5 +1,5 @@
 import MonacoEditor, { Monaco } from '@monaco-editor/react'
-import React, { useEffect, useMemo, useRef, useContext, useCallback } from 'react'
+import React, { useEffect, useRef, useContext, useCallback } from 'react'
 
 import { MonacoEditorConfig } from './monacoConfig'
 import { useEditor } from './useEditor'
@@ -13,7 +13,7 @@ import './useEditorWoker'
 
 interface Props {
   file: File
-  onChange?: () => void
+  onChange?: (code: string | undefined) => void
   options?: EditorOptions
   selectFile?: (fileName: string) => void
 }
@@ -82,27 +82,24 @@ export const Editor: React.FC<Props> = ({ file, onChange, options }) => {
     highlight()
   }, [file.value])
 
-  return useMemo(
-    () => (
-      <MonacoEditor
-        className='react-playground-editor'
-        height='100%'
-        theme={`vs-${theme}`}
-        path={file.name}
-        language={file.language}
-        value={file.value}
-        onChange={onChange}
-        onMount={handleEditorDidMount}
-        onValidate={handleEditorValidation}
-        options={{
-          ...MonacoEditorConfig,
-          ...{
-            ...options,
-            theme: undefined
-          }
-        }}
-      />
-    ),
-    [file, theme]
+  return (
+    <MonacoEditor
+      className='react-playground-editor'
+      height='100%'
+      theme={`vs-${theme}`}
+      path={file.name}
+      language={file.language}
+      value={file.value}
+      onChange={onChange}
+      onMount={handleEditorDidMount}
+      onValidate={handleEditorValidation}
+      options={{
+        ...MonacoEditorConfig,
+        ...{
+          ...options,
+          theme: undefined
+        }
+      }}
+    />
   )
 }

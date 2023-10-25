@@ -27,6 +27,8 @@ export const Preview: React.FC<Props> = props => {
       iframeRef.current?.contentWindow?.postMessage(data)
     } else if (type === 'ERROR') {
       setError(typeof message === 'string' ? message : '')
+    } else if (!type) {
+      setError('')
     }
   }
 
