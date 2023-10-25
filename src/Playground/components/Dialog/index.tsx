@@ -8,12 +8,13 @@ interface Props {
   children: React.ReactNode
 }
 
-export const Dialog: React.FC<Props> = ({ message, onConfirm, children }) => {
-  const dialogRef = useRef<any>(null)
+export const Dialog: React.FC<Props> = props => {
+  const { message, onConfirm, children } = props
+  const dialogRef = useRef<HTMLDialogElement | null>(null)
 
-  const handleOpen = (e: any) => {
+  const handleOpen = (e: React.MouseEvent) => {
     e.stopPropagation()
-    dialogRef.current.showModal()
+    dialogRef.current?.showModal()
   }
 
   return (

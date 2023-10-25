@@ -12,10 +12,10 @@
     window.parent.postMessage({type:'ERROR',message:e.message})
   })
 
-  window.addEventListener('load',()=>{
-    window.parent.postMessage({type:'LOADED'})
+  window.addEventListener('load', () => {
+    window.parent.postMessage({type: 'LOADED', message: ''})
   })
-  
+
   window.addEventListener('message', ({data}) => {
     if (data?.type === 'UPDATE_FILES') {
       const importmapTag = document.querySelector(

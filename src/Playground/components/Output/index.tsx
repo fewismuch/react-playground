@@ -6,19 +6,19 @@ import { Preview } from './Preview'
 import { ViewSelector } from './ViewSelector'
 import { IMPORT_MAP_FILE_NAME } from '../../files'
 import { PlaygroundContext } from '../../PlaygroundContext'
-import { PreviewData } from '../../types'
+import { IPreview } from '../../types'
 import { MonacoEditorConfig } from '../EditorContainer/Editor/monacoConfig'
 
-import type { OutputProps } from '../../types'
+import type { IOutput } from '../../types'
 
 const viewTypes = ['PREVIEW', 'JS']
 
-export const Output: React.FC<OutputProps> = props => {
+export const Output: React.FC<IOutput> = props => {
   const { showCompileOutput = true } = props
   const { files, theme, selectedFileName } = useContext(PlaygroundContext)
   const [activedType, setActivedType] = useState('PREVIEW')
   const compilerRef = useRef<Worker | null>(null)
-  const [compiledFiles, setCompiledFiles] = useState<PreviewData>()
+  const [compiledFiles, setCompiledFiles] = useState<IPreview>()
   const [compiledCode, setCompiledCode] = useState('')
 
   const handleViewChange = (type: string) => {
@@ -72,7 +72,11 @@ export const Output: React.FC<OutputProps> = props => {
         hidden={!showCompileOutput}
       />
 
-      <Preview key={files[IMPORT_MAP_FILE_NAME].value} hidden={activedType !== 'PREVIEW'} data={compiledFiles} />
+      <Preview
+        key={files[IMPORT_MAP_FILE_NAME].value}
+        hidden={activedType !== 'PREVIEW'}
+        data={compiledFiles}
+      />
       {showCompileOutput ? (
         <div style={{ display: activedType !== 'JS' ? 'none' : '', height: '100%' }}>
           <MonacoEditor

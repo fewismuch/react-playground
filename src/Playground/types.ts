@@ -20,7 +20,7 @@ export interface EditorContainerProps {
   options?: EditorOptions
 }
 
-export interface OutputProps {
+export interface IOutput {
   showCompileOutput?: boolean
 }
 
@@ -37,7 +37,7 @@ export type PlaygroundProps = {
   border?: boolean
   onUrlChange?: (url: string) => void
 } & EditorContainerProps &
-  OutputProps
+  IOutput
 
 export interface PlaygroundContextProps {
   files: Files
@@ -53,7 +53,7 @@ export interface PlaygroundContextProps {
   changeTheme: (theme: Theme) => void
 }
 
-export interface PreviewData {
+export interface IPreview {
   compileCode: string
   importmap: string
 }
@@ -74,4 +74,8 @@ export interface TabsItemProps {
   onRemove: (name: string) => void
   onClick: () => void
   onValidate: (newName: string, oldName: string) => boolean
+}
+
+export interface IMessage {
+  data: { type: string; message: string | unknown }
 }

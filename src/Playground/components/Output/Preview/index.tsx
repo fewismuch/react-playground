@@ -3,11 +3,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import { getIframeUrl } from './utils'
 import { Message } from '../../Message'
 
-import type { PreviewData } from '../../../types'
+import type { IPreview, IMessage } from '../../../types'
 
 interface Props {
   hidden: boolean
-  data?: PreviewData
+  data?: IPreview
 }
 
 const iframeUrl = getIframeUrl()
@@ -21,7 +21,7 @@ export const Preview: React.FC<Props> = props => {
     if (data) iframeRef.current?.contentWindow?.postMessage(data)
   }, [data])
 
-  const errorHandler = (msg: any) => {
+  const handleMessage = (msg: IMessage) => {
     const { type, message } = msg.data
     if (type === 'LOADED') {
       iframeRef.current?.contentWindow?.postMessage(data)
@@ -31,9 +31,9 @@ export const Preview: React.FC<Props> = props => {
   }
 
   useEffect(() => {
-    window.addEventListener('message', errorHandler)
+    window.addEventListener('message', handleMessage)
     return () => {
-      window.removeEventListener('message', errorHandler)
+      window.removeEventListener('message', handleMessage)
     }
   }, [])
 
