@@ -1,0 +1,50 @@
+.dialog {
+  top: 15%;
+  left: 50%;
+  min-width: 200px;
+  padding: 20px 30px;
+  font-size: 14px;
+  color: var(--base);
+  background-color: var(--dialog);
+  border: none;
+  border-radius: 4px;
+  transform: translateX(-50%);
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 15px;
+
+  button {
+    padding: 4px 15px;
+    font-size: 14px;
+    color: var(--base);
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+  }
+
+  .dialog-btn {
+    margin-left: 4px;
+    color: #fff;
+    text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 2px #0000000b;
+  }
+}
+
+.content {
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin-right: 16px;
+    font-size: 20px;
+    color: #d89614;
+  }
+}

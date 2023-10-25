@@ -26,7 +26,6 @@ export const Output: React.FC<OutputProps> = props => {
   }
 
   const sendCompiledCode = () => {
-    if (selectedFileName === IMPORT_MAP_FILE_NAME) return
     if (activedType === 'PREVIEW') compilerRef.current?.postMessage(files)
     if (activedType === 'JS') {
       compilerRef.current?.postMessage(files[selectedFileName].value)
@@ -73,7 +72,7 @@ export const Output: React.FC<OutputProps> = props => {
         hidden={!showCompileOutput}
       />
 
-      <Preview hidden={activedType !== 'PREVIEW'} data={compiledFiles} />
+      <Preview key={files[IMPORT_MAP_FILE_NAME].value} hidden={activedType !== 'PREVIEW'} data={compiledFiles} />
       {showCompileOutput ? (
         <div style={{ display: activedType !== 'JS' ? 'none' : '', height: '100%' }}>
           <MonacoEditor

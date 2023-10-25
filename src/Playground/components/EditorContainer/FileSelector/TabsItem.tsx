@@ -2,6 +2,7 @@ import classnames from 'classnames'
 import React, { useState, useRef, useEffect } from 'react'
 
 import { TabsItemProps } from '../../../types'
+import { Dialog } from '../../Dialog'
 
 import styles from './index.module.less'
 
@@ -82,18 +83,14 @@ export const TabsItem: React.FC<TabsItemProps> = props => {
         <>
           <span onDoubleClick={handleDoubleClick}>{name}</span>
           {readOnlyTabs.includes(name) ? null : (
-            <span
-              onClick={e => {
-                e.stopPropagation()
-                onRemove(name)
-              }}
-              style={{ marginLeft: 5, display: 'flex' }}
-            >
-              <svg width='12' height='12' viewBox='0 0 24 24'>
-                <line stroke='#999' x1='18' y1='6' x2='6' y2='18'></line>
-                <line stroke='#999' x1='6' y1='6' x2='18' y2='18'></line>
-              </svg>
-            </span>
+            <Dialog message={`确定要删除 ${name} 吗?`} onConfirm={() => onRemove(name)}>
+              <span style={{ marginLeft: 5, display: 'flex' }}>
+                <svg width='12' height='12' viewBox='0 0 24 24'>
+                  <line stroke='#999' x1='18' y1='6' x2='6' y2='18'></line>
+                  <line stroke='#999' x1='6' y1='6' x2='18' y2='18'></line>
+                </svg>
+              </span>
+            </Dialog>
           )}
         </>
       )}

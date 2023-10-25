@@ -34,6 +34,7 @@ export type PlaygroundProps = {
   files?: Files
   options?: EditorOptions
   showHeader?: boolean
+  border?: boolean
   onUrlChange?: (url: string) => void
 } & EditorContainerProps &
   OutputProps

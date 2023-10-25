@@ -1,3 +1,4 @@
 node_modules
 .codesandbox
 .devcontainer
+.pnpm-debug.log

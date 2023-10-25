@@ -86,11 +86,8 @@ export const FileSelector: React.FC<FileSelectorProps> = props => {
           onOk={(name: string) => handleSaveTab(name, item)}
           onCancel={handleCancel}
           onRemove={(name: string) => {
-            const result = confirm(`你确定要删除 ${name} 吗？`)
-            if (result) {
-              removeFile(name)
-              handleClickTab(MAIN_FILE_NAME)
-            }
+            removeFile(name)
+            handleClickTab(MAIN_FILE_NAME)
           }}
           onClick={() => handleClickTab(item)}
         />

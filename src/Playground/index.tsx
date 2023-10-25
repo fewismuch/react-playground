@@ -28,6 +28,7 @@ const ReactPlayground = (props: PlaygroundProps) => {
     showHeader = true,
     showFileSelector = true,
     fileSelectorReadOnly = false,
+    border = false,
     onUrlChange
   } = props
   const { filesHash, changeTheme, setFiles } = useContext(PlaygroundContext)
@@ -53,7 +54,10 @@ const ReactPlayground = (props: PlaygroundProps) => {
   }, [filesHash])
 
   return (
-    <div id='react-playground' style={{ width, height }}>
+    <div
+      id='react-playground'
+      style={{ width, height, border: border ? '1px solid var(--border)' : '' }}
+    >
       {showHeader ? <Header /> : null}
       <div style={{ height: `calc(100% - ${showHeader ? 50 : 0}px)` }}>
         <SplitPane>
