@@ -3,7 +3,7 @@ import { transform } from '@babel/standalone'
 import { ENTRY_FILE_NAME } from '../../files'
 import { Files, File } from '../../types'
 
-const getInternalModule = (files: Files, moduleName: string) => {
+const getModuleFile = (files: Files, moduleName: string) => {
   let _moduleName = moduleName.split('./').pop() || ''
   if (!_moduleName.includes('.')) {
     _moduleName += '.jsx'
@@ -34,31 +34,6 @@ const transformCss = (file: File) => {
   return URL.createObjectURL(new Blob([js], { type: 'application/javascript' }))
 }
 
-const customResolver = (files: Files) => {
-  return {
-    visitor: {
-      ImportDeclaration(path: any) {
-        const module: string = path.node.source.value
-        if (module.startsWith('.')) {
-          const _module = getInternalModule(files, module)
-          if (!_module) return
-          if (_module.name.endsWith('.css')) {
-            path.node.source.value = transformCss(_module)
-          } else if (_module.name.endsWith('.json')) {
-            path.node.source.value = transformJson(_module)
-          } else {
-            path.node.source.value = URL.createObjectURL(
-              new Blob([babelTransform(_module.name, _module.value, files)], {
-                type: 'application/javascript'
-              })
-            )
-          }
-        }
-      }
-    }
-  }
-}
-
 const babelTransform = (filename: string, code: string, files: Files) => {
   let _code = code
   // 如果没有引入React，开头添加React引用
@@ -72,6 +47,31 @@ const babelTransform = (filename: string, code: string, files: Files) => {
     filename,
     plugins: [customResolver(files)]
   }).code!
+}
+
+const customResolver = (files: Files) => {
+  return {
+    visitor: {
+      ImportDeclaration(path: any) {
+        const moduleName: string = path.node.source.value
+        if (moduleName.startsWith('.')) {
+          const module = getModuleFile(files, moduleName)
+          if (!module) return
+          if (module.name.endsWith('.css')) {
+            path.node.source.value = transformCss(module)
+          } else if (module.name.endsWith('.json')) {
+            path.node.source.value = transformJson(module)
+          } else {
+            path.node.source.value = URL.createObjectURL(
+              new Blob([babelTransform(module.name, module.value, files)], {
+                type: 'application/javascript'
+              })
+            )
+          }
+        }
+      }
+    }
+  }
 }
 
 const compile = (files: Files) => {
