@@ -73,7 +73,7 @@ export const Output: React.FC<IOutput> = props => {
       />
 
       <Preview
-        key={files[IMPORT_MAP_FILE_NAME].value}
+        iframeKey={files[IMPORT_MAP_FILE_NAME].value}
         hidden={activedType !== 'PREVIEW'}
         data={compiledFiles}
       />

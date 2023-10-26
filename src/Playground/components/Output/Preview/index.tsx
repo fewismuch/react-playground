@@ -8,12 +8,13 @@ import type { IPreview, IMessage } from '../../../types'
 interface Props {
   hidden: boolean
   data?: IPreview
+  iframeKey?: string
 }
 
 const iframeUrl = getIframeUrl()
 
 export const Preview: React.FC<Props> = props => {
-  const { hidden, data } = props
+  const { hidden, data, iframeKey } = props
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const [error, setError] = useState('')
 
@@ -42,6 +43,7 @@ export const Preview: React.FC<Props> = props => {
   return (
     <>
       <iframe
+        key={iframeKey}
         ref={iframeRef}
         src={iframeUrl}
         style={{

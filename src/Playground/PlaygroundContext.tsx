@@ -41,6 +41,7 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
     const newFile = {
       [newFieldName]: {
         ...value,
+        language: fileName2Language(newFieldName),
         name: newFieldName
       }
     }
