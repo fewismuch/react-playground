@@ -1,5 +1,5 @@
 import MonacoEditor, { Monaco } from '@monaco-editor/react'
-import React, { useEffect, useRef, useContext, useCallback } from 'react'
+import React, { useEffect, useRef, useContext, useCallback, useState } from 'react'
 
 import { MonacoEditorConfig } from './monacoConfig'
 import { useEditor } from './useEditor'
@@ -23,6 +23,13 @@ export const Editor: React.FC<Props> = (props) => {
   const editorRef = useRef<any>(null)
   const { doOpenEditor, loadJsxSyntaxHighlight, initExtraLibs } = useEditor()
   const jsxSyntaxHighlight = useRef<any>({ highlighter: null })
+  const [editorOptions, setEditorOptions] = useState({
+    ...MonacoEditorConfig,
+    ...{
+      ...options,
+      theme: undefined,
+    },
+  })
 
   const handleEditorDidMount = useCallback((editor: any, monaco: Monaco) => {
     editorRef.current = editor
@@ -82,6 +89,13 @@ export const Editor: React.FC<Props> = (props) => {
     highlight()
   }, [file.value])
 
+  useEffect(() => {
+    setEditorOptions({
+      ...editorOptions,
+      readOnly: file.readOnly,
+    })
+  }, [file.readOnly])
+
   return (
     <MonacoEditor
       className='react-playground-editor'
@@ -93,13 +107,7 @@ export const Editor: React.FC<Props> = (props) => {
       onChange={onChange}
       onMount={handleEditorDidMount}
       onValidate={handleEditorValidation}
-      options={{
-        ...MonacoEditorConfig,
-        ...{
-          ...options,
-          theme: undefined
-        }
-      }}
+      options={editorOptions}
     />
   )
 }

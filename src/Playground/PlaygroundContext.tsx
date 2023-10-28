@@ -6,7 +6,7 @@ import { fileName2Language, getPlaygroundTheme, setPlaygroundTheme, utoa } from 
 
 const initialContext: Partial<IPlaygroundContext> = {
   files: initFiles,
-  selectedFileName: MAIN_FILE_NAME
+  selectedFileName: MAIN_FILE_NAME,
 }
 
 export const PlaygroundContext = createContext<IPlaygroundContext>(
@@ -25,7 +25,7 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
     files[name] = {
       name,
       language: fileName2Language(name),
-      value: ''
+      value: '',
     }
     setFiles({ ...files })
   }
@@ -42,12 +42,12 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
       [newFieldName]: {
         ...value,
         language: fileName2Language(newFieldName),
-        name: newFieldName
-      }
+        name: newFieldName,
+      },
     }
     setFiles({
       ...rest,
-      ...newFile
+      ...newFile,
     })
   }
 
@@ -79,7 +79,7 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
         setFiles,
         addFile,
         removeFile,
-        updateFileName
+        updateFileName,
       }}
     >
       {children}
