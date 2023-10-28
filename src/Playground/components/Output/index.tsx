@@ -7,6 +7,7 @@ import { ViewSelector } from './ViewSelector'
 import { IMPORT_MAP_FILE_NAME } from '../../files'
 import { PlaygroundContext } from '../../PlaygroundContext'
 import { IPreviewData } from '../../types'
+import { debounce } from '../../utils.ts'
 import { MonacoEditorConfig } from '../EditorContainer/Editor/monacoConfig'
 
 import type { IOutput } from '../../types'
@@ -25,12 +26,12 @@ export const Output: React.FC<IOutput> = (props) => {
     setActivedType(type)
   }
 
-  const sendCompiledCode = () => {
+  const sendCompiledCode = debounce(() => {
     if (activedType === 'PREVIEW') compilerRef.current?.postMessage(files)
     if (activedType === 'JS') {
       compilerRef.current?.postMessage(files[selectedFileName].value)
     }
-  }
+  }, 50)
 
   useEffect(() => {
     if (!compilerRef.current) {
@@ -45,8 +46,6 @@ export const Output: React.FC<IOutput> = (props) => {
           console.log(data)
         }
       })
-
-      compilerRef.current.postMessage(files)
     }
   }, [])
 
@@ -55,9 +54,9 @@ export const Output: React.FC<IOutput> = (props) => {
   }, [activedType, files])
 
   useEffect(() => {
-    if (selectedFileName === IMPORT_MAP_FILE_NAME) return
-    if (['javascript', 'typescript'].includes(files[selectedFileName].language)) {
-      compilerRef.current?.postMessage(files[selectedFileName].value)
+    if (selectedFileName === IMPORT_MAP_FILE_NAME || activedType === 'PREVIEW') return
+    if (['javascript', 'typescript'].includes(files[selectedFileName]?.language)) {
+      compilerRef.current?.postMessage(files[selectedFileName]?.value)
     } else {
       compilerRef.current?.postMessage('')
     }
@@ -87,7 +86,7 @@ export const Output: React.FC<IOutput> = (props) => {
             language='javascript'
             options={{
               ...MonacoEditorConfig,
-              readOnly: true
+              readOnly: true,
             }}
           />
         </div>

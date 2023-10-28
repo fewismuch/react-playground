@@ -6,7 +6,7 @@ import index from './template/index.html?raw'
 import pkg from './template/package.json?raw'
 import readme from './template/README.md?raw'
 import config from './template/vite.config.js?raw'
-import { IImportMap, ITheme } from './types'
+import { ICustomFiles, IImportMap, ITheme } from './types'
 
 import type { IFiles } from './types'
 
@@ -81,23 +81,61 @@ export const getPlaygroundTheme = () => {
   return isDarkTheme ? 'dark' : 'light'
 }
 
-// 合并用户自定义files和importMap
-export const getMergedCustomFiles = (files?: IFiles, importMap?: IImportMap) => {
+const transformCustomFiles = (files: ICustomFiles) => {
+  const newFiles: IFiles = {}
+  Object.keys(files).forEach((key) => {
+    const tempFile = files[key]
+    if (typeof tempFile === 'string') {
+      newFiles[key] = {
+        name: key,
+        language: fileName2Language(key),
+        value: tempFile,
+      }
+    } else {
+      newFiles[key] = {
+        name: key,
+        language: fileName2Language(key),
+        value: tempFile.code,
+        hidden: tempFile.hidden,
+        active: tempFile.active,
+        readOnly: tempFile.readOnly,
+      }
+    }
+  })
+
+  return newFiles
+}
+
+// 获取用户自定义的选中文件
+export const getCustomActiveFile = (files?: ICustomFiles) => {
+  if (!files) return null
+  const result = Object.keys(files).find((key) => {
+    const tempFile = files[key]
+    if (typeof tempFile !== 'string' && tempFile.active) {
+      return key
+    }
+    return null
+  })
+  return result
+}
+
+// 合并用户自定义files和importMap，files需要转换
+export const getMergedCustomFiles = (files?: ICustomFiles, importMap?: IImportMap) => {
   if (!files) return null
   if (importMap) {
     return {
       ...reactTemplateFiles,
-      ...files,
+      ...transformCustomFiles(files),
       [IMPORT_MAP_FILE_NAME]: {
         name: IMPORT_MAP_FILE_NAME,
         language: 'json',
-        value: JSON.stringify(importMap, null, 2)
-      }
+        value: JSON.stringify(importMap, null, 2),
+      },
     }
   } else {
     return {
       ...reactTemplateFiles,
-      ...files
+      ...transformCustomFiles(files),
     }
   }
 }

@@ -11,7 +11,7 @@ import styles from './index.module.less'
 
 export const FileSelector: React.FC<IFileSelector> = (props) => {
   const { onChange, onError, readOnly = false } = props
-  const { files, removeFile, addFile, updateFileName, selectedFileName, setSelectedFileName } =
+  const { files, removeFile, addFile, updateFileName, selectedFileName } =
     useContext(PlaygroundContext)
   const [tabs, setTabs] = useState([''])
   const [creating, setCreating] = useState(false)
@@ -32,7 +32,6 @@ export const FileSelector: React.FC<IFileSelector> = (props) => {
   const handleClickTab = (fileName: string) => {
     if (creating) return
     onChange(fileName)
-    setSelectedFileName(fileName)
   }
 
   const editImportMap = () => {
@@ -69,7 +68,9 @@ export const FileSelector: React.FC<IFileSelector> = (props) => {
 
   useEffect(() => {
     setTabs(
-      Object.keys(files).filter((item) => ![IMPORT_MAP_FILE_NAME, ENTRY_FILE_NAME].includes(item))
+      Object.keys(files).filter(
+        (item) => ![IMPORT_MAP_FILE_NAME, ENTRY_FILE_NAME].includes(item) && !files[item].hidden
+      )
     )
   }, [files])
 

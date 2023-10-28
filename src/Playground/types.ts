@@ -7,13 +7,27 @@ export interface IFile {
   name: string
   value: string
   language: string
+  readOnly?: boolean
+  active?: boolean
+  hidden?: boolean
 }
 
 export interface IFiles {
   [key: string]: IFile
 }
 
-export type IEditorOptions = editor.IStandaloneEditorConstructionOptions
+export interface ICustomFiles {
+  [key: string]:
+    | string
+    | {
+        code: string
+        readOnly?: boolean
+        active?: boolean
+        hidden?: boolean
+      }
+}
+
+export type IEditorOptions = editor.IStandaloneEditorConstructionOptions & any
 
 export interface IEditorContainer {
   showFileSelector?: boolean
@@ -32,12 +46,16 @@ export type IPlayground = {
   height?: string | number
   theme?: ITheme
   importMap?: IImportMap
-  files?: IFiles
-  options?: IEditorOptions
+  files?: ICustomFiles
+  options?: {
+    lineNumbers?: boolean
+    fontSize?: number
+    tabSize?: number
+  }
   showHeader?: boolean
   border?: boolean
   onUrlChange?: (url: string) => void
-} & IEditorContainer &
+} & Omit<IEditorContainer, 'options'> &
   IOutput
 
 export interface IPlaygroundContext {

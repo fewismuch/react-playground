@@ -6,7 +6,8 @@ import { IFiles, IFile } from '../../types'
 const getModuleFile = (files: IFiles, moduleName: string) => {
   let _moduleName = moduleName.split('./').pop() || ''
   if (!_moduleName.includes('.')) {
-    _moduleName += '.jsx'
+    const realModuleName = Object.keys(files).find((key) => key.split('.').includes(_moduleName))
+    if (realModuleName) _moduleName = realModuleName
   }
   return files[_moduleName]
 }
@@ -41,11 +42,14 @@ const babelTransform = (filename: string, code: string, files: IFiles) => {
   if (filename.endsWith('.jsx') && !regexReact.test(code)) {
     _code = `import React from 'react';\n${code}`
   }
-
+  /*  const regexExportDefault = /export\s+default/g
+  if (filename.endsWith('.js') && !regexExportDefault.test(files[filename].value)) {
+    _code = `${code}\nexport default {}`
+  } */
   return transform(_code, {
     presets: ['react'],
     filename,
-    plugins: [customResolver(files)]
+    plugins: [customResolver(files)],
   }).code!
 }
 
@@ -64,13 +68,13 @@ const customResolver = (files: IFiles) => {
           } else {
             path.node.source.value = URL.createObjectURL(
               new Blob([babelTransform(module.name, module.value, files)], {
-                type: 'application/javascript'
+                type: 'application/javascript',
               })
             )
           }
         }
-      }
-    }
+      },
+    },
   }
 }
 
@@ -86,15 +90,15 @@ self.addEventListener('message', async ({ data }) => {
       type: 'UPDATE_FILE',
       data: transform(data, {
         presets: ['react'],
-        retainLines: true
-      }).code
+        retainLines: true,
+      }).code,
     })
     return
   }
   try {
     self.postMessage({
       type: 'UPDATE_FILES',
-      data: compile(data)
+      data: compile(data),
     })
   } catch (e) {
     self.postMessage({ type: 'ERROR', error: e })

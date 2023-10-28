@@ -45,7 +45,7 @@ export const Preview: React.FC<IPreview> = (props) => {
           height: '100%',
           padding: 0,
           border: 'none',
-          display: hidden ? 'none' : ''
+          display: hidden ? 'none' : '',
         }}
         sandbox='allow-popups-to-escape-sandbox allow-scripts allow-popups allow-forms allow-pointer-lock allow-top-navigation allow-modals allow-same-origin'
       />

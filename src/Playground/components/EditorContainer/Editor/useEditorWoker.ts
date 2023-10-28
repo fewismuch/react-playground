@@ -27,6 +27,6 @@ import { loader } from '@monaco-editor/react'
 
 loader.config({
   paths: {
-    vs: 'https://cdn.staticfile.org/monaco-editor/0.43.0/min/vs'
-  }
+    vs: 'https://cdn.staticfile.org/monaco-editor/0.43.0/min/vs',
+  },
 })

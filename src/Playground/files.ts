@@ -17,34 +17,34 @@ export const initFiles: IFiles = getFilesFromUrl() || {
   [ENTRY_FILE_NAME]: {
     name: ENTRY_FILE_NAME,
     language: 'javascript',
-    value: main
+    value: main,
   },
   [MAIN_FILE_NAME]: {
     name: MAIN_FILE_NAME,
     language: 'javascript',
-    value: App
+    value: App,
   },
   'App.css': {
     name: 'App.css',
     language: 'css',
-    value: AppCss
+    value: AppCss,
   },
   [IMPORT_MAP_FILE_NAME]: {
     name: IMPORT_MAP_FILE_NAME,
     language: 'json',
-    value: importMap
-  }
+    value: importMap,
+  },
 }
 
 export const reactTemplateFiles = {
   [ENTRY_FILE_NAME]: {
     name: ENTRY_FILE_NAME,
     language: 'javascript',
-    value: main
+    value: main,
   },
   [IMPORT_MAP_FILE_NAME]: {
     name: IMPORT_MAP_FILE_NAME,
     language: 'json',
-    value: importMap
-  }
+    value: importMap,
+  },
 }

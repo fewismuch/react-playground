@@ -7,7 +7,7 @@ export const useEditor = () => {
     const types = import.meta.glob(
       [
         '/node_modules/{react,react-dom}/**/*.{d.ts,json}',
-        '/node_modules/@types/{react,react-dom}/**/*.{d.ts,json}'
+        '/node_modules/@types/{react,react-dom}/**/*.{d.ts,json}',
       ],
       { eager: true, as: 'raw' }
     )
@@ -28,13 +28,13 @@ export const useEditor = () => {
       } else {
         const pos = {
           lineNumber: selection.startLineNumber,
-          column: selection.startColumn
+          column: selection.startColumn,
         }
         editor.setPosition(pos)
         editor.revealPositionInCenter(pos, 1 /* Immediate */)
       }
     }
-    console.log('触发鼠标+ctrl点击', input.resource, selection)
+    console.log('触发鼠标+command点击', input.resource, selection)
   }
 
   // 加载jsx高亮
@@ -42,13 +42,13 @@ export const useEditor = () => {
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
       jsx: monaco.languages.typescript.JsxEmit.Preserve,
       target: monaco.languages.typescript.ScriptTarget.ES2020,
-      esModuleInterop: true
+      esModuleInterop: true,
     })
 
     const monacoJsxSyntaxHighlight = new MonacoJsxSyntaxHighlight(getWorker(), monaco)
 
     return monacoJsxSyntaxHighlight.highlighterBuilder({
-      editor
+      editor,
     }) as { highlighter: any; dispose: any }
   }
 
@@ -58,6 +58,6 @@ export const useEditor = () => {
   return {
     initExtraLibs,
     doOpenEditor,
-    loadJsxSyntaxHighlight
+    loadJsxSyntaxHighlight,
   }
 }

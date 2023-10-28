@@ -6,7 +6,7 @@ import { Output } from './components/Output'
 import { SplitPane } from './components/SplitPane'
 import { MAIN_FILE_NAME } from './files'
 import { PlaygroundContext, PlaygroundProvider } from './PlaygroundContext'
-import { getMergedCustomFiles } from './utils'
+import { getCustomActiveFile, getMergedCustomFiles } from './utils'
 
 import './index.less'
 
@@ -14,7 +14,7 @@ import type { IPlayground } from './types'
 
 const defaultCodeSandboxOptions = {
   theme: 'dark',
-  editorHeight: '100vh'
+  editorHeight: '100vh',
 }
 
 const ReactPlayground = (props: IPlayground) => {
@@ -29,9 +29,9 @@ const ReactPlayground = (props: IPlayground) => {
     showFileSelector = true,
     fileSelectorReadOnly = false,
     border = false,
-    onUrlChange
+    onUrlChange,
   } = props
-  const { filesHash, changeTheme, setFiles } = useContext(PlaygroundContext)
+  const { filesHash, changeTheme, setFiles, setSelectedFileName } = useContext(PlaygroundContext)
   const options = Object.assign(defaultCodeSandboxOptions, props.options || {})
 
   useEffect(() => {
@@ -42,6 +42,8 @@ const ReactPlayground = (props: IPlayground) => {
     } else {
       const newFiles = getMergedCustomFiles(files, importMap)
       if (newFiles) setFiles(newFiles)
+      const selectedFileName = getCustomActiveFile(files)
+      if (selectedFileName) setSelectedFileName(selectedFileName)
     }
   }, [files])
 

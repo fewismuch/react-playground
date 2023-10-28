@@ -15,7 +15,7 @@ export const TabsItem: React.FC<ITabsItem> = (props) => {
     onCancel,
     onRemove,
     onClick,
-    onValidate
+    onValidate,
   } = props
   const inputRef = useRef<HTMLInputElement>(null)
   const [name, setName] = useState(value)
