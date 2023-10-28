@@ -6,11 +6,11 @@ import index from './template/index.html?raw'
 import pkg from './template/package.json?raw'
 import readme from './template/README.md?raw'
 import config from './template/vite.config.js?raw'
-import { ImportMap, Theme } from './types'
+import { IImportMap, ITheme } from './types'
 
-import type { Files } from './types'
+import type { IFiles } from './types'
 
-export async function downloadFiles(files: Files) {
+export async function downloadFiles(files: IFiles) {
   const { default: JSZip } = await import('jszip')
   const zip = new JSZip()
 
@@ -23,7 +23,7 @@ export async function downloadFiles(files: Files) {
   // project src
   const src = zip.folder('src')!
 
-  Object.keys(files).forEach(name => {
+  Object.keys(files).forEach((name) => {
     if (files[name].name !== IMPORT_MAP_FILE_NAME) {
       src.file(name, files[name].value)
     } else {
@@ -71,7 +71,7 @@ export function atou(base64: string): string {
 
 const STORAGE_DARK_THEME = 'react-playground-prefer-dark'
 
-export const setPlaygroundTheme = (theme: Theme) => {
+export const setPlaygroundTheme = (theme: ITheme) => {
   localStorage.setItem(STORAGE_DARK_THEME, String(theme === 'dark'))
   document.querySelector('#react-playground')?.setAttribute('class', theme)
 }
@@ -82,7 +82,7 @@ export const getPlaygroundTheme = () => {
 }
 
 // 合并用户自定义files和importMap
-export const getMergedCustomFiles = (files?: Files, importMap?: ImportMap) => {
+export const getMergedCustomFiles = (files?: IFiles, importMap?: IImportMap) => {
   if (!files) return null
   if (importMap) {
     return {
@@ -104,7 +104,7 @@ export const getMergedCustomFiles = (files?: Files, importMap?: ImportMap) => {
 
 // 从url hash中获取files
 export const getFilesFromUrl = () => {
-  let files: Files | undefined
+  let files: IFiles | undefined
   try {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash

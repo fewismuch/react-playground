@@ -6,9 +6,9 @@ import { PlaygroundContext } from '../../PlaygroundContext'
 import { debounce } from '../../utils'
 import { Message } from '../Message'
 
-import type { EditorContainerProps } from '../../types'
+import type { IEditorContainer } from '../../types'
 
-export const EditorContainer: React.FC<EditorContainerProps> = props => {
+export const EditorContainer: React.FC<IEditorContainer> = (props) => {
   const { showFileSelector, fileSelectorReadOnly, options = {} } = props
   const { files, setFiles, selectedFileName, setSelectedFileName } = useContext(PlaygroundContext)
   const [error, setError] = useState('')
@@ -37,12 +37,7 @@ export const EditorContainer: React.FC<EditorContainerProps> = props => {
         />
       ) : null}
 
-      <Editor
-        onChange={handleEditorChange}
-        file={file}
-        options={options}
-        selectFile={handleTabsChange}
-      />
+      <Editor onChange={handleEditorChange} file={file} options={options} />
       <Message type='error' context={error} />
     </div>
   )

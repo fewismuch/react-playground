@@ -1,16 +1,16 @@
 import React, { createContext, useEffect, useState } from 'react'
 
 import { initFiles, MAIN_FILE_NAME } from './files'
-import { PlaygroundContextProps, Theme } from './types'
+import { IPlaygroundContext, ITheme } from './types'
 import { fileName2Language, getPlaygroundTheme, setPlaygroundTheme, utoa } from './utils'
 
-const initialContext: Partial<PlaygroundContextProps> = {
+const initialContext: Partial<IPlaygroundContext> = {
   files: initFiles,
   selectedFileName: MAIN_FILE_NAME
 }
 
-export const PlaygroundContext = createContext<PlaygroundContextProps>(
-  initialContext as PlaygroundContextProps
+export const PlaygroundContext = createContext<IPlaygroundContext>(
+  initialContext as IPlaygroundContext
 )
 
 export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
@@ -51,7 +51,7 @@ export const PlaygroundProvider = (props: { children: React.ReactElement }) => {
     })
   }
 
-  const changeTheme = (theme: Theme) => {
+  const changeTheme = (theme: ITheme) => {
     setPlaygroundTheme(theme)
     setTheme(theme)
   }

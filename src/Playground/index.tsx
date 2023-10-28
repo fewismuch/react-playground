@@ -10,14 +10,14 @@ import { getMergedCustomFiles } from './utils'
 
 import './index.less'
 
-import type { PlaygroundProps } from './types'
+import type { IPlayground } from './types'
 
 const defaultCodeSandboxOptions = {
   theme: 'dark',
   editorHeight: '100vh'
 }
 
-const ReactPlayground = (props: PlaygroundProps) => {
+const ReactPlayground = (props: IPlayground) => {
   const {
     width = '100vw',
     height = '100vh',
@@ -73,7 +73,7 @@ const ReactPlayground = (props: PlaygroundProps) => {
   )
 }
 
-export const Playground: React.FC<PlaygroundProps> = props => {
+export const Playground: React.FC<IPlayground> = (props) => {
   return (
     <PlaygroundProvider>
       <ReactPlayground {...props} />

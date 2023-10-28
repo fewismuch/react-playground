@@ -1,14 +1,11 @@
 import classnames from 'classnames'
 import React, { useEffect, useState } from 'react'
 
+import { IMessage } from '../../types.ts'
+
 import styles from './index.module.less'
 
-interface Props {
-  type: 'error' | 'warn'
-  context: string
-}
-
-export const Message: React.FC<Props> = props => {
+export const Message: React.FC<IMessage> = (props) => {
   const { type, context } = props
   const [visible, setVisible] = useState(false)
 

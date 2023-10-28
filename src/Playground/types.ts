@@ -1,70 +1,77 @@
 import { editor } from 'monaco-editor'
+import React from 'react'
 
-export type Theme = 'light' | 'dark'
+export type ITheme = 'light' | 'dark'
 
-export interface File {
+export interface IFile {
   name: string
   value: string
   language: string
 }
 
-export interface Files {
-  [key: string]: File
+export interface IFiles {
+  [key: string]: IFile
 }
 
-export type EditorOptions = editor.IStandaloneEditorConstructionOptions
+export type IEditorOptions = editor.IStandaloneEditorConstructionOptions
 
-export interface EditorContainerProps {
+export interface IEditorContainer {
   showFileSelector?: boolean
   fileSelectorReadOnly?: boolean
-  options?: EditorOptions
+  options?: IEditorOptions
 }
 
 export interface IOutput {
   showCompileOutput?: boolean
 }
 
-export type ImportMap = { imports: Record<string, string> }
+export type IImportMap = { imports: Record<string, string> }
 
-export type PlaygroundProps = {
+export type IPlayground = {
   width?: string | number
   height?: string | number
-  theme?: Theme
-  importMap?: ImportMap
-  files?: Files
-  options?: EditorOptions
+  theme?: ITheme
+  importMap?: IImportMap
+  files?: IFiles
+  options?: IEditorOptions
   showHeader?: boolean
   border?: boolean
   onUrlChange?: (url: string) => void
-} & EditorContainerProps &
+} & IEditorContainer &
   IOutput
 
-export interface PlaygroundContextProps {
-  files: Files
+export interface IPlaygroundContext {
+  files: IFiles
   filesHash: string
-  theme: Theme
+  theme: ITheme
   selectedFileName: string
   setSelectedFileName: (fileName: string) => void
-  setTheme: (theme: Theme) => void
-  setFiles: (files: Files) => void
+  setTheme: (theme: ITheme) => void
+  setFiles: (files: IFiles) => void
   addFile: (fileName: string) => void
   removeFile: (fileName: string) => void
   updateFileName: (oldFieldName: string, newFieldName: string) => void
-  changeTheme: (theme: Theme) => void
+  changeTheme: (theme: ITheme) => void
 }
 
-export interface IPreview {
+export interface IPreviewData {
   compileCode: string
   importmap: string
 }
 
-export interface FileSelectorProps {
+export interface IPreview {
+  hidden: boolean
+  data?: IPreviewData
+  iframeKey?: string
+}
+
+export interface IFileSelector {
   onChange: (fileName: string) => void
   onError: (msg: string) => void
   readOnly?: boolean
 }
 
-export interface TabsItemProps {
+export interface ITabsItem {
   readOnlyTabs: string[]
   creating: boolean
   value: string
@@ -76,6 +83,24 @@ export interface TabsItemProps {
   onValidate: (newName: string, oldName: string) => boolean
 }
 
-export interface IMessage {
+export interface IMessageData {
   data: { type: string; message: string | unknown }
+}
+
+export interface IMessage {
+  type: 'error' | 'warn'
+  context: string
+}
+
+export interface IDialog {
+  message: string
+  onConfirm: () => void
+  children: React.ReactNode
+}
+
+export interface IViewSelector {
+  onChange: (viewType: string) => void
+  items: string[]
+  value?: string
+  hidden?: boolean
 }

@@ -6,19 +6,19 @@ import { useEditor } from './useEditor'
 import { PlaygroundContext } from '../../../PlaygroundContext'
 import { debounce } from '../../../utils.ts'
 
-import type { EditorOptions, File } from '../../../types.ts'
+import type { IEditorOptions, IFile } from '../../../types.ts'
 
 import './jsx-highlight.less'
 import './useEditorWoker'
 
 interface Props {
-  file: File
+  file: IFile
   onChange?: (code: string | undefined) => void
-  options?: EditorOptions
-  selectFile?: (fileName: string) => void
+  options?: IEditorOptions
 }
 
-export const Editor: React.FC<Props> = ({ file, onChange, options }) => {
+export const Editor: React.FC<Props> = (props) => {
+  const { file, onChange, options } = props
   const { theme, files, setSelectedFileName } = useContext(PlaygroundContext)
   const editorRef = useRef<any>(null)
   const { doOpenEditor, loadJsxSyntaxHighlight, initExtraLibs } = useEditor()
@@ -64,7 +64,7 @@ export const Editor: React.FC<Props> = ({ file, onChange, options }) => {
   }, [])
 
   const handleEditorValidation = (markers: { message: string }[]) => {
-    markers.forEach(marker => {
+    markers.forEach((marker) => {
       console.log(marker.message)
     })
   }

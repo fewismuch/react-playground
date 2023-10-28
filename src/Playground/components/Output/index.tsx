@@ -6,19 +6,19 @@ import { Preview } from './Preview'
 import { ViewSelector } from './ViewSelector'
 import { IMPORT_MAP_FILE_NAME } from '../../files'
 import { PlaygroundContext } from '../../PlaygroundContext'
-import { IPreview } from '../../types'
+import { IPreviewData } from '../../types'
 import { MonacoEditorConfig } from '../EditorContainer/Editor/monacoConfig'
 
 import type { IOutput } from '../../types'
 
 const viewTypes = ['PREVIEW', 'JS']
 
-export const Output: React.FC<IOutput> = props => {
+export const Output: React.FC<IOutput> = (props) => {
   const { showCompileOutput = true } = props
   const { files, theme, selectedFileName } = useContext(PlaygroundContext)
   const [activedType, setActivedType] = useState('PREVIEW')
   const compilerRef = useRef<Worker | null>(null)
-  const [compiledFiles, setCompiledFiles] = useState<IPreview>()
+  const [compiledFiles, setCompiledFiles] = useState<IPreviewData>()
   const [compiledCode, setCompiledCode] = useState('')
 
   const handleViewChange = (type: string) => {

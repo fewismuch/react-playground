@@ -1,14 +1,10 @@
 import React, { useRef } from 'react'
 
+import { IDialog } from '../../types.ts'
+
 import styles from './index.module.less'
 
-interface Props {
-  message: string
-  onConfirm: () => void
-  children: React.ReactNode
-}
-
-export const Dialog: React.FC<Props> = props => {
+export const Dialog: React.FC<IDialog> = (props) => {
   const { message, onConfirm, children } = props
   const dialogRef = useRef<HTMLDialogElement | null>(null)
 
@@ -18,7 +14,7 @@ export const Dialog: React.FC<Props> = props => {
   }
 
   return (
-    <span onClick={e => e.stopPropagation()}>
+    <span onClick={(e) => e.stopPropagation()}>
       <span onClick={handleOpen}>{children}</span>
       <dialog ref={dialogRef} className={styles.dialog}>
         <span className={styles.content}>

@@ -12,7 +12,7 @@ export const useEditor = () => {
       { eager: true, as: 'raw' }
     )
 
-    Object.keys(types).forEach(path => {
+    Object.keys(types).forEach((path) => {
       monaco.languages.typescript.typescriptDefaults.addExtraLib(types[path], `file://${path}`)
       monaco.languages.typescript.javascriptDefaults.addExtraLib(types[path], `file://${path}`)
     })

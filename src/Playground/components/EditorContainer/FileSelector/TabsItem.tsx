@@ -1,12 +1,12 @@
 import classnames from 'classnames'
 import React, { useState, useRef, useEffect } from 'react'
 
-import { TabsItemProps } from '../../../types'
+import { ITabsItem } from '../../../types'
 import { Dialog } from '../../Dialog'
 
 import styles from './index.module.less'
 
-export const TabsItem: React.FC<TabsItemProps> = props => {
+export const TabsItem: React.FC<ITabsItem> = (props) => {
   const {
     readOnlyTabs = [''],
     value,
@@ -73,7 +73,7 @@ export const TabsItem: React.FC<TabsItemProps> = props => {
             ref={inputRef}
             className={styles['tabs-item-input']}
             value={name}
-            onChange={e => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             onBlur={doneNameFile}
             onKeyDown={handleKeyDown}
           />

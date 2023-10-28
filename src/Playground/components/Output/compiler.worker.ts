@@ -1,9 +1,9 @@
 import { transform } from '@babel/standalone'
 
 import { ENTRY_FILE_NAME } from '../../files'
-import { Files, File } from '../../types'
+import { IFiles, IFile } from '../../types'
 
-const getModuleFile = (files: Files, moduleName: string) => {
+const getModuleFile = (files: IFiles, moduleName: string) => {
   let _moduleName = moduleName.split('./').pop() || ''
   if (!_moduleName.includes('.')) {
     _moduleName += '.jsx'
@@ -11,12 +11,12 @@ const getModuleFile = (files: Files, moduleName: string) => {
   return files[_moduleName]
 }
 
-const transformJson = (file: File) => {
+const transformJson = (file: IFile) => {
   const js = `export default {${file.value}}`
   return URL.createObjectURL(new Blob([js], { type: 'application/javascript' }))
 }
 
-const transformCss = (file: File) => {
+const transformCss = (file: IFile) => {
   const randomId = new Date().getTime()
   const js = `
                   (() => {
@@ -34,7 +34,7 @@ const transformCss = (file: File) => {
   return URL.createObjectURL(new Blob([js], { type: 'application/javascript' }))
 }
 
-const babelTransform = (filename: string, code: string, files: Files) => {
+const babelTransform = (filename: string, code: string, files: IFiles) => {
   let _code = code
   // 如果没有引入React，开头添加React引用
   const regexReact = /import\s+React/g
@@ -49,7 +49,7 @@ const babelTransform = (filename: string, code: string, files: Files) => {
   }).code!
 }
 
-const customResolver = (files: Files) => {
+const customResolver = (files: IFiles) => {
   return {
     visitor: {
       ImportDeclaration(path: any) {
@@ -74,7 +74,7 @@ const customResolver = (files: Files) => {
   }
 }
 
-const compile = (files: Files) => {
+const compile = (files: IFiles) => {
   const main = files[ENTRY_FILE_NAME]
   const compileCode = babelTransform(ENTRY_FILE_NAME, main.value, files)
   return { compileCode }

@@ -4,7 +4,7 @@ import App from './template/src/App.jsx?raw'
 import main from './template/src/main.jsx?raw'
 import { getFilesFromUrl } from './utils'
 
-import type { Files } from './types'
+import type { IFiles } from './types'
 
 // app文件名
 export const MAIN_FILE_NAME = 'App.jsx'
@@ -13,7 +13,7 @@ export const IMPORT_MAP_FILE_NAME = 'import-map.json'
 // app入口文件名
 export const ENTRY_FILE_NAME = 'main.jsx'
 
-export const initFiles: Files = getFilesFromUrl() || {
+export const initFiles: IFiles = getFilesFromUrl() || {
   [ENTRY_FILE_NAME]: {
     name: ENTRY_FILE_NAME,
     language: 'javascript',
