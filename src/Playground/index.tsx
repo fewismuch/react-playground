@@ -29,6 +29,7 @@ const ReactPlayground = (props: IPlayground) => {
     showFileSelector = true,
     fileSelectorReadOnly = false,
     border = false,
+    defaultSizes,
     onUrlChange,
   } = props
   const { filesHash, changeTheme, setFiles, setSelectedFileName } = useContext(PlaygroundContext)
@@ -62,7 +63,7 @@ const ReactPlayground = (props: IPlayground) => {
     >
       {showHeader ? <Header /> : null}
       <div style={{ height: `calc(100% - ${showHeader ? 50 : 0}px)` }}>
-        <SplitPane>
+        <SplitPane defaultSizes={defaultSizes}>
           <EditorContainer
             options={options}
             showFileSelector={showFileSelector}

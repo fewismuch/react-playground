@@ -27,6 +27,11 @@ export interface ICustomFiles {
       }
 }
 
+export interface ISplitPane {
+  children?: React.ReactNode[]
+  defaultSizes?: number[]
+}
+
 export type IEditorOptions = editor.IStandaloneEditorConstructionOptions & any
 
 export interface IEditorContainer {
@@ -56,7 +61,8 @@ export type IPlayground = {
   border?: boolean
   onUrlChange?: (url: string) => void
 } & Omit<IEditorContainer, 'options'> &
-  IOutput
+  IOutput &
+  ISplitPane
 
 export interface IPlaygroundContext {
   files: IFiles
