@@ -1,4 +1,6 @@
 import React, { useContext, useState } from 'react'
+// @ts-ignore
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import DownloadSvg from './icons/download.svg?raw'
 import GithubSvg from './icons/github.svg?raw'
@@ -17,8 +19,7 @@ export const Header: React.FC = () => {
   const [copyed, setCopyed] = useState(false)
   const [downloaded, setDownloaded] = useState(false)
 
-  const copyLink = async () => {
-    await navigator.clipboard.writeText(location.href)
+  const copyLink = () => {
     setCopyed(true)
     setTimeout(() => {
       setCopyed(false)
@@ -58,11 +59,16 @@ export const Header: React.FC = () => {
           />
         )}
 
-        <button
-          title='Copy sharable URL'
-          dangerouslySetInnerHTML={{ __html: copyed ? SuccessSvg : ShareSvg }}
-          onClick={copyLink}
-        />
+        <CopyToClipboard
+          text={`${location.host}${location.pathname}#${filesHash}`}
+          onCopy={copyLink}
+        >
+          <button
+            title='Copy sharable URL'
+            dangerouslySetInnerHTML={{ __html: copyed ? SuccessSvg : ShareSvg }}
+            onClick={copyLink}
+          />
+        </CopyToClipboard>
 
         <button
           title='Download project files'

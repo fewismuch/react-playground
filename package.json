@@ -1,6 +1,6 @@
 {
   "name": "react-playground",
-  "description": "react playground 可在线编辑和创建代码并实时预览渲染效果",
+  "description": "react-playground是一个react在线代码编辑器可实时预览运行效果",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -37,6 +37,7 @@
     "monaco-editor": "^0.43.0",
     "monaco-jsx-syntax-highlight": "^1.2.0",
     "react": "^18.2.0",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
