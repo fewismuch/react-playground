@@ -13,7 +13,7 @@ const getModuleFile = (files: IFiles, moduleName: string) => {
 }
 
 const transformJson = (file: IFile) => {
-  const js = `export default {${file.value}}`
+  const js = `export default ${file.value}`
   return URL.createObjectURL(new Blob([js], { type: 'application/javascript' }))
 }
 
