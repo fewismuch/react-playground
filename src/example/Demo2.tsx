@@ -14,7 +14,9 @@ export const Demo2 = () => {
 
     // 可匹配到.d.ts文件，但是没内容
     monaco.languages.typescript.typescriptDefaults.addExtraLib(
-      `declare module 'ahooks' {}`,
+      `declare module 'ahooks' {
+          type useMount = any
+      }`,
       'dir/ahooks.d.ts'
     )
   }
@@ -32,7 +34,7 @@ export const Demo2 = () => {
       width='600px'
       language='typescript'
       value={`import {useMount} from 'ahooks' 
-      import type { IEditorContainer } from '../../types'
+      import type { IEditorContainer } from 'types'
       import AB,{ab} from 'tianyu'
       import _ from 'lodash'
       
