@@ -15,7 +15,7 @@ import { downloadFiles } from '../../utils'
 import styles from './index.module.less'
 
 export const Header: React.FC = () => {
-  const { files, theme, changeTheme } = useContext(PlaygroundContext)
+  const { files, theme, changeTheme, filesHash } = useContext(PlaygroundContext)
   const [copyed, setCopyed] = useState(false)
   const [downloaded, setDownloaded] = useState(false)
 

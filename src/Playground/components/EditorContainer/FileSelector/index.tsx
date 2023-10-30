@@ -1,7 +1,7 @@
 import classnames from 'classnames'
 import React, { useContext, useEffect, useState } from 'react'
 
-import { TabsItem } from './TabsItem'
+import { FileItem } from './FileItem.tsx'
 import { maxSequenceTabName } from './utils'
 import { ENTRY_FILE_NAME, IMPORT_MAP_FILE_NAME, MAIN_FILE_NAME } from '../../../files'
 import { PlaygroundContext } from '../../../PlaygroundContext'
@@ -77,7 +77,7 @@ export const FileSelector: React.FC<IFileSelector> = (props) => {
   return (
     <div className={styles.tabs}>
       {tabs.map((item, index) => (
-        <TabsItem
+        <FileItem
           key={index + item}
           value={item}
           actived={selectedFileName === item}

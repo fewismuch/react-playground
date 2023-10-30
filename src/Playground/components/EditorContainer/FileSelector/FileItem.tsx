@@ -6,7 +6,7 @@ import { Dialog } from '../../Dialog'
 
 import styles from './index.module.less'
 
-export const TabsItem: React.FC<ITabsItem> = (props) => {
+export const FileItem: React.FC<ITabsItem> = (props) => {
   const {
     readOnlyTabs = [''],
     value,

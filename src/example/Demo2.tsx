@@ -1,5 +1,5 @@
 import MonacoEditor, { Monaco } from '@monaco-editor/react'
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 
 export const Demo2 = () => {
   const editorRef = useRef<any>(null)
@@ -11,7 +11,12 @@ export const Demo2 = () => {
     editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
       // ignore save event
     })
-    monaco.languages.typescript.typescriptDefaults.addExtraLib('', `file:///ahooks`)
+
+    // 可匹配到.d.ts文件，但是没内容
+    monaco.languages.typescript.typescriptDefaults.addExtraLib(
+      `declare module 'ahooks' {}`,
+      'dir/ahooks.d.ts'
+    )
   }
 
   const handleEditorValidation = (markers: { message: string }[]) => {
@@ -27,6 +32,10 @@ export const Demo2 = () => {
       width='600px'
       language='typescript'
       value={`import {useMount} from 'ahooks' 
+      import type { IEditorContainer } from '../../types'
+      import AB,{ab} from 'tianyu'
+      import _ from 'lodash'
+      
       const a:number = 1`}
       onMount={handleEditorDidMount}
       onValidate={handleEditorValidation}

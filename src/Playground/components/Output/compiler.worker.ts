@@ -73,9 +73,9 @@ const customResolver = (files: IFiles) => {
             )
           }
         } else {
-          // 根据导入的内容去生成ts声明文件
-          path.node.specifiers.forEach((item: any) => {
-            console.log(item.imported?.name)
+          // 可以根据导入的内容去生成ts声明文件
+          path.node.specifiers.forEach(() => {
+            // console.log(item.imported?.name)
           })
         }
       },

@@ -49,6 +49,7 @@
       }
       document.body.appendChild(script);
       URL.revokeObjectURL(oldSrc);
+      window.parent.postMessage({type: 'DONE', message: ''})
     }
   });
 </script>
