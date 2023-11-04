@@ -2,14 +2,13 @@ import { Playground } from '../Playground'
 
 export const Demo1 = () => {
   const files = {
-    'App.jsx': `import {title} from './const'
-
+    'App.tsx': `import {title} from './const'
 function App() {
   return <h1>this is {title}</h1>
 }
 export default App
 `,
-    'const.js': {
+    'const.ts': {
       code: 'export const title = "demo2"',
       readOnly: true,
     },

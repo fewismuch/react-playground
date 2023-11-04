@@ -1,7 +1,7 @@
 import classnames from 'classnames'
 import React, { useEffect, useState } from 'react'
 
-import { IMessage } from '../../types.ts'
+import { IMessage } from '../../types'
 
 import styles from './index.module.less'
 

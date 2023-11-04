@@ -7,7 +7,7 @@ import { ViewSelector } from './ViewSelector'
 import { IMPORT_MAP_FILE_NAME } from '../../files'
 import { PlaygroundContext } from '../../PlaygroundContext'
 import { IPreviewData } from '../../types'
-import { debounce } from '../../utils.ts'
+import { debounce } from '../../utils'
 import { MonacoEditorConfig } from '../EditorContainer/Editor/monacoConfig'
 
 import type { IOutput } from '../../types'

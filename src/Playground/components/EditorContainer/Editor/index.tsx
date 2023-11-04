@@ -16,7 +16,7 @@ interface Props {
   onChange?: (code: string | undefined) => void
   options?: IEditorOptions
 }
-// TODO 当输入code时如果有错误，会导致编辑器失去焦点？
+
 export const Editor: React.FC<Props> = (props) => {
   const { file, onChange, options } = props
   const { theme, files, setSelectedFileName } = useContext(PlaygroundContext)

@@ -58,7 +58,7 @@ const ReactPlayground = (props: IPlayground) => {
 
   return (
     <div
-      id='react-playground'
+      data-id='react-playground'
       style={{ width, height, border: border ? '1px solid var(--border)' : '' }}
     >
       {showHeader ? <Header /> : null}

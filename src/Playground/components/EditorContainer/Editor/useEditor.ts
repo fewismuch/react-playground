@@ -1,10 +1,10 @@
 import { Monaco } from '@monaco-editor/react'
 import { getWorker, MonacoJsxSyntaxHighlight } from 'monaco-jsx-syntax-highlight'
 
-import { createATA } from './ata.ts'
+import { createATA } from './ata'
 
 export const useEditor = () => {
-  // 点击变量跳转文件
+  // 点击变量跳转
   const doOpenEditor = (editor: any, input: any) => {
     const selection = input.options ? input.options.selection : null
     if (selection) {

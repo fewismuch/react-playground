@@ -1,7 +1,7 @@
 import classnames from 'classnames'
 import React from 'react'
 
-import { IViewSelector } from '../../../types.ts'
+import { IViewSelector } from '../../../types'
 
 import styles from './index.module.less'
 

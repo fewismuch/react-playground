@@ -3,7 +3,7 @@ import { Allotment } from 'allotment'
 import classnames from 'classnames'
 import React, { useRef, useState } from 'react'
 
-import { ISplitPane } from '../../types.ts'
+import { ISplitPane } from '../../types'
 
 import styles from './index.module.less'
 

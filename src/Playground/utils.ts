@@ -43,7 +43,7 @@ const STORAGE_DARK_THEME = 'react-playground-prefer-dark'
 
 export const setPlaygroundTheme = (theme: ITheme) => {
   localStorage.setItem(STORAGE_DARK_THEME, String(theme === 'dark'))
-  document.querySelector('#react-playground')?.setAttribute('class', theme)
+  document.querySelector('div[data-id="react-playground"]')?.setAttribute('class', theme)
 }
 
 export const getPlaygroundTheme = () => {

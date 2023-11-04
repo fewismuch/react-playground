@@ -1,47 +1,11 @@
 import { transform } from '@babel/standalone'
 
+import { getModuleFile, css2Js, json2Js, beforeTransformCodeHandler } from './utils'
 import { ENTRY_FILE_NAME } from '../../files'
-import { IFiles, IFile } from '../../types'
-
-const getModuleFile = (files: IFiles, moduleName: string) => {
-  let _moduleName = moduleName.split('./').pop() || ''
-  if (!_moduleName.includes('.')) {
-    const realModuleName = Object.keys(files).find((key) => key.split('.').includes(_moduleName))
-    if (realModuleName) _moduleName = realModuleName
-  }
-  return files[_moduleName]
-}
-
-const transformJson = (file: IFile) => {
-  const js = `export default ${file.value}`
-  return URL.createObjectURL(new Blob([js], { type: 'application/javascript' }))
-}
-
-const transformCss = (file: IFile) => {
-  const randomId = new Date().getTime()
-  const js = `
-                  (() => {
-                    let stylesheet = document.getElementById('style_${randomId}_${file.name}');
-                    if (!stylesheet) {
-                      stylesheet = document.createElement('style')
-                      stylesheet.setAttribute('id', 'style_${randomId}_${file.name}')
-                      document.head.appendChild(stylesheet)
-                    }
-                    const styles = document.createTextNode(\`${file.value}\`)
-                    stylesheet.innerHTML = ''
-                    stylesheet.appendChild(styles)
-                  })()
-                  `
-  return URL.createObjectURL(new Blob([js], { type: 'application/javascript' }))
-}
+import { IFiles } from '../../types'
 
 const babelTransform = (filename: string, code: string, files: IFiles) => {
-  let _code = code
-  // 如果没有引入React，开头添加React引用
-  const regexReact = /import\s+React/g
-  if ((filename.endsWith('.jsx') || filename.endsWith('.tsx')) && !regexReact.test(code)) {
-    _code = `import React from 'react';\n${code}`
-  }
+  const _code = beforeTransformCodeHandler(filename, code)
   return transform(_code, {
     presets: ['react', 'typescript'],
     filename,
@@ -58,9 +22,9 @@ const customResolver = (files: IFiles) => {
           const module = getModuleFile(files, moduleName)
           if (!module) return
           if (module.name.endsWith('.css')) {
-            path.node.source.value = transformCss(module)
+            path.node.source.value = css2Js(module)
           } else if (module.name.endsWith('.json')) {
-            path.node.source.value = transformJson(module)
+            path.node.source.value = json2Js(module)
           } else {
             path.node.source.value = URL.createObjectURL(
               new Blob([babelTransform(module.name, module.value, files)], {
