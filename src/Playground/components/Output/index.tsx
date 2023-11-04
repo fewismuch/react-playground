@@ -38,7 +38,12 @@ export const Output: React.FC<IOutput> = (props) => {
       compilerRef.current = new CompilerWorker()
       compilerRef.current.addEventListener('message', ({ data }: { data: any }) => {
         if (data.type === 'UPDATE_FILES') {
-          data.data.importmap = files[IMPORT_MAP_FILE_NAME].value
+          try {
+            JSON.parse(files[IMPORT_MAP_FILE_NAME].value)
+            data.data.importmap = files[IMPORT_MAP_FILE_NAME].value
+          } catch (error) {
+            console.error('importmap 解析错误:', error)
+          }
           setCompiledFiles(data)
         } else if (data.type === 'UPDATE_FILE') {
           setCompiledCode(data.data)

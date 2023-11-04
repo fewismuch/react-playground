@@ -1,23 +1,9 @@
 import { Monaco } from '@monaco-editor/react'
 import { getWorker, MonacoJsxSyntaxHighlight } from 'monaco-jsx-syntax-highlight'
 
+import { createATA } from './ata.ts'
+
 export const useEditor = () => {
-  // 加载react类型定义文件
-  const initExtraLibs = (monaco: Monaco) => {
-    const types = import.meta.glob(
-      [
-        '/node_modules/{react,react-dom}/**/*.{d.ts,json}',
-        '/node_modules/@types/{react,react-dom}/**/*.{d.ts,json}',
-      ],
-      { eager: true, as: 'raw' }
-    )
-
-    Object.keys(types).forEach((path) => {
-      monaco.languages.typescript.typescriptDefaults.addExtraLib(types[path], `file://${path}`)
-      monaco.languages.typescript.javascriptDefaults.addExtraLib(types[path], `file://${path}`)
-    })
-  }
-
   // 点击变量跳转文件
   const doOpenEditor = (editor: any, input: any) => {
     const selection = input.options ? input.options.selection : null
@@ -39,24 +25,39 @@ export const useEditor = () => {
 
   // 加载jsx高亮
   const loadJsxSyntaxHighlight = (editor: any, monaco: Monaco) => {
-    monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-      jsx: monaco.languages.typescript.JsxEmit.Preserve,
-      target: monaco.languages.typescript.ScriptTarget.ES2020,
-      esModuleInterop: true,
+    const monacoJsxSyntaxHighlight = new MonacoJsxSyntaxHighlight(getWorker(), monaco)
+    const { highlighter, dispose } = monacoJsxSyntaxHighlight.highlighterBuilder({
+      editor,
     })
 
-    const monacoJsxSyntaxHighlight = new MonacoJsxSyntaxHighlight(getWorker(), monaco)
+    editor.onDidChangeModelContent(() => {
+      highlighter()
+    })
 
-    return monacoJsxSyntaxHighlight.highlighterBuilder({
-      editor,
-    }) as { highlighter: any; dispose: any }
+    highlighter()
+
+    return dispose
   }
 
-  // TODO 加载第三方包的类型定义文件
-  // ...
+  // 自动加载第三方包的类型定义文件
+  const typeHelper = createATA()
+  const autoLoadExtraLib = (editor: any, monaco: any, defaultValue: string) => {
+    editor.onDidChangeModelContent(() => {
+      typeHelper.acquireType(editor.getValue())
+    })
+
+    const addLibraryToRuntime = (code: string, path: string) => {
+      monaco.languages.typescript.typescriptDefaults.addExtraLib(code, `file://${path}`)
+    }
+
+    typeHelper.addListener('receivedFile', addLibraryToRuntime)
+    typeHelper.acquireType(defaultValue)
+
+    return typeHelper.dispose
+  }
 
   return {
-    initExtraLibs,
+    autoLoadExtraLib,
     doOpenEditor,
     loadJsxSyntaxHighlight,
   }

@@ -34,13 +34,16 @@ export const Editor: React.FC<Props> = (props) => {
     editorRef.current = editor
     editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
       // ignore save event
+      console.log(11)
+      editor.getAction('editor.action.formatDocument').run()
     })
 
-    // setTimeout(() => {
-    //   editor.getAction('editor.action.formatDocument').run()
-    // }, 300)
+    monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+      jsx: monaco.languages.typescript.JsxEmit.Preserve,
+      esModuleInterop: true,
+    })
 
-    // 初始化文件model
+    // 初始化自定义文件model
     Object.entries(files).forEach(([key]) => {
       if (!monaco?.editor?.getModel(monaco.Uri.parse(`file:///${key}`))) {
         monaco?.editor?.createModel(
@@ -61,19 +64,10 @@ export const Editor: React.FC<Props> = (props) => {
     }
 
     // 加载类型定义文件
-    // const dispose2 =
     autoLoadExtraLib(editor, monaco, file.value)
 
     // 加载jsx高亮
-    // const dispose =
     loadJsxSyntaxHighlight(editor, monaco)
-    // useEffect中调用销毁
-  }
-
-  const handleEditorValidation = (markers: { message: string }[]) => {
-    markers.forEach((marker) => {
-      console.log(marker.message)
-    })
   }
 
   useEffect(() => {
@@ -99,7 +93,6 @@ export const Editor: React.FC<Props> = (props) => {
       value={file.value}
       onChange={onChange}
       onMount={handleEditorDidMount}
-      onValidate={handleEditorValidation}
       options={editorOptions}
     />
   )

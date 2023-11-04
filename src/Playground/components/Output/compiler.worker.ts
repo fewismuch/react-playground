@@ -39,15 +39,11 @@ const babelTransform = (filename: string, code: string, files: IFiles) => {
   let _code = code
   // 如果没有引入React，开头添加React引用
   const regexReact = /import\s+React/g
-  if (filename.endsWith('.jsx') && !regexReact.test(code)) {
+  if ((filename.endsWith('.jsx') || filename.endsWith('.tsx')) && !regexReact.test(code)) {
     _code = `import React from 'react';\n${code}`
   }
-  /*  const regexExportDefault = /export\s+default/g
-  if (filename.endsWith('.js') && !regexExportDefault.test(files[filename].value)) {
-    _code = `${code}\nexport default {}`
-  } */
   return transform(_code, {
-    presets: ['react'],
+    presets: ['react', 'typescript'],
     filename,
     plugins: [customResolver(files)],
   }).code!
@@ -72,11 +68,6 @@ const customResolver = (files: IFiles) => {
               })
             )
           }
-        } else {
-          // 可以根据导入的内容去生成ts声明文件
-          path.node.specifiers.forEach(() => {
-            // console.log(item.imported?.name)
-          })
         }
       },
     },
@@ -90,17 +81,18 @@ const compile = (files: IFiles) => {
 }
 
 self.addEventListener('message', async ({ data }) => {
-  if (typeof data === 'string') {
-    self.postMessage({
-      type: 'UPDATE_FILE',
-      data: transform(data, {
-        presets: ['react'],
-        retainLines: true,
-      }).code,
-    })
-    return
-  }
   try {
+    if (typeof data === 'string') {
+      self.postMessage({
+        type: 'UPDATE_FILE',
+        data: transform(data, {
+          presets: ['react', 'typescript'],
+          retainLines: true,
+        }).code,
+      })
+      return
+    }
+
     self.postMessage({
       type: 'UPDATE_FILES',
       data: compile(data),

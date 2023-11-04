@@ -108,7 +108,12 @@ export interface ITabsItem {
 }
 
 export interface IMessageData {
-  data: { type: string; message: string | unknown }
+  data: {
+    type: string
+    error: {
+      message: string
+    }
+  }
 }
 
 export interface IMessage {
