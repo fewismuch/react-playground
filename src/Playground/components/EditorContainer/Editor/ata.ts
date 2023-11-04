@@ -9,6 +9,7 @@ const ata = setupTypeAcquisition({
   logger: console,
   fetcher(input, init) {
     // console.log('fetching =>', input, init);
+    // @ts-ignore
     return fetch(input, init)
   },
   delegate: {
