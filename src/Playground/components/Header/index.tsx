@@ -2,15 +2,8 @@ import React, { useContext, useState } from 'react'
 // @ts-ignore
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
-import DownloadSvg from './icons/download.svg?raw'
-import GithubSvg from './icons/github.svg?raw'
-import MoonSvg from './icons/moon.svg?raw'
-import ReactSvg from './icons/react.svg'
-import ShareSvg from './icons/share.svg?raw'
-import SuccessSvg from './icons/success.svg?raw'
-import SunSvg from './icons/sun.svg?raw'
+import { downloadFiles, icons } from './utils'
 import { PlaygroundContext } from '../../PlaygroundContext'
-import { downloadFiles } from '../../utils'
 
 import styles from './index.module.less'
 
@@ -38,7 +31,7 @@ export const Header: React.FC = () => {
   return (
     <nav className={styles.header}>
       <div className={styles.logo}>
-        <img alt='logo' src={ReactSvg} />
+        <img alt='logo' src={icons.ReactSvg} />
         <span>React Playground</span>
       </div>
       <div className={styles.links}>
@@ -46,7 +39,7 @@ export const Header: React.FC = () => {
           <button
             title='Toggle dark mode'
             className={styles.theme}
-            dangerouslySetInnerHTML={{ __html: SunSvg }}
+            dangerouslySetInnerHTML={{ __html: icons.SunSvg }}
             onClick={() => changeTheme('dark')}
           />
         )}
@@ -54,7 +47,7 @@ export const Header: React.FC = () => {
           <button
             title='Toggle light mode'
             className={styles.theme}
-            dangerouslySetInnerHTML={{ __html: MoonSvg }}
+            dangerouslySetInnerHTML={{ __html: icons.MoonSvg }}
             onClick={() => changeTheme('light')}
           />
         )}
@@ -65,14 +58,14 @@ export const Header: React.FC = () => {
         >
           <button
             title='Copy sharable URL'
-            dangerouslySetInnerHTML={{ __html: copyed ? SuccessSvg : ShareSvg }}
+            dangerouslySetInnerHTML={{ __html: copyed ? icons.SuccessSvg : icons.ShareSvg }}
             onClick={copyLink}
           />
         </CopyToClipboard>
 
         <button
           title='Download project files'
-          dangerouslySetInnerHTML={{ __html: downloaded ? SuccessSvg : DownloadSvg }}
+          dangerouslySetInnerHTML={{ __html: downloaded ? icons.SuccessSvg : icons.DownloadSvg }}
           onClick={downloadProject}
         />
 
@@ -81,7 +74,7 @@ export const Header: React.FC = () => {
           target='_blank'
           title='View on GitHub'
         >
-          <button dangerouslySetInnerHTML={{ __html: GithubSvg }} />
+          <button dangerouslySetInnerHTML={{ __html: icons.GithubSvg }} />
         </a>
       </div>
     </nav>

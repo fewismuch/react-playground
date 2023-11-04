@@ -9,7 +9,7 @@
 <body>
 <script>
   window.addEventListener('error', (e) => {
-    window.parent.postMessage({type:'ERROR',message:e.message})
+    window.parent.postMessage({type: 'ERROR', message: e.message})
   })
 
   window.addEventListener('load', () => {
@@ -21,7 +21,7 @@
       const importmapTag = document.querySelector(
         'script[type="importmap"]',
       );
-      importmapTag.innerHTML = data.data.importmap
+      if (data.data.importmap) importmapTag.innerHTML = data.data.importmap
 
       // 即将要清除的样式
       const appStyleTags = document.querySelectorAll('style[id^="style_"]') || []

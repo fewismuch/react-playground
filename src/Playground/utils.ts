@@ -1,39 +1,9 @@
 import { zlibSync, unzlibSync, strToU8, strFromU8 } from 'fflate'
-import { saveAs } from 'file-saver'
 
 import { IMPORT_MAP_FILE_NAME, reactTemplateFiles } from './files'
-import index from './template/index.html?raw'
-import pkg from './template/package.json?raw'
-import readme from './template/README.md?raw'
-import config from './template/vite.config.js?raw'
 import { ICustomFiles, IImportMap, ITheme } from './types'
 
 import type { IFiles } from './types'
-
-export async function downloadFiles(files: IFiles) {
-  const { default: JSZip } = await import('jszip')
-  const zip = new JSZip()
-
-  // basic structure
-  zip.file('index.html', index)
-  zip.file('package.json', pkg)
-  zip.file('vite.config.js', config)
-  zip.file('README.md', readme)
-
-  // project src
-  const src = zip.folder('src')!
-
-  Object.keys(files).forEach((name) => {
-    if (files[name].name !== IMPORT_MAP_FILE_NAME) {
-      src.file(name, files[name].value)
-    } else {
-      zip.file(name, files[name].value)
-    }
-  })
-
-  const blob = await zip.generateAsync({ type: 'blob' })
-  saveAs(blob, 'react-project.zip')
-}
 
 export function debounce(fn: (...args: any[]) => void, n = 100) {
   let handle: any
