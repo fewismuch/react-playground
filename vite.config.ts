@@ -15,6 +15,16 @@ export default defineConfig({
     importToCDN({
       modules: [
         {
+          name: 'react',
+          var: 'React',
+          path: 'https://cdn.staticfile.org/react/18.2.0/umd/react.production.min.js',
+        },
+        {
+          name: 'react-dom',
+          var: 'ReactDOM',
+          path: 'https://cdn.staticfile.org/react-dom/18.2.0/umd/react-dom.production.min.js',
+        },
+        {
           name: 'typescript',
           var: 'ts',
           path: 'https://cdn.staticfile.org/typescript/5.2.2/typescript.min.js',
