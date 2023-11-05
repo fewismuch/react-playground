@@ -58,6 +58,7 @@ self.addEventListener('message', async ({ data }) => {
         data: transform(data, {
           presets: ['react', 'typescript'],
           retainLines: true,
+          filename: 'tempFileName',
         }).code,
       })
       return
