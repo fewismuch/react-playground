@@ -6,11 +6,17 @@ import { IFiles } from '../../types.ts'
 
 const babelTransform = (filename: string, code: string, files: IFiles) => {
   const _code = beforeTransformCodeHandler(filename, code)
-  return transform(_code, {
-    presets: ['react', 'typescript'],
-    filename,
-    plugins: [customResolver(files)],
-  }).code!
+  let result = ''
+  try {
+    result = transform(_code, {
+      presets: ['react', 'typescript'],
+      filename,
+      plugins: [customResolver(files)],
+    }).code!
+  } catch (e) {
+    self.postMessage({ type: 'ERROR', error: e })
+  }
+  return result
 }
 
 const customResolver = (files: IFiles) => {

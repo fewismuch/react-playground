@@ -73,6 +73,8 @@ export default App
 
 ![截图](https://raw.githubusercontent.com/fewismuch/react-playground/main/src/example/Demo1.png)
 
+> 注意：作为组件使用会导致页面url变化（代码会存到hash中），建议在单独页面中使用。暂时无法一个页面多次使用组件，会有冲突，后续会更新解决
+
 # Props
 
 | Name                 | Type                                                                  | Default          | Description  |

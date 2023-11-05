@@ -2,7 +2,7 @@
   "name": "react-exercise-playground",
   "description": "react-exercise-playground是一个react在线代码编辑器可实时预览运行效果",
   "private": false,
-  "version": "0.0.3",
+  "version": "0.0.4",
   "types": "dist/@types/index.d.ts",
   "main": "dist/index.mjs",
   "files": [
@@ -35,7 +35,7 @@
     "preview": "vite preview",
     "prepare": "husky install",
     "report": "tsc && vite build",
-    "prepublish": "npm run docs && npm run build"
+    "prepublish": "npm run docs && npm run build && npm publish"
   },
   "dependencies": {
     "@babel/standalone": "^7.23.1",

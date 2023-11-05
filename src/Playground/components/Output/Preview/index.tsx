@@ -17,12 +17,12 @@ export const Preview: React.FC<IPreview> = (props) => {
   }, [data])
 
   const handleMessage = (msg: IMessageData) => {
-    const { type, error } = msg.data
+    const { type, message } = msg.data
     if (type === 'LOADED') {
       iframeRef.current?.contentWindow?.postMessage(data)
     } else if (type === 'ERROR') {
-      setError(JSON.stringify(error.message))
-    } else if (!type) {
+      setError(message)
+    } else {
       setError('')
     }
   }

@@ -57,8 +57,8 @@ export const Editor: React.FC<Props> = (props) => {
     // 覆盖原点击变量跳转方法
     editor._codeEditorService.doOpenEditor = function (editor: any, input: any) {
       const path = input.resource.path
-      setSelectedFileName(path.replace('/', ''))
       if (!path.startsWith('/node_modules/')) {
+        setSelectedFileName(path.replace('/', ''))
         doOpenEditor(editor, input)
       }
     }

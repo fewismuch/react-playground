@@ -92,9 +92,7 @@ export interface ITabsItem {
 export interface IMessageData {
     data: {
         type: string;
-        error: {
-            message: string;
-        };
+        message: string;
     };
 }
 export interface IMessage {
