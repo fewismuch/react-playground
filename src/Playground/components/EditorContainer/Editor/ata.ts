@@ -29,8 +29,14 @@ export async function createATA() {
     logger: console,
     fetcher(input, init) {
       // console.log('fetching =>', input, init);
-      // @ts-ignore
-      return fetch(input, init)
+      let result: any
+      try {
+        // @ts-ignore
+        result = fetch(input, init)
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      }
+      return result
     },
     delegate: {
       receivedFile: (code, path) => {
