@@ -50,6 +50,7 @@ specifiers:
   typescript: ^5.0.2
   vite: ^4.4.5
   vite-plugin-cdn-import: ^0.3.5
+  vite-plugin-css-injected-by-js: ^3.3.0
 
 dependencies:
   '@babel/standalone': 7.23.2
@@ -103,6 +104,7 @@ devDependencies:
   typescript: 5.2.2
   vite: 4.5.0_4xeyzcr7cyak4djtmyfiy26urq
   vite-plugin-cdn-import: 0.3.5
+  vite-plugin-css-injected-by-js: 3.3.0_vite@4.5.0
 
 packages:
 
@@ -4132,6 +4134,14 @@ packages:
       rollup-plugin-external-globals: 0.6.1
     transitivePeerDependencies:
       - rollup
+    dev: true
+
+  /vite-plugin-css-injected-by-js/3.3.0_vite@4.5.0:
+    resolution: {integrity: sha512-xG+jyHNCmUqi/TXp6q88wTJGeAOrNLSyUUTp4qEQ9QZLGcHWQQsCsSSKa59rPMQr8sOzfzmWDd8enGqfH/dBew==}
+    peerDependencies:
+      vite: '>2.0.0-0'
+    dependencies:
+      vite: 4.5.0_4xeyzcr7cyak4djtmyfiy26urq
     dev: true
 
   /vite/4.5.0_4xeyzcr7cyak4djtmyfiy26urq:

@@ -9,14 +9,14 @@ function App() {
 export default App
 `,
     'const.ts': {
-      code: 'export const title = "demo2"',
+      code: 'export const title = "demo2";',
       readOnly: true,
     },
   }
 
   return (
     <>
-      <h1>嵌入页面自定义代码示例：</h1>
+      <h1>作为组件使用：</h1>
       <Playground
         showHeader={false}
         showCompileOutput={false}
@@ -26,7 +26,6 @@ export default App
         files={files}
         border
       />
-      <h3>我是页面底部</h3>
     </>
   )
 }

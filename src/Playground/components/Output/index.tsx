@@ -1,13 +1,13 @@
 import MonacoEditor from '@monaco-editor/react'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 
-import CompilerWorker from './compiler.worker.ts?worker'
+import CompilerWorker from './compiler.worker.ts?worker&inline'
 import { Preview } from './Preview'
 import { ViewSelector } from './ViewSelector'
-import { IMPORT_MAP_FILE_NAME } from '../../files'
+import { IMPORT_MAP_FILE_NAME } from '../../files.ts'
 import { PlaygroundContext } from '../../PlaygroundContext'
 import { IPreviewData } from '../../types'
-import { debounce } from '../../utils'
+import { debounce } from '../../utils.ts'
 import { MonacoEditorConfig } from '../EditorContainer/Editor/monacoConfig'
 
 import type { IOutput } from '../../types'

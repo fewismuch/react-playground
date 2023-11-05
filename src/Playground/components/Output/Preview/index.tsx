@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 
-import { getIframeUrl } from './utils'
+import { getIframeUrl } from './utils.ts'
 import { Message } from '../../Message'
 
 import type { IPreview, IMessageData } from '../../../types'

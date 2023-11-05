@@ -4,9 +4,9 @@ import React, { useEffect, useRef, useContext, useState } from 'react'
 import { MonacoEditorConfig } from './monacoConfig'
 import { useEditor } from './useEditor'
 import { PlaygroundContext } from '../../../PlaygroundContext'
-import { fileName2Language } from '../../../utils'
+import { fileName2Language } from '../../../utils.ts'
 
-import type { IEditorOptions, IFile } from '../../../types'
+import type { IEditorOptions, IFile } from '../../../types.ts'
 
 import './jsx-highlight.less'
 import './useEditorWoker'

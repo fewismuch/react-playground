@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 
-import { IDialog } from '../../types'
+import { IDialog } from '../../types.ts'
 
 import styles from './index.module.less'
 

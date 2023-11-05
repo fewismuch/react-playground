@@ -2,7 +2,7 @@ import importMap from './template/import-map.json?raw'
 import AppCss from './template/src/App.css?raw'
 import App from './template/src/App.tsx?raw'
 import main from './template/src/main.tsx?raw'
-import { getFilesFromUrl } from './utils'
+import { getFilesFromUrl } from './utils.ts'
 
 import type { IFiles } from './types'
 

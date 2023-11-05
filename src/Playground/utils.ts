@@ -1,9 +1,9 @@
 import { zlibSync, unzlibSync, strToU8, strFromU8 } from 'fflate'
 
-import { IMPORT_MAP_FILE_NAME, reactTemplateFiles } from './files'
-import { ICustomFiles, IImportMap, ITheme } from './types'
+import { IMPORT_MAP_FILE_NAME, reactTemplateFiles } from './files.ts'
+import { ICustomFiles, IImportMap, ITheme } from './types.ts'
 
-import type { IFiles } from './types'
+import type { IFiles } from './types.ts'
 
 export function debounce(fn: (...args: any[]) => void, n = 100) {
   let handle: any
@@ -43,7 +43,9 @@ const STORAGE_DARK_THEME = 'react-playground-prefer-dark'
 
 export const setPlaygroundTheme = (theme: ITheme) => {
   localStorage.setItem(STORAGE_DARK_THEME, String(theme === 'dark'))
-  document.querySelector('div[data-id="react-playground"]')?.setAttribute('class', theme)
+  document
+    .querySelectorAll('div[data-id="react-playground"]')
+    ?.forEach((item) => item.setAttribute('class', theme))
 }
 
 export const getPlaygroundTheme = () => {
