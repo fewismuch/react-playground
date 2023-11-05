@@ -36,7 +36,7 @@ export const useEditor = () => {
 
     highlighter()
 
-    return dispose
+    return { highlighter, dispose }
   }
 
   const autoLoadExtraLib = async (editor: any, monaco: any, defaultValue: string) => {

@@ -2,7 +2,7 @@
   "name": "react-exercise-playground",
   "description": "react-exercise-playground是一个react在线代码编辑器可实时预览运行效果",
   "private": false,
-  "version": "0.0.5",
+  "version": "0.0.6",
   "types": "dist/@types/index.d.ts",
   "main": "dist/index.mjs",
   "files": [

@@ -22,6 +22,7 @@ export const Editor: React.FC<Props> = (props) => {
   const { theme, files, setSelectedFileName } = useContext(PlaygroundContext)
   const editorRef = useRef<any>(null)
   const { doOpenEditor, loadJsxSyntaxHighlight, autoLoadExtraLib } = useEditor()
+  const jsxSyntaxHighlightRef = useRef<any>({ highlighter: null, dispose: null })
   const [editorOptions, setEditorOptions] = useState({
     ...MonacoEditorConfig,
     ...{
@@ -67,11 +68,12 @@ export const Editor: React.FC<Props> = (props) => {
     autoLoadExtraLib(editor, monaco, file.value)
 
     // 加载jsx高亮
-    loadJsxSyntaxHighlight(editor, monaco)
+    jsxSyntaxHighlightRef.current = loadJsxSyntaxHighlight(editor, monaco)
   }
 
   useEffect(() => {
     editorRef.current?.focus()
+    jsxSyntaxHighlightRef?.current?.highlighter?.()
   }, [file.name])
 
   useEffect(() => {
