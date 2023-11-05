@@ -19,8 +19,8 @@
 # NEXT TODO
 
 - [X]  发布npm包，支持项目内嵌入使用
-- [X]  提供多场景示例
-- [ ]  完善文档
+- [X]  提供场景示例
+- [ ]  丰富实用文档
 - [X]  支持ts,tsx
 - [X]  支持第三方依赖ts类型自动导入
 - [ ]  发布1.0版本
@@ -37,7 +37,7 @@ pnpm install react-exercise-playground --save
 # 使用示例
 
 ```tsx
-import { Playground } from 'react-exercise-playground'
+import {Playground} from 'react-exercise-playground'
 
 export const Demo1 = () => {
   const files = {
@@ -70,11 +70,47 @@ export default App
 }
 
 ```
+
 ![截图](https://raw.githubusercontent.com/fewismuch/react-playground/main/src/example/Demo1.png)
 
 # Props
 
-| Name  | Type | Default | Description |
-| :---- | :--- | :------ | :---------- |
-|  |      |         |             |
+| Name                 | Type                                                                  | Default          | Description  |
+|:---------------------|:----------------------------------------------------------------------|:-----------------|:-------------|
+| width                | string丨number丨undefined                                               | 100vw            | 宽度           |
+| height               | string丨number丨undefined                                               | 100vh            | 高度           |
+| theme                | 'dark'丨'light'丨undefined                                              | 'light'          | 主题           |
+| showHeader           | boolean丨undefined                                                     | true             | 是否显示头部       |
+| border               | boolean丨undefined                                                     | false            | 是否显示边框       |
+| showFileSelector     | boolean丨undefined                                                     | true             | 是否显示文件tab    |
+| fileSelectorReadOnly | boolean丨undefined                                                     | false            | 文件tab是否只读    |
+| onUrlChange          | (url: string) => void                                                 | undefined        |              |
+| showCompileOutput    | boolean丨undefined                                                     | true             | 是否显示编译后代码    |
+| defaultSizes         | number[]丨undefined                                                    | [100,100]        | 编辑器和预览区宽度比例  |
+| options              | { lineNumbers?: boolean;fontSize?: number;tabSize?: number}丨undefined | undefined        | 编辑器配置        |
+| files                | File                                                                  | Object           | 初始化代码        |
+| importMap            | { imports: Record<string, string> }                                   | defaultImportMap | 初始化importmap |
 
+### File
+```ts
+interface File {
+  [key: string]:
+| string
+  | {
+    code: string
+    readOnly?: boolean
+    active?: boolean
+    hidden?: boolean
+  }
+}
+
+```
+### defaultImportMap
+```json
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.2.0",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0"
+  }
+}
+```
