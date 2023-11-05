@@ -29,7 +29,8 @@ export const icons = {
 }
 
 export async function downloadFiles(files: IFiles) {
-  const { default: JSZip } = await import('jszip')
+  // @ts-ignore
+  const { default: JSZip } = await import('https://esm.sh/jszip@3.10.1')
   const zip = new JSZip()
 
   // basic structure

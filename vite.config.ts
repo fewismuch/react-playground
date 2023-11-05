@@ -32,16 +32,16 @@ export default defineConfig({
               var: 'ReactDOM',
               path: 'https://cdn.staticfile.org/react-dom/18.2.0/umd/react-dom.production.min.js',
             },
-            {
-              name: 'typescript',
-              var: 'ts',
-              path: 'https://cdn.staticfile.org/typescript/5.2.2/typescript.min.js',
-            },
-            {
-              name: 'jszip',
-              var: 'jszip',
-              path: 'https://cdn.staticfile.org/jszip/3.10.1/jszip.min.js',
-            },
+            // {
+            //   name: 'typescript',
+            //   var: 'ts',
+            //   path: 'https://cdn.staticfile.org/typescript/5.2.2/typescript.min.js',
+            // },
+            // {
+            //   name: 'jszip',
+            //   var: 'jszip',
+            //   path: 'https://cdn.staticfile.org/jszip/3.10.1/jszip.min.js',
+            // },
           ],
         }),
   ],

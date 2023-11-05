@@ -39,9 +39,10 @@ export const useEditor = () => {
     return dispose
   }
 
-  // 自动加载第三方包的类型定义文件
-  const typeHelper = createATA()
-  const autoLoadExtraLib = (editor: any, monaco: any, defaultValue: string) => {
+  const autoLoadExtraLib = async (editor: any, monaco: any, defaultValue: string) => {
+    // 自动加载第三方包的类型定义文件
+    const typeHelper = await createATA()
+
     editor.onDidChangeModelContent(() => {
       typeHelper.acquireType(editor.getValue())
     })

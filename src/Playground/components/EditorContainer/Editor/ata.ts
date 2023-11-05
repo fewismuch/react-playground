@@ -1,36 +1,10 @@
 import { setupTypeAcquisition, ATABootstrapConfig } from '@typescript/ata'
-import ts from 'typescript'
-
-const delegateListener = createDelegate()
-
-const ata = setupTypeAcquisition({
-  projectName: 'monaco-ts',
-  typescript: ts,
-  logger: console,
-  fetcher(input, init) {
-    // console.log('fetching =>', input, init);
-    // @ts-ignore
-    return fetch(input, init)
-  },
-  delegate: {
-    receivedFile: (code, path) => {
-      delegateListener.receivedFile.forEach((fn) => fn(code, path))
-    },
-    progress: (downloaded, total) => {
-      delegateListener.progress.forEach((fn) => fn(downloaded, total))
-    },
-    started: () => {
-      delegateListener.started.forEach((fn) => fn())
-    },
-    finished: (_f) => {
-      delegateListener.finished.forEach((fn) => fn(_f))
-    },
-  },
-})
 
 type DelegateListener = Required<{
   [k in keyof ATABootstrapConfig['delegate']]: Set<NonNullable<ATABootstrapConfig['delegate'][k]>>
 }>
+
+const delegateListener = createDelegate()
 
 function createDelegate() {
   const delegate: DelegateListener = {
@@ -46,7 +20,34 @@ function createDelegate() {
 
 type InferSet<T> = T extends Set<infer U> ? U : never
 
-export function createATA() {
+export async function createATA() {
+  // @ts-ignore
+  const ts = await import('https://esm.sh/typescript@5.2.2')
+  const ata = setupTypeAcquisition({
+    projectName: 'monaco-ts',
+    typescript: ts,
+    logger: console,
+    fetcher(input, init) {
+      // console.log('fetching =>', input, init);
+      // @ts-ignore
+      return fetch(input, init)
+    },
+    delegate: {
+      receivedFile: (code, path) => {
+        delegateListener.receivedFile.forEach((fn) => fn(code, path))
+      },
+      progress: (downloaded, total) => {
+        delegateListener.progress.forEach((fn) => fn(downloaded, total))
+      },
+      started: () => {
+        delegateListener.started.forEach((fn) => fn())
+      },
+      finished: (_f) => {
+        delegateListener.finished.forEach((fn) => fn(_f))
+      },
+    },
+  })
+
   const acquireType = (code: string) => ata(code)
   const addListener = <T extends keyof DelegateListener>(
     event: T,
