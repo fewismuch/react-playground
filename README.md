@@ -1,11 +1,10 @@
 # react-exercise-playground
 
-`react-exercise-playground` 是一个可在线编辑react代码并实时预览渲染效果的组件，支持ts，tsx，支持引入第三方库
+`react-exercise-playground` 是一个可以在线编辑react代码并实时预览渲染效果的组件，支持ts，tsx，支持引入第三方库，支持自定义文件
 
 ![截图](https://raw.githubusercontent.com/fewismuch/react-playground/main/src/example/index.png)
 
 [基础示例](https://fewismuch.github.io/react-playground)
-
 
 [ahooks示例](https://fewismuch.github.io/react-playground/#eNqNU8tu2zAQ/JUtL5IAm+zj0MB1i/R16MFokVwagBdCom0l4gMkFdgQ9O9ZUrJjOQ4QQBCWszuj3R2qI0rUmga/I4uOaKEkWTxDM9IIvWnFJqJhb6UvXW0D4o+iaSNYK2tcgBspygBrZxRkLsYZ16epX39Xp9l5ZRQrm1rqWHgs/W7tWEUZxil1oNMSmUHeGBPyypStQi7dyPC7kTH8sf9T5ZnDbFa8K6iTupIu5xpgmRTobXB1GVamkt8iinj8GkuHJbtQU3BN+hnBqrPtHJA3L6eD1suVwRf043xia8yDz77ECdetLkNtdBw/L6CLHZVG+wAqcb4e6XmRCABOhtZpSPNh+1X9OA6FB3sMAX6mFcMcdgvokhodtv6/n8H+DLvrjxrsWWSi9w+HnahZBKZaEXmD0i3aKfVEC9eH0FRtwC7pLdlhajQK81zLXdp2JdeibdJlGhwcXJgrYem9N/rEyfPMxNEROXiZbOEjxXOCLQ6NcJKudEQ42YZg/YIx6RX1W5Yy1x+u6Ef6npPZhHDyD7zOjUUv+cPtucgaUtef6Gd6xUkk4G7wIX3/BJ7TRj4=) 
 
@@ -16,12 +15,11 @@
 # 特点
 
 - 可以在线编辑代码,提供实时交互式演示
-- 代码自动保存到 URL 上, 分享网址即可分享代码
-- 添加自定义文件，支持ts/tsx/js/jsx/css/json
-- 支持动态引入其他标签页的代码
 - 支持引入第三方库（ESM包）
-- 纯前端部署, 不依赖服务器
-- 快速简单易用
+- 自动从jsdelivr加载第三库ts类型文件
+- 支持自定义文件并动态引入，支持ts/tsx/js/jsx/css/json
+- 代码自动保存到 URL 上, 分享网址即可分享代码
+- 纯前端部署, 不依赖服务器，可公司内部署使用内部包
 
 # NEXT TODO
 
