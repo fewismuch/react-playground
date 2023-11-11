@@ -3,14 +3,15 @@ import React, { useContext, useEffect } from 'react'
 import { EditorContainer } from './components/EditorContainer'
 import { Header } from './components/Header'
 import { Output } from './components/Output'
+import { Sandbox } from './components/Sandbox'
 import { SplitPane } from './components/SplitPane'
-import { MAIN_FILE_NAME } from './files'
+import { ENTRY_FILE_NAME, initFiles, MAIN_FILE_NAME } from './files'
 import { PlaygroundContext, PlaygroundProvider } from './PlaygroundContext'
-import { getCustomActiveFile, getMergedCustomFiles } from './utils'
-
-import './index.less'
+import { getCustomActiveFile, getMergedCustomFiles, getPlaygroundTheme } from './utils'
 
 import type { IPlayground } from './types'
+
+import './index.less'
 
 const defaultCodeSandboxOptions = {
   theme: 'dark',
@@ -23,8 +24,8 @@ const ReactPlayground = (props: IPlayground) => {
     width = '100vw',
     height = '100vh',
     theme,
+    files: propsFiles,
     importMap,
-    files,
     showCompileOutput = true,
     showHeader = true,
     showFileSelector = true,
@@ -33,34 +34,51 @@ const ReactPlayground = (props: IPlayground) => {
     defaultSizes,
     onFilesChange,
   } = props
-  const { filesHash, changeTheme, setFiles, setSelectedFileName } = useContext(PlaygroundContext)
+  const { filesHash, changeTheme, files, setFiles, setSelectedFileName } =
+    useContext(PlaygroundContext)
   const options = Object.assign(defaultCodeSandboxOptions, props.options || {})
 
   useEffect(() => {
-    if (files && !files?.[MAIN_FILE_NAME]) {
+    if (propsFiles && !propsFiles?.[MAIN_FILE_NAME]) {
       throw new Error(
         `Missing required property : '${MAIN_FILE_NAME}' is a mandatory property for 'files'`
       )
-    } else {
-      const newFiles = getMergedCustomFiles(files, importMap)
+    } else if (propsFiles) {
+      const newFiles = getMergedCustomFiles(propsFiles, importMap)
       if (newFiles) setFiles(newFiles)
-      const selectedFileName = getCustomActiveFile(files)
+      const selectedFileName = getCustomActiveFile(propsFiles)
       if (selectedFileName) setSelectedFileName(selectedFileName)
     }
-  }, [files])
-
-  useEffect(() => {
-    if (theme) changeTheme(theme)
-  }, [theme])
+  }, [propsFiles])
 
   useEffect(() => {
     onFilesChange?.(filesHash)
   }, [filesHash])
 
-  return (
+  useEffect(() => {
+    setTimeout(() => {
+      if (!theme) {
+        changeTheme(getPlaygroundTheme())
+      } else {
+        changeTheme(theme)
+      }
+    }, 15)
+  }, [theme])
+
+  useEffect(() => {
+    if (!propsFiles) setFiles(initFiles)
+  }, [])
+
+  return files[ENTRY_FILE_NAME] ? (
     <div
       data-id='react-playground'
-      style={{ width, height, border: border ? '1px solid var(--border)' : '' }}
+      className={theme}
+      style={{
+        width,
+        height,
+        boxSizing: 'border-box',
+        border: border ? '1px solid var(--border)' : '',
+      }}
     >
       {showHeader ? <Header /> : null}
       <div style={{ height: `calc(100% - ${showHeader ? 50 : 0}px)` }}>
@@ -74,7 +92,7 @@ const ReactPlayground = (props: IPlayground) => {
         </SplitPane>
       </div>
     </div>
-  )
+  ) : null
 }
 
 export const Playground: React.FC<IPlayground> = (props) => {
@@ -84,3 +102,5 @@ export const Playground: React.FC<IPlayground> = (props) => {
     </PlaygroundProvider>
   )
 }
+
+export const PlaygroundSandbox = Sandbox

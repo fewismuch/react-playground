@@ -1,12 +1,11 @@
 import React, { createContext, useEffect, useState } from 'react'
 
-import { initFiles, MAIN_FILE_NAME } from './files'
-import { fileName2Language, getPlaygroundTheme, setPlaygroundTheme, utoa } from './utils'
+import { MAIN_FILE_NAME } from './files'
+import { fileName2Language, setPlaygroundTheme, utoa } from './utils'
 
-import type { IPlaygroundContext, ITheme } from './types'
+import type { IFiles, IPlaygroundContext, ITheme } from './types'
 
 const initialContext: Partial<IPlaygroundContext> = {
-  files: initFiles,
   selectedFileName: MAIN_FILE_NAME,
 }
 
@@ -20,7 +19,7 @@ export const PlaygroundProvider = (props: {
 }) => {
   const { children, saveOnUrl = true } = props
 
-  const [files, setFiles] = useState(initialContext.files!)
+  const [files, setFiles] = useState<IFiles>({})
   const [theme, setTheme] = useState(initialContext.theme!)
   const [selectedFileName, setSelectedFileName] = useState(initialContext.selectedFileName!)
   const [filesHash, setFilesHash] = useState('')
@@ -62,14 +61,9 @@ export const PlaygroundProvider = (props: {
 
   useEffect(() => {
     const hash = utoa(JSON.stringify(files))
-    console.log(saveOnUrl)
     if (saveOnUrl) window.location.hash = hash
     setFilesHash(hash)
   }, [files])
-
-  useEffect(() => {
-    changeTheme(getPlaygroundTheme())
-  }, [])
 
   return (
     <PlaygroundContext.Provider

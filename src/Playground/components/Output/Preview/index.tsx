@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 
+import iframeRaw from './iframe.html?raw'
 import { getIframeUrl } from './utils'
 
 import { Message } from '@/Playground/components/Message'
 import type { IPreview, IMessageData } from '@/Playground/types'
 
-const iframeUrl = getIframeUrl()
+const iframeUrl = getIframeUrl(iframeRaw)
 
 export const Preview: React.FC<IPreview> = (props) => {
   const { hidden, data, iframeKey } = props
