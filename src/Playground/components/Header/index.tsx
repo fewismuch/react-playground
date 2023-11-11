@@ -3,9 +3,10 @@ import React, { useContext, useState } from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import { downloadFiles, icons } from './utils.ts'
-import { PlaygroundContext } from '../../PlaygroundContext'
 
 import styles from './index.module.less'
+
+import { PlaygroundContext } from '@/Playground/PlaygroundContext'
 
 export const Header: React.FC = () => {
   const { files, theme, changeTheme, filesHash } = useContext(PlaygroundContext)

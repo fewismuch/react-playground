@@ -1,9 +1,9 @@
 import { zlibSync, unzlibSync, strToU8, strFromU8 } from 'fflate'
 
-import { IMPORT_MAP_FILE_NAME, reactTemplateFiles } from './files.ts'
-import { ICustomFiles, IImportMap, ITheme } from './types.ts'
+import { IMPORT_MAP_FILE_NAME, reactTemplateFiles } from './files'
+import { ICustomFiles, IImportMap, ITheme } from './types'
 
-import type { IFiles } from './types.ts'
+import type { IFiles } from './types'
 
 export function debounce(fn: (...args: any[]) => void, n = 100) {
   let handle: any
@@ -70,7 +70,6 @@ const transformCustomFiles = (files: ICustomFiles) => {
         value: tempFile.code,
         hidden: tempFile.hidden,
         active: tempFile.active,
-        readOnly: tempFile.readOnly,
       }
     }
   })
@@ -134,4 +133,29 @@ export const fileName2Language = (name: string) => {
   if (['json'].includes(suffix)) return 'json'
   if (['css'].includes(suffix)) return 'css'
   return 'javascript'
+}
+
+export const generateRandomString = (length = 10) => {
+  const charactersLength = Math.ceil(length / 2)
+  const numbersLength = length - charactersLength
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+  const numbers = '0123456789'
+  let randomString = ''
+
+  for (let i = 0; i < charactersLength; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length)
+    randomString += characters.charAt(randomIndex)
+  }
+
+  for (let i = 0; i < numbersLength; i++) {
+    const randomIndex = Math.floor(Math.random() * numbers.length)
+    randomString += numbers.charAt(randomIndex)
+  }
+
+  randomString = randomString
+    .split('')
+    .sort(() => Math.random() - 0.5)
+    .join('')
+
+  return randomString
 }

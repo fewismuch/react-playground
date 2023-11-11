@@ -1,8 +1,8 @@
 import React, { useRef } from 'react'
 
-import { IDialog } from '../../types.ts'
-
 import styles from './index.module.less'
+
+import type { IDialog } from '@/Playground/types'
 
 export const Dialog: React.FC<IDialog> = (props) => {
   const { message, onConfirm, children } = props

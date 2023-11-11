@@ -4,13 +4,12 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import CompilerWorker from './compiler.worker.ts?worker&inline'
 import { Preview } from './Preview'
 import { ViewSelector } from './ViewSelector'
-import { IMPORT_MAP_FILE_NAME } from '../../files.ts'
-import { PlaygroundContext } from '../../PlaygroundContext'
-import { IPreviewData } from '../../types'
-import { debounce } from '../../utils.ts'
 import { MonacoEditorConfig } from '../EditorContainer/Editor/monacoConfig'
 
-import type { IOutput } from '../../types'
+import { IMPORT_MAP_FILE_NAME } from '@/Playground/files.ts'
+import { PlaygroundContext } from '@/Playground/PlaygroundContext'
+import type { IOutput, IPreviewData } from '@/Playground/types'
+import { debounce } from '@/Playground/utils.ts'
 
 const viewTypes = ['PREVIEW', 'JS']
 

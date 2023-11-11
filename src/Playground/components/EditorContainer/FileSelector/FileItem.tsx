@@ -1,10 +1,11 @@
 import classnames from 'classnames'
 import React, { useState, useRef, useEffect } from 'react'
 
-import { ITabsItem } from '../../../types'
 import { Dialog } from '../../Dialog'
 
 import styles from './index.module.less'
+
+import type { ITabsItem } from '@/Playground/types'
 
 export const FileItem: React.FC<ITabsItem> = (props) => {
   const {

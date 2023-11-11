@@ -2,7 +2,7 @@ import importMap from './template/import-map.json?raw'
 import AppCss from './template/src/App.css?raw'
 import App from './template/src/App.tsx?raw'
 import main from './template/src/main.tsx?raw'
-import { getFilesFromUrl } from './utils.ts'
+import { getFilesFromUrl, fileName2Language } from './utils'
 
 import type { IFiles } from './types'
 
@@ -16,12 +16,12 @@ export const ENTRY_FILE_NAME = 'main.tsx'
 export const initFiles: IFiles = getFilesFromUrl() || {
   [ENTRY_FILE_NAME]: {
     name: ENTRY_FILE_NAME,
-    language: 'typescript',
+    language: fileName2Language(ENTRY_FILE_NAME),
     value: main,
   },
   [MAIN_FILE_NAME]: {
     name: MAIN_FILE_NAME,
-    language: 'typescript',
+    language: fileName2Language(MAIN_FILE_NAME),
     value: App,
   },
   'App.css': {
@@ -31,7 +31,7 @@ export const initFiles: IFiles = getFilesFromUrl() || {
   },
   [IMPORT_MAP_FILE_NAME]: {
     name: IMPORT_MAP_FILE_NAME,
-    language: 'json',
+    language: fileName2Language(IMPORT_MAP_FILE_NAME),
     value: importMap,
   },
 }
@@ -39,12 +39,12 @@ export const initFiles: IFiles = getFilesFromUrl() || {
 export const reactTemplateFiles = {
   [ENTRY_FILE_NAME]: {
     name: ENTRY_FILE_NAME,
-    language: 'typescript',
+    language: fileName2Language(ENTRY_FILE_NAME),
     value: main,
   },
   [IMPORT_MAP_FILE_NAME]: {
     name: IMPORT_MAP_FILE_NAME,
-    language: 'json',
+    language: fileName2Language(IMPORT_MAP_FILE_NAME),
     value: importMap,
   },
 }

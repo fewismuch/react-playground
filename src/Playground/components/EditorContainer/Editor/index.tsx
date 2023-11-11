@@ -1,12 +1,12 @@
 import MonacoEditor, { Monaco } from '@monaco-editor/react'
-import React, { useEffect, useRef, useContext, useState } from 'react'
+import React, { useEffect, useRef, useContext } from 'react'
 
 import { MonacoEditorConfig } from './monacoConfig'
 import { useEditor } from './useEditor'
-import { PlaygroundContext } from '../../../PlaygroundContext'
-import { fileName2Language } from '../../../utils.ts'
 
-import type { IEditorOptions, IFile } from '../../../types.ts'
+import { PlaygroundContext } from '@/Playground/PlaygroundContext'
+import type { IEditorOptions, IFile } from '@/Playground/types.ts'
+import { fileName2Language } from '@/Playground/utils.ts'
 
 import './jsx-highlight.less'
 import './useEditorWoker'
@@ -23,13 +23,6 @@ export const Editor: React.FC<Props> = (props) => {
   const editorRef = useRef<any>(null)
   const { doOpenEditor, loadJsxSyntaxHighlight, autoLoadExtraLib } = useEditor()
   const jsxSyntaxHighlightRef = useRef<any>({ highlighter: null, dispose: null })
-  const [editorOptions, setEditorOptions] = useState({
-    ...MonacoEditorConfig,
-    ...{
-      ...options,
-      theme: undefined,
-    },
-  })
 
   const handleEditorDidMount = (editor: any, monaco: Monaco) => {
     editorRef.current = editor
@@ -76,13 +69,6 @@ export const Editor: React.FC<Props> = (props) => {
     jsxSyntaxHighlightRef?.current?.highlighter?.()
   }, [file.name])
 
-  useEffect(() => {
-    setEditorOptions({
-      ...editorOptions,
-      readOnly: file.readOnly,
-    })
-  }, [file.readOnly])
-
   useEffect(() => {}, [])
 
   return (
@@ -95,7 +81,13 @@ export const Editor: React.FC<Props> = (props) => {
       value={file.value}
       onChange={onChange}
       onMount={handleEditorDidMount}
-      options={editorOptions}
+      options={{
+        ...MonacoEditorConfig,
+        ...{
+          ...options,
+          theme: undefined,
+        },
+      }}
     />
   )
 }

@@ -2,11 +2,11 @@ import React, { useContext, useState } from 'react'
 
 import { Editor } from './Editor'
 import { FileSelector } from './FileSelector'
-import { PlaygroundContext } from '../../PlaygroundContext'
-import { debounce } from '../../utils.ts'
 import { Message } from '../Message'
 
-import type { IEditorContainer } from '../../types.ts'
+import { PlaygroundContext } from '@/Playground/PlaygroundContext'
+import type { IEditorContainer } from '@/Playground/types.ts'
+import { debounce } from '@/Playground/utils.ts'
 
 export const EditorContainer: React.FC<IEditorContainer> = (props) => {
   const { showFileSelector, fileSelectorReadOnly, options = {} } = props

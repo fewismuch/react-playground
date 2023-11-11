@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 
-import { getIframeUrl } from './utils.ts'
-import { Message } from '../../Message'
+import { getIframeUrl } from './utils'
 
-import type { IPreview, IMessageData } from '../../../types'
+import { Message } from '@/Playground/components/Message'
+import type { IPreview, IMessageData } from '@/Playground/types'
 
 const iframeUrl = getIframeUrl()
 

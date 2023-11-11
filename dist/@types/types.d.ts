@@ -5,7 +5,6 @@ export interface IFile {
     name: string;
     value: string;
     language: string;
-    readOnly?: boolean;
     active?: boolean;
     hidden?: boolean;
 }
@@ -15,7 +14,6 @@ export interface IFiles {
 export interface ICustomFiles {
     [key: string]: string | {
         code: string;
-        readOnly?: boolean;
         active?: boolean;
         hidden?: boolean;
     };

@@ -9,8 +9,7 @@ function App() {
 export default App
 `,
     'const.ts': {
-      code: 'export const title = "demo2";',
-      readOnly: true,
+      code: 'export const title = "demo2"',
     },
   }
 

@@ -1,9 +1,9 @@
 import classnames from 'classnames'
 import React from 'react'
 
-import { IViewSelector } from '../../../types'
-
 import styles from './index.module.less'
+
+import { IViewSelector } from '@/Playground/types'
 
 export const ViewSelector: React.FC<IViewSelector> = (props) => {
   const { onChange, items, value = items[0], hidden } = props

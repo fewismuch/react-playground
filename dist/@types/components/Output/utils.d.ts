@@ -1,4 +1,4 @@
-import { IFile, IFiles } from '../../types';
+import { IFile, IFiles } from '@/Playground/types';
 export declare const getModuleFile: (files: IFiles, moduleName: string) => IFile;
 export declare const json2Js: (file: IFile) => string;
 export declare const css2Js: (file: IFile) => string;

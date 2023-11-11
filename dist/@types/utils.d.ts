@@ -1,5 +1,5 @@
-import { ICustomFiles, IImportMap, ITheme } from './types.ts';
-import type { IFiles } from './types.ts';
+import { ICustomFiles, IImportMap, ITheme } from './types';
+import type { IFiles } from './types';
 export declare function debounce(fn: (...args: any[]) => void, n?: number): (...args: any[]) => void;
 export declare function utoa(data: string): string;
 export declare function atou(base64: string): string;
@@ -19,4 +19,5 @@ export declare const getMergedCustomFiles: (files?: ICustomFiles, importMap?: II
     };
 } | null;
 export declare const getFilesFromUrl: () => IFiles | undefined;
-export declare const fileName2Language: (name: string) => "typescript" | "json" | "javascript" | "css";
+export declare const fileName2Language: (name: string) => "javascript" | "typescript" | "json" | "css";
+export declare const generateRandomString: (length?: number) => string;

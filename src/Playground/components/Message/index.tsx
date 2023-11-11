@@ -1,9 +1,9 @@
 import classnames from 'classnames'
 import React, { useEffect, useState } from 'react'
 
-import { IMessage } from '../../types'
-
 import styles from './index.module.less'
+
+import type { IMessage } from '@/Playground/types'
 
 export const Message: React.FC<IMessage> = (props) => {
   const { type, context } = props
