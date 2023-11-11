@@ -54,7 +54,6 @@ export default App
 `,
     'const.ts': {
       code: 'export const title = "demo2";',
-      readOnly: true,
     },
   }
 
@@ -105,7 +104,6 @@ interface File {
 | string
   | {
     code: string
-    readOnly?: boolean
     active?: boolean
     hidden?: boolean
   }
