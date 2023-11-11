@@ -7,11 +7,13 @@ import { Plugin as importToCDN } from 'vite-plugin-cdn-import'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
 const lifecycle = process.env.npm_lifecycle_event
-const isDevelopment = process.env.NODE_ENV === 'development'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
+  define: {
+    'process.env': {},
+  },
   plugins: [
     react(),
     cssInjectedByJsPlugin({ topExecutionPriority: false }),
@@ -32,16 +34,6 @@ export default defineConfig({
               var: 'ReactDOM',
               path: 'https://cdn.staticfile.org/react-dom/18.2.0/umd/react-dom.production.min.js',
             },
-            // {
-            //   name: 'typescript',
-            //   var: 'ts',
-            //   path: 'https://cdn.staticfile.org/typescript/5.2.2/typescript.min.js',
-            // },
-            // {
-            //   name: 'jszip',
-            //   var: 'jszip',
-            //   path: 'https://cdn.staticfile.org/jszip/3.10.1/jszip.min.js',
-            // },
           ],
         }),
   ],
@@ -54,11 +46,11 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': '/src',
+      '@': resolve(__dirname, './src'),
     },
   },
   optimizeDeps: {
-    exclude: isDevelopment ? undefined : ['react', 'react-dom'],
+    exclude: ['react', 'react-dom'],
   },
   build: {
     minify: true,
