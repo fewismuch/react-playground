@@ -39,7 +39,6 @@
     }
   ],
   "include": [
-    "src/Playground",
-    "src/vite-env.d.ts"
+    "src/**/*",
   ]
 }

@@ -15,6 +15,7 @@ import type { IPlayground } from './types'
 const defaultCodeSandboxOptions = {
   theme: 'dark',
   editorHeight: '100vh',
+  showUrlHash: true,
 }
 
 const ReactPlayground = (props: IPlayground) => {
@@ -30,7 +31,7 @@ const ReactPlayground = (props: IPlayground) => {
     fileSelectorReadOnly = false,
     border = false,
     defaultSizes,
-    onUrlChange,
+    onFilesChange,
   } = props
   const { filesHash, changeTheme, setFiles, setSelectedFileName } = useContext(PlaygroundContext)
   const options = Object.assign(defaultCodeSandboxOptions, props.options || {})
@@ -53,7 +54,7 @@ const ReactPlayground = (props: IPlayground) => {
   }, [theme])
 
   useEffect(() => {
-    onUrlChange?.(filesHash)
+    onFilesChange?.(filesHash)
   }, [filesHash])
 
   return (
@@ -78,7 +79,7 @@ const ReactPlayground = (props: IPlayground) => {
 
 export const Playground: React.FC<IPlayground> = (props) => {
   return (
-    <PlaygroundProvider>
+    <PlaygroundProvider saveOnUrl={props.saveOnUrl}>
       <ReactPlayground {...props} />
     </PlaygroundProvider>
   )

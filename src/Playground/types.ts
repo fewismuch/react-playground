@@ -57,7 +57,8 @@ export type IPlayground = {
   }
   showHeader?: boolean
   border?: boolean
-  onUrlChange?: (url: string) => void
+  onFilesChange?: (url: string) => void
+  saveOnUrl?: boolean
 } & Omit<IEditorContainer, 'options'> &
   IOutput &
   ISplitPane

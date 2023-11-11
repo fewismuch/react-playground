@@ -1,4 +1,4 @@
-import { zlibSync, unzlibSync, strToU8, strFromU8 } from 'fflate'
+import { strFromU8, strToU8, unzlibSync, zlibSync } from 'fflate'
 
 import { IMPORT_MAP_FILE_NAME, reactTemplateFiles } from './files'
 import { ICustomFiles, IImportMap, ITheme } from './types'
@@ -80,14 +80,13 @@ const transformCustomFiles = (files: ICustomFiles) => {
 // 获取用户自定义的选中文件
 export const getCustomActiveFile = (files?: ICustomFiles) => {
   if (!files) return null
-  const result = Object.keys(files).find((key) => {
+  return Object.keys(files).find((key) => {
     const tempFile = files[key]
     if (typeof tempFile !== 'string' && tempFile.active) {
       return key
     }
     return null
   })
-  return result
 }
 
 // 合并用户自定义files和importMap，files需要转换
