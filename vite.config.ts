@@ -50,7 +50,7 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    exclude: ['react', 'react-dom'],
+    exclude: lifecycle === 'dev' ? null : ['react', 'react-dom'],
   },
   build: {
     minify: true,

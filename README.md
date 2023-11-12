@@ -1,6 +1,6 @@
 # react-exercise-playground
 
-`react-exercise-playground` 是一个可以在线编辑react代码并实时预览渲染效果的组件，支持ts，tsx，支持引入第三方库，支持自定义文件
+`react-exercise-playground` 是一个react在线代码编辑器，可实时运行react代码，支持动态引入自定义文件和第三方依赖包，支持ts，tsx
 
 ![截图](https://raw.githubusercontent.com/fewismuch/react-playground/main/src/example/index.png)
 
@@ -14,22 +14,25 @@
 
 # 特点
 
-- 可以在线编辑代码,提供实时交互式演示
-- 支持引入第三方库（ESM包）
-- 自动从jsdelivr加载第三库ts类型文件
-- 支持自定义文件并动态引入，支持ts/tsx/js/jsx/css/json
+- 可以在线编辑react代码,提供实时交互式演示
+- 支持引入第三方库（ESM格式）
+- 自动加载第三库ts类型文件，提供友好的编码提示
+- 自定义文件并动态引入，支持ts/tsx/js/jsx/css/json
 - 代码自动保存到 URL 上, 分享网址即可分享代码
 - 纯前端部署, 不依赖服务器，可公司内部署使用内部包
 
 # NEXT TODO
 
-- [X]  发布npm包，支持项目内嵌入使用
-- [X]  提供场景示例
+- [X]  ~~发布npm包，支持项目内嵌入使用~~
+- [X]  ~~提供场景示例~~
 - [ ]  丰富实用文档
-- [X]  支持ts,tsx
-- [X]  支持第三方依赖ts类型自动导入
+- [X]  ~~支持ts,tsx~~
+- [X]  ~~支持第三方依赖ts类型自动导入~~
 - [ ]  发布1.0版本
 - [ ]  编译器改为esbuild-wasm，提升预览速度
+- [ ]  待定：将playground项目和sandbox包分离
+
+> 1.0版本之前可能会有一些API变动和功能新增，我会尽快修复并稳定，如果兴趣的可以关注一下
 
 # 安装
 
@@ -45,6 +48,23 @@ pnpm install react-exercise-playground --save
 import {Playground} from 'react-exercise-playground'
 
 export const Demo1 = () => {
+  return <Playground />
+}
+
+```
+> `Playground` 是基础组件，使用时对宿主环境有侵入性（会动态加载一些js和css且默认会改变url hash，可以通过配置`saveOnUrl={false}`属性取消对url的改变）。
+
+
+### PlaygroundSandbox
+`PlaygroundSandbox`是对 `Playground` 做了沙盒封装，功能和配置项完全一致，且完全隔离宿主环境。
+
+仅仅是在文档或者项目中使用的话，推荐使用`PlaygroundSandbox`组件
+
+示例代码：
+```jsx
+import { PlaygroundSandbox } from 'react-exercise-playground'
+
+export const Demo2 = () => {
   const files = {
     'App.tsx': `import {title} from './const'
 function App() {
@@ -53,14 +73,14 @@ function App() {
 export default App
 `,
     'const.ts': {
-      code: 'export const title = "demo2";',
+      code: 'export const title = "demo2"',
     },
   }
 
   return (
     <>
       <h1>作为组件使用：</h1>
-      <Playground
+      <PlaygroundSandbox
         showHeader={false}
         showCompileOutput={false}
         fileSelectorReadOnly
@@ -68,16 +88,33 @@ export default App
         height={400}
         files={files}
         border
+        theme='dark'
+        options={{
+          lineNumbers: false,
+        }}
+      />
+      <div style={{ height: '60vh' }}></div>
+      <div>滚动到可视范围内才会加载</div>
+      <PlaygroundSandbox
+        showHeader={false}
+        showCompileOutput={false}
+        fileSelectorReadOnly
+        width={700}
+        height={400}
+        files={files}
+        border
+        theme='dark'
+        options={{
+          lineNumbers: false,
+        }}
       />
     </>
   )
 }
 
 ```
-
 ![截图](https://raw.githubusercontent.com/fewismuch/react-playground/main/src/example/Demo1.png)
 
-> 注意：作为组件使用会导致页面url变化（代码会存到hash中），建议在单独页面中使用。暂时无法一个页面多次使用组件，会有冲突，后续会更新解决
 
 # Props
 
@@ -123,3 +160,10 @@ interface File {
   }
 }
 ```
+
+# 更新日志
+## 0.1.2
+- 新增types文件加载提示
+- 新增PlaygroundSandbox组件（功能与原Playground组件一致，只是在iframe中渲染，不影响宿主环境，推荐使用）
+- 优化打包和代码
+- 修复主题配置初始化错误
