@@ -8,7 +8,7 @@ import ShareSvg from './icons/share.svg?raw'
 import SuccessSvg from './icons/success.svg?raw'
 import SunSvg from './icons/sun.svg?raw'
 
-import { IMPORT_MAP_FILE_NAME } from '@/Playground/files.ts'
+import { IMPORT_MAP_FILE_NAME } from '@/Playground/files'
 import eslintrc from '@/Playground/template/.eslintrc.cjs?raw'
 import gitignore from '@/Playground/template/.gitignore?raw'
 import index from '@/Playground/template/index.html?raw'

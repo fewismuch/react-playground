@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 // @ts-ignore
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
-import { downloadFiles, icons } from './utils.ts'
+import { downloadFiles, icons } from './utils'
 
 import styles from './index.module.less'
 

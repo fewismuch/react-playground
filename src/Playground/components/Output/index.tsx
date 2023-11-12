@@ -6,10 +6,10 @@ import { Preview } from './Preview'
 import { ViewSelector } from './ViewSelector'
 import { MonacoEditorConfig } from '../EditorContainer/Editor/monacoConfig'
 
-import { IMPORT_MAP_FILE_NAME } from '@/Playground/files.ts'
+import { IMPORT_MAP_FILE_NAME } from '@/Playground/files'
 import { PlaygroundContext } from '@/Playground/PlaygroundContext'
 import type { IOutput, IPreviewData } from '@/Playground/types'
-import { debounce } from '@/Playground/utils.ts'
+import { debounce } from '@/Playground/utils'
 
 const viewTypes = ['PREVIEW', 'JS']
 

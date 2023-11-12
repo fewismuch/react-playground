@@ -33,6 +33,7 @@ const ReactPlayground = (props: IPlayground) => {
     border = false,
     defaultSizes,
     onFilesChange,
+    autorun = true,
   } = props
   const { filesHash, changeTheme, files, setFiles, setSelectedFileName } =
     useContext(PlaygroundContext)
@@ -88,7 +89,7 @@ const ReactPlayground = (props: IPlayground) => {
             showFileSelector={showFileSelector}
             fileSelectorReadOnly={fileSelectorReadOnly}
           />
-          <Output showCompileOutput={showCompileOutput} />
+          {autorun ? <Output showCompileOutput={showCompileOutput} /> : null}
         </SplitPane>
       </div>
     </div>

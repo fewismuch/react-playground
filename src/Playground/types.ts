@@ -59,6 +59,8 @@ export type IPlayground = {
   border?: boolean
   onFilesChange?: (url: string) => void
   saveOnUrl?: boolean
+  autorun?: boolean
+  // recompileDelay
 } & Omit<IEditorContainer, 'options'> &
   IOutput &
   ISplitPane
