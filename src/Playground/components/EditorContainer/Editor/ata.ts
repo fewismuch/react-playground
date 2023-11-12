@@ -72,6 +72,7 @@ export async function createATA() {
     // @ts-ignore
     delegateListener[event].delete(handler)
   }
+
   return {
     acquireType,
     addListener,

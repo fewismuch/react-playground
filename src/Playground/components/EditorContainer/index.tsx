@@ -5,8 +5,8 @@ import { FileSelector } from './FileSelector'
 import { Message } from '../Message'
 
 import { PlaygroundContext } from '@/Playground/PlaygroundContext'
-import type { IEditorContainer } from '@/Playground/types.ts'
-import { debounce } from '@/Playground/utils.ts'
+import type { IEditorContainer } from '@/Playground/types'
+import { debounce } from '@/Playground/utils'
 
 export const EditorContainer: React.FC<IEditorContainer> = (props) => {
   const { showFileSelector, fileSelectorReadOnly, options = {} } = props

@@ -2,11 +2,11 @@ import classnames from 'classnames'
 import React, { useContext, useEffect, useState } from 'react'
 
 import { FileItem } from './FileItem'
-import { maxSequenceTabName } from './utils.ts'
+import { maxSequenceTabName } from './utils'
 
 import styles from './index.module.less'
 
-import { ENTRY_FILE_NAME, IMPORT_MAP_FILE_NAME, MAIN_FILE_NAME } from '@/Playground/files.ts'
+import { ENTRY_FILE_NAME, IMPORT_MAP_FILE_NAME, MAIN_FILE_NAME } from '@/Playground/files'
 import { PlaygroundContext } from '@/Playground/PlaygroundContext'
 import type { IFileSelector } from '@/Playground/types'
 
