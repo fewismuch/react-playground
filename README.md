@@ -127,7 +127,6 @@ export default App
 | border               | boolean丨undefined                                                     | false            | 是否显示边框       |
 | showFileSelector     | boolean丨undefined                                                     | true             | 是否显示文件tab    |
 | fileSelectorReadOnly | boolean丨undefined                                                     | false            | 文件tab是否只读    |
-| onFilesChange        | (url: string) => void                                                 | undefined        |              |
 | showCompileOutput    | boolean丨undefined                                                     | true             | 是否显示编译后代码    |
 | defaultSizes         | number[]丨undefined                                                    | [100,100]        | 编辑器和预览区宽度比例  |
 | options              | { lineNumbers?: boolean;fontSize?: number;tabSize?: number}丨undefined | undefined        | 编辑器配置        |
@@ -165,6 +164,9 @@ interface File {
 对于这个组件的实现原理和过程我写了一篇文章，感兴趣的可以看一看 [React终于也有playground了：一个能实时运行React代码的在线编辑器](https://juejin.cn/post/7297529039311552522)
 
 # 更新日志
+## 0.1.3
+- 修复types路径错误
+
 ## 0.1.2
 - 新增types文件加载提示
 - 新增PlaygroundSandbox组件（功能与原Playground组件一致，只是在iframe中渲染，不影响宿主环境，推荐使用）
