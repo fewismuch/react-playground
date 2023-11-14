@@ -2,7 +2,7 @@ import { Monaco } from '@monaco-editor/react';
 export declare const useEditor: () => {
     autoLoadExtraLib: (editor: any, monaco: any, defaultValue: string, onWatch: any) => Promise<{
         acquireType: (code: string) => void;
-        addListener: <T extends "receivedFile" | "progress" | "errorMessage" | "started" | "finished">(event: T, handler: Required<{
+        addListener: <T extends "progress" | "receivedFile" | "errorMessage" | "started" | "finished">(event: T, handler: Required<{
             receivedFile?: Set<(code: string, path: string) => void> | undefined;
             progress?: Set<(downloaded: number, estimatedTotal: number) => void> | undefined;
             errorMessage?: Set<(userFacingMessage: string, error: Error) => void> | undefined;
@@ -15,7 +15,7 @@ export declare const useEditor: () => {
             started?: Set<() => void> | undefined;
             finished?: Set<(files: Map<string, string>) => void> | undefined;
         }>[T] ? T_1 extends Set<infer U> ? U : never : never : never) => void;
-        removeListener: <T_2 extends "receivedFile" | "progress" | "errorMessage" | "started" | "finished">(event: T_2, handler: Required<{
+        removeListener: <T_2 extends "progress" | "receivedFile" | "errorMessage" | "started" | "finished">(event: T_2, handler: Required<{
             receivedFile?: Set<(code: string, path: string) => void> | undefined;
             progress?: Set<(downloaded: number, estimatedTotal: number) => void> | undefined;
             errorMessage?: Set<(userFacingMessage: string, error: Error) => void> | undefined;
