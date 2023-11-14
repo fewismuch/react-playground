@@ -1,6 +1,6 @@
 # react-exercise-playground
 
-`react-exercise-playground` 是一个react在线代码编辑器，可实时运行react代码，支持动态引入自定义文件和第三方依赖包，支持ts，tsx
+这是一个react在线代码编辑器，可实时运行react代码，支持动态引入自定义文件和第三方依赖包，支持ts，tsx，可嵌入项目使用
 
 ![截图](https://raw.githubusercontent.com/fewismuch/react-playground/main/src/example/index.png)
 
@@ -30,7 +30,7 @@
 - [X]  ~~支持第三方依赖ts类型自动导入~~
 - [ ]  发布1.0版本
 - [ ]  编译器改为esbuild-wasm，提升预览速度
-- [ ]  待定：将playground项目和sandbox包分离
+- [ ]  待定：将playground和sandbox包分离
 
 > 1.0版本之前可能会有一些API变动和功能新增，我会尽快修复并稳定，如果兴趣的可以关注一下
 
