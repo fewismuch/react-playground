@@ -17,8 +17,7 @@
   {
     "imports": {
       "react": "https://esm.sh/react@18.2.0",
-      "react-dom/client": "https://esm.sh/react-dom@18.2.0",
-      "react-exercise-playground":"https://esm.sh/react-exercise-playground@#version#}"
+      "react-dom/client": "https://esm.sh/react-dom@18.2.0"
     }
   }
 </script>
@@ -28,7 +27,7 @@
 <script type="module">
   import React, {useState, useEffect} from 'react';
   import ReactDOM from 'react-dom/client';
-  import {Playground} from 'react-exercise-playground'
+  import {Playground} from 'https://esm.sh/react-exercise-playground@#version#'
 
   const App = () => {
     const [sandboxProps, setSandboxProps] = useState(null);

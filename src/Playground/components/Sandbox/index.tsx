@@ -9,7 +9,7 @@ import type { IMessageData, IPlayground } from '@/Playground/types'
 const currentVersionIframeRaw = iframeRaw.replace('#version#', packageConfig.version)
 const iframeUrl = getIframeUrl(currentVersionIframeRaw)
 
-export const Sandbox: React.FC<IPlayground> = (props) => {
+export const Sandbox: React.FC<Omit<IPlayground, 'onFilesChange'>> = (props) => {
   const { width = '100vw', height = '100vh' } = props
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const loaded = useRef(false)
