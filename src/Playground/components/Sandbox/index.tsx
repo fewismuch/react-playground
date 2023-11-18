@@ -8,7 +8,7 @@ import type { IMessageData, IPlayground } from '@/Playground/types'
 
 const currentVersionIframeRaw = iframeRaw.replace('#version#', packageConfig.version)
 const iframeUrl =
-  getIframeUrl(currentVersionIframeRaw) + window.location.hash ? `#${window.location.hash}` : ''
+  getIframeUrl(currentVersionIframeRaw) + (window.location.hash ? `#${window.location.hash}` : '')
 
 export const Sandbox: React.FC<IPlayground> = (props) => {
   const { width = '100vw', height = '100vh' } = props

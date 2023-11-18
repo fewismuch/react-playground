@@ -3454,7 +3454,7 @@ const sX = `<!doctype html>
 </div>
 </body>
 </html>
-`, xX = "react-exercise-playground", UX = "react-exercise-playground是一个react在线代码编辑器可实时预览运行效果", jX = "0.1.6", KX = "dist/@types/Playground/index.d.ts", oX = "dist/index.mjs", HX = [
+`, xX = "react-exercise-playground", UX = "react-exercise-playground是一个react在线代码编辑器可实时预览运行效果", jX = "0.1.7", KX = "dist/@types/Playground/index.d.ts", oX = "dist/index.mjs", HX = [
   "dist/*"
 ], TX = {
   type: "git",
@@ -3559,7 +3559,7 @@ const sX = `<!doctype html>
       "stylelint --max-warnings 0"
     ]
   }
-}, PX = wX.replace("#version#", EX.version), AX = _I(PX) + window.location.hash ? `#${window.location.hash}` : "", fX = (Z) => {
+}, PX = wX.replace("#version#", EX.version), AX = _I(PX) + (window.location.hash ? `#${window.location.hash}` : ""), fX = (Z) => {
   const { width: l = "100vw", height: m = "100vh" } = Z, c = A(null), I = A(!1), [i, W] = yZ(!1), b = A(null), X = (y) => {
     y.forEach((L) => {
       L.isIntersecting && W(!0);
