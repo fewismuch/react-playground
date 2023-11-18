@@ -64,8 +64,9 @@ export const Demo1 = () => {
 
 引用命令：`import {PlaygroundSandbox} from 'react-exercise-playground/PlaygroundSandbox'`
 
-`PlaygroundSandbox`会从CDN下载包，体积仅有10kb+,gzip后2kb+
-> 后续会增加一个完整包，无外网环境下也可使用，体积会大一些
+`PlaygroundSandbox`会从CDN下载包，体积仅有10kb+，gzip后2kb+
+
+> 后续会增加一个完整包，无外网环境下也可使用，体积会大很多
 
 示例代码：
 
@@ -175,6 +176,15 @@ interface File {
 对于这个组件的实现原理和过程我写了一篇文章，感兴趣的可以看一看 [React终于也有playground了：一个能实时运行React代码的在线编辑器](https://juejin.cn/post/7297529039311552522)
 
 # 更新日志
+
+## 0.1.93
+
+- 单独拆分PlaygroundSandbox组件，支持按需加载
+- 修复PlaygroundSandbox的一些bug
+
+## 0.1.5
+
+- 更新版本
 
 ## 0.1.4
 
