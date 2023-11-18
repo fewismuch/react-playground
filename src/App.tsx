@@ -1,7 +1,11 @@
-import { Playground } from './Playground'
+import { PlaygroundSandbox } from './Playground/PlaygroundSandbox'
 
 function App() {
-  return <Playground />
+  const handleFilesHash = (hash: string) => {
+    window.location.hash = hash
+  }
+
+  return <PlaygroundSandbox onFilesChange={handleFilesHash} />
 }
 
 export default App

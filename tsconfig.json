@@ -31,7 +31,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
-
   },
   "references": [
     {
@@ -39,7 +38,7 @@
     }
   ],
   "include": [
-    "src/Playground/*",
+    "src/**/*",
     "src/vite-env.d.ts"
   ],
 }

@@ -35,6 +35,9 @@
     useEffect(() => {
       window.addEventListener('message', ({data}) => {
         if (data?.type === 'SANDBOX_RUN') {
+          data.data.onFilesChange = (val) => {
+            window.parent.postMessage({type: 'SANDBOX_ON_FILES_CHANGE', message: val})
+          }
           setSandboxProps(data.data)
         }
       })

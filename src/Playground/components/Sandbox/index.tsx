@@ -7,9 +7,9 @@ import { getIframeUrl } from '../Output/Preview/utils'
 import type { IMessageData, IPlayground } from '@/Playground/types'
 
 const currentVersionIframeRaw = iframeRaw.replace('#version#', packageConfig.version)
-const iframeUrl = getIframeUrl(currentVersionIframeRaw)
+const iframeUrl = getIframeUrl(currentVersionIframeRaw) + window.location.hash
 
-export const Sandbox: React.FC<Omit<IPlayground, 'onFilesChange'>> = (props) => {
+export const Sandbox: React.FC<IPlayground> = (props) => {
   const { width = '100vw', height = '100vh' } = props
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const loaded = useRef(false)
@@ -24,9 +24,26 @@ export const Sandbox: React.FC<Omit<IPlayground, 'onFilesChange'>> = (props) => 
     })
   }
 
+  const handleMessage = (msg: IMessageData) => {
+    const { type, message } = msg.data
+    if (type === 'SANDBOX_LOADED') {
+      // onFilesChange is removed because it's not serializable
+      iframeRef.current?.contentWindow?.postMessage({
+        type: 'SANDBOX_RUN',
+        data: {
+          ...props,
+          onFilesChange: undefined,
+        },
+      })
+      loaded.current = true
+    } else if (type === 'SANDBOX_ON_FILES_CHANGE') {
+      props.onFilesChange?.(message)
+    }
+  }
+
   useEffect(() => {
     const observer = new IntersectionObserver(handleIntersection, {
-      threshold: 0.2, // 可见性超过20%时触发回调
+      threshold: 0.2,
     })
 
     if (sandboxRef.current) {
@@ -40,17 +57,6 @@ export const Sandbox: React.FC<Omit<IPlayground, 'onFilesChange'>> = (props) => 
     }
   }, [])
 
-  const handleMessage = (msg: IMessageData) => {
-    const { type } = msg.data
-    if (type === 'SANDBOX_LOADED') {
-      iframeRef.current?.contentWindow?.postMessage({
-        type: 'SANDBOX_RUN',
-        data: props,
-      })
-      loaded.current = true
-    }
-  }
-
   useEffect(() => {
     window.addEventListener('message', handleMessage)
     return () => {
@@ -62,7 +68,10 @@ export const Sandbox: React.FC<Omit<IPlayground, 'onFilesChange'>> = (props) => 
     if (loaded.current) {
       iframeRef.current?.contentWindow?.postMessage({
         type: 'SANDBOX_RUN',
-        data: props,
+        data: {
+          ...props,
+          onFilesChange: undefined,
+        },
       })
     }
   }, [props])
