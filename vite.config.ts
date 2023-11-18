@@ -16,7 +16,18 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    cssInjectedByJsPlugin({ topExecutionPriority: false }),
+    cssInjectedByJsPlugin(
+      lifecycle === 'docs'
+        ? { topExecutionPriority: false }
+        : {
+            jsAssetsFilterFunction: function customJsAssetsfilterFunction(outputChunk) {
+              return (
+                outputChunk.fileName === 'index.mjs' ||
+                outputChunk.fileName === 'PlaygroundSandbox.mjs'
+              )
+            },
+          }
+    ),
     lifecycle === 'report'
       ? visualizer({ open: true, brotliSize: true, filename: 'report.html' })
       : null,
@@ -63,9 +74,14 @@ export default defineConfig({
         ? undefined
         : {
             // Could also be a dictionary or array of multiple entry points
-            entry: resolve(__dirname, 'src/Playground/index.tsx'),
+            entry: [
+              resolve(__dirname, 'src/Playground/index.tsx'),
+              resolve(__dirname, 'src/Playground/PlaygroundSandbox.tsx'),
+            ],
             formats: ['es'],
-            fileName: 'index',
+            fileName: (format, entryName) => {
+              return entryName + '.mjs'
+            },
           },
   },
 })

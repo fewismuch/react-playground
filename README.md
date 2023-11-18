@@ -53,14 +53,19 @@ export const Demo1 = () => {
 
 ```
 
-> `Playground` 是基础组件，使用时对宿主环境有侵入性（会动态加载一些js和css且默认会改变url
+> `Playground` 是页面组件，使用时对宿主环境有侵入性（会动态加载一些js和css且默认会改变url
 > hash，可以通过配置`saveOnUrl={false}`属性取消对url的改变）。
 
 ### PlaygroundSandbox
 
-`PlaygroundSandbox`是对 `Playground` 做了沙盒封装，功能和配置项完全一致，且完全隔离宿主环境。
+`PlaygroundSandbox`是对 `Playground` 做了沙盒封装，功能和配置项完全一致，且完全隔离宿主环境的组件。
 
 仅仅是在文档或者项目中使用的话，推荐使用`PlaygroundSandbox`组件
+
+引用命令：`import {PlaygroundSandbox} from 'react-exercise-playground/PlaygroundSandbox'`
+
+`PlaygroundSandbox`会从CDN下载包，体积仅有10kb+,gzip后2kb+
+> 后续会增加一个完整包，无外网环境下也可使用，体积会大一些
 
 示例代码：
 

@@ -2,9 +2,21 @@
   "name": "react-exercise-playground",
   "description": "react-exercise-playground是一个react在线代码编辑器可实时预览运行效果",
   "private": false,
-  "version": "0.1.91",
-  "types": "dist/@types/Playground/index.d.ts",
-  "main": "dist/index.mjs",
+  "version": "0.1.93",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/@types/Playground/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
+    },
+    "./PlaygroundSandbox": {
+      "import": {
+        "types": "./dist/@types/Playground/PlaygroundSandbox.d.ts",
+        "default": "./dist/PlaygroundSandbox.mjs"
+      }
+    }
+  },
   "files": [
     "dist/*"
   ],
