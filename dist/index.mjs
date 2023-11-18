@@ -3140,11 +3140,11 @@ const hX = "_header_1whkb_1", JX = "_logo_1whkb_15", NX = "_links_1whkb_24", RX 
   links: NX,
   theme: RX
 }, pX = () => {
-  const { files: Z, theme: l, changeTheme: m, filesHash: c } = Tl(Ml), [I, i] = yZ(!1), [W, b] = yZ(!1), X = () => {
+  const { files: Z, theme: l, changeTheme: m, filesHash: c } = Tl(Ml), [I, i] = yZ(!1), [W, b] = yZ(!1), X = window.self !== window.top ? `${window.parent.location.host}${window.parent.location.pathname}#${c}` : `${location.host}${location.pathname}#${c}`, d = () => {
     i(!0), setTimeout(() => {
       i(!1);
     }, 3e3);
-  }, d = () => {
+  }, y = () => {
     uX(Z).then(() => {
       b(!0), setTimeout(() => {
         b(!1);
@@ -3175,27 +3175,20 @@ const hX = "_header_1whkb_1", JX = "_logo_1whkb_15", NX = "_links_1whkb_24", RX 
           onClick: () => m("light")
         }
       ),
-      /* @__PURE__ */ F.jsx(
-        _W.CopyToClipboard,
+      /* @__PURE__ */ F.jsx(_W.CopyToClipboard, { text: X, onCopy: d, children: /* @__PURE__ */ F.jsx(
+        "button",
         {
-          text: `${location.host}${location.pathname}#${c}`,
-          onCopy: X,
-          children: /* @__PURE__ */ F.jsx(
-            "button",
-            {
-              title: "Copy sharable URL",
-              dangerouslySetInnerHTML: { __html: I ? dl.SuccessSvg : dl.ShareSvg },
-              onClick: X
-            }
-          )
+          title: "Copy sharable URL",
+          dangerouslySetInnerHTML: { __html: I ? dl.SuccessSvg : dl.ShareSvg },
+          onClick: d
         }
-      ),
+      ) }),
       /* @__PURE__ */ F.jsx(
         "button",
         {
           title: "Download project files",
           dangerouslySetInnerHTML: { __html: W ? dl.SuccessSvg : dl.DownloadSvg },
-          onClick: d
+          onClick: y
         }
       ),
       /* @__PURE__ */ F.jsx(
@@ -3454,7 +3447,7 @@ const sX = `<!doctype html>
 </div>
 </body>
 </html>
-`, xX = "react-exercise-playground", UX = "react-exercise-playground是一个react在线代码编辑器可实时预览运行效果", jX = "0.1.9", KX = "dist/@types/Playground/index.d.ts", oX = "dist/index.mjs", HX = [
+`, xX = "react-exercise-playground", UX = "react-exercise-playground是一个react在线代码编辑器可实时预览运行效果", jX = "0.1.91", KX = "dist/@types/Playground/index.d.ts", oX = "dist/index.mjs", HX = [
   "dist/*"
 ], TX = {
   type: "git",

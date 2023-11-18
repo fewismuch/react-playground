@@ -13,6 +13,11 @@ export const Header: React.FC = () => {
   const [copyed, setCopyed] = useState(false)
   const [downloaded, setDownloaded] = useState(false)
 
+  const shareUrl =
+    window.self !== window.top
+      ? `${window.parent.location.host}${window.parent.location.pathname}#${filesHash}`
+      : `${location.host}${location.pathname}#${filesHash}`
+
   const copyLink = () => {
     setCopyed(true)
     setTimeout(() => {
@@ -53,10 +58,7 @@ export const Header: React.FC = () => {
           />
         )}
 
-        <CopyToClipboard
-          text={`${location.host}${location.pathname}#${filesHash}`}
-          onCopy={copyLink}
-        >
+        <CopyToClipboard text={shareUrl} onCopy={copyLink}>
           <button
             title='Copy sharable URL'
             dangerouslySetInnerHTML={{ __html: copyed ? icons.SuccessSvg : icons.ShareSvg }}
