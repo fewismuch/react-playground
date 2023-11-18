@@ -48,21 +48,25 @@ pnpm install react-exercise-playground --save
 import {Playground} from 'react-exercise-playground'
 
 export const Demo1 = () => {
-  return <Playground />
+  return <Playground/>
 }
 
 ```
-> `Playground` 是基础组件，使用时对宿主环境有侵入性（会动态加载一些js和css且默认会改变url hash，可以通过配置`saveOnUrl={false}`属性取消对url的改变）。
 
+> `Playground` 是基础组件，使用时对宿主环境有侵入性（会动态加载一些js和css且默认会改变url
+> hash，可以通过配置`saveOnUrl={false}`属性取消对url的改变）。
 
 ### PlaygroundSandbox
+
 `PlaygroundSandbox`是对 `Playground` 做了沙盒封装，功能和配置项完全一致，且完全隔离宿主环境。
 
 仅仅是在文档或者项目中使用的话，推荐使用`PlaygroundSandbox`组件
 
 示例代码：
+
 ```jsx
-import { PlaygroundSandbox } from 'react-exercise-playground'
+import {PlaygroundSandbox} from 'react-exercise-playground'
+// import {PlaygroundSandbox} from 'react-exercise-playground/PlaygroundSandbox'
 
 export const Demo2 = () => {
   const files = {
@@ -93,7 +97,7 @@ export default App
           lineNumbers: false,
         }}
       />
-      <div style={{ height: '60vh' }}></div>
+      <div style={{height: '60vh'}}></div>
       <div>滚动到可视范围内才会加载</div>
       <PlaygroundSandbox
         showHeader={false}
@@ -113,26 +117,27 @@ export default App
 }
 
 ```
-![截图](https://raw.githubusercontent.com/fewismuch/react-playground/main/src/example/Demo1.png)
 
+![截图](https://raw.githubusercontent.com/fewismuch/react-playground/main/src/example/Demo1.png)
 
 # Props
 
-| Name                 | Type                                                                  | Default          | Description  |
-|:---------------------|:----------------------------------------------------------------------|:-----------------|:-------------|
-| width                | string丨number丨undefined                                               | 100vw            | 宽度           |
-| height               | string丨number丨undefined                                               | 100vh            | 高度           |
-| theme                | 'dark'丨'light'丨undefined                                              | 'light'          | 主题           |
-| showHeader           | boolean丨undefined                                                     | true             | 是否显示头部       |
-| border               | boolean丨undefined                                                     | false            | 是否显示边框       |
-| showFileSelector     | boolean丨undefined                                                     | true             | 是否显示文件tab    |
-| fileSelectorReadOnly | boolean丨undefined                                                     | false            | 文件tab是否只读    |
-| showCompileOutput    | boolean丨undefined                                                     | true             | 是否显示编译后代码    |
-| defaultSizes         | number[]丨undefined                                                    | [100,100]        | 编辑器和预览区宽度比例  |
-| options              | { lineNumbers?: boolean;fontSize?: number;tabSize?: number}丨undefined | undefined        | 编辑器配置        |
-| files                | File                                                                  | Object           | 初始化代码        |
-| importMap            | { imports: Record<string, string> }                                   | defaultImportMap | 初始化importmap |
-| saveOnUrl            | boolean                                                               | true             | 代码是否存储到url上  |
+| Name                 | Type                                                                  | Default          | Description           |
+|:---------------------|:----------------------------------------------------------------------|:-----------------|:----------------------|
+| width                | string丨number丨undefined                                               | 100vw            | 宽度                    |
+| height               | string丨number丨undefined                                               | 100vh            | 高度                    |
+| theme                | 'dark'丨'light'丨undefined                                              | 'light'          | 主题                    |
+| showHeader           | boolean丨undefined                                                     | true             | 是否显示头部                |
+| border               | boolean丨undefined                                                     | false            | 是否显示边框                |
+| showFileSelector     | boolean丨undefined                                                     | true             | 是否显示文件tab             |
+| fileSelectorReadOnly | boolean丨undefined                                                     | false            | 文件tab是否只读             |
+| showCompileOutput    | boolean丨undefined                                                     | true             | 是否显示编译后代码             |
+| defaultSizes         | number[]丨undefined                                                    | [100,100]        | 编辑器和预览区宽度比例           |
+| options              | { lineNumbers?: boolean;fontSize?: number;tabSize?: number}丨undefined | undefined        | 编辑器配置                 |
+| files                | File                                                                  | Object           | 初始化代码                 |
+| importMap            | { imports: Record<string, string> }                                   | defaultImportMap | 初始化importmap          |
+| saveOnUrl            | boolean                                                               | true             | 代码是否存储到url上           |
+| onFilesChange        | (hash:string)=>void                                                   | undefined        | 代码变更后的回调，回调参数为文件hash值 |
 
 ### File
 
@@ -161,13 +166,17 @@ interface File {
 ```
 
 # 其他
+
 对于这个组件的实现原理和过程我写了一篇文章，感兴趣的可以看一看 [React终于也有playground了：一个能实时运行React代码的在线编辑器](https://juejin.cn/post/7297529039311552522)
 
 # 更新日志
+
 ## 0.1.4
+
 - 修复types路径错误
 
 ## 0.1.2
+
 - 新增types文件加载提示
 - 新增PlaygroundSandbox组件（功能与原Playground组件一致，只是在iframe中渲染，不影响宿主环境，推荐使用）
 - 优化打包和代码

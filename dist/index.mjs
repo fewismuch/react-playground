@@ -3430,6 +3430,9 @@ const sX = `<!doctype html>
     useEffect(() => {
       window.addEventListener('message', ({data}) => {
         if (data?.type === 'SANDBOX_RUN') {
+          data.data.onFilesChange = (val) => {
+            window.parent.postMessage({type: 'SANDBOX_ON_FILES_CHANGE', message: val})
+          }
           setSandboxProps(data.data)
         }
       })
@@ -3451,7 +3454,7 @@ const sX = `<!doctype html>
 </div>
 </body>
 </html>
-`, xX = "react-exercise-playground", UX = "react-exercise-playground是一个react在线代码编辑器可实时预览运行效果", jX = "0.1.3", KX = "dist/@types/index.d.ts", oX = "dist/index.mjs", HX = [
+`, xX = "react-exercise-playground", UX = "react-exercise-playground是一个react在线代码编辑器可实时预览运行效果", jX = "0.1.5", KX = "dist/@types/Playground/index.d.ts", oX = "dist/index.mjs", HX = [
   "dist/*"
 ], TX = {
   type: "git",
@@ -3491,8 +3494,8 @@ const sX = `<!doctype html>
   "react-copy-to-clipboard": "^5.1.0",
   "react-dom": "^18.2.0"
 }, BX = {
-  react: ">17.0.0",
-  "react-dom": ">17.0.0"
+  react: ">=18.2.0",
+  "react-dom": ">=18.2.0"
 }, OX = {
   "@types/babel__standalone": "^7.1.5",
   "@types/file-saver": "^2.0.5",
@@ -3556,36 +3559,39 @@ const sX = `<!doctype html>
       "stylelint --max-warnings 0"
     ]
   }
-}, PX = wX.replace("#version#", EX.version), AX = _I(PX), fX = (Z) => {
+}, PX = wX.replace("#version#", EX.version), AX = _I(PX) + window.location.hash, fX = (Z) => {
   const { width: l = "100vw", height: m = "100vh" } = Z, c = A(null), I = A(!1), [i, W] = yZ(!1), b = A(null), X = (y) => {
     y.forEach((L) => {
       L.isIntersecting && W(!0);
     });
+  }, d = (y) => {
+    var u, s, S;
+    const { type: L, message: V } = y.data;
+    L === "SANDBOX_LOADED" ? ((s = (u = c.current) == null ? void 0 : u.contentWindow) == null || s.postMessage({
+      type: "SANDBOX_RUN",
+      data: {
+        ...Z,
+        onFilesChange: void 0
+      }
+    }), I.current = !0) : L === "SANDBOX_ON_FILES_CHANGE" && ((S = Z.onFilesChange) == null || S.call(Z, V));
   };
-  lZ(() => {
+  return lZ(() => {
     const y = new IntersectionObserver(X, {
       threshold: 0.2
-      // 可见性超过20%时触发回调
     });
     return b.current && y.observe(b.current), () => {
       b.current && y.unobserve(b.current);
     };
-  }, []);
-  const d = (y) => {
-    var V, u;
-    const { type: L } = y.data;
-    L === "SANDBOX_LOADED" && ((u = (V = c.current) == null ? void 0 : V.contentWindow) == null || u.postMessage({
-      type: "SANDBOX_RUN",
-      data: Z
-    }), I.current = !0);
-  };
-  return lZ(() => (window.addEventListener("message", d), () => {
+  }, []), lZ(() => (window.addEventListener("message", d), () => {
     window.removeEventListener("message", d);
   }), []), lZ(() => {
     var y, L;
     I.current && ((L = (y = c.current) == null ? void 0 : y.contentWindow) == null || L.postMessage({
       type: "SANDBOX_RUN",
-      data: Z
+      data: {
+        ...Z,
+        onFilesChange: void 0
+      }
     }));
   }, [Z]), /* @__PURE__ */ F.jsx("div", { ref: b, style: { width: l, height: m }, children: i ? /* @__PURE__ */ F.jsx(
     "iframe",
