@@ -33,13 +33,12 @@ export interface ISplitPane {
 export type IEditorOptions = editor.IStandaloneEditorConstructionOptions & any
 
 export interface IEditorContainer {
-  showFileSelector?: boolean
+  // show tabs
+  showTabs?: boolean
+  // closableTabs tabs
+  closableTabs?: boolean
   fileSelectorReadOnly?: boolean
   options?: IEditorOptions
-}
-
-export interface IOutput {
-  showCompileOutput?: boolean
 }
 
 export type IImportMap = { imports: Record<string, string> }
@@ -58,11 +57,11 @@ export type IPlayground = {
   showHeader?: boolean
   border?: boolean
   onFilesChange?: (url: string) => void
+  // save code on url
   saveOnUrl?: boolean
   autorun?: boolean
   // recompileDelay
 } & Omit<IEditorContainer, 'options'> &
-  IOutput &
   ISplitPane
 
 export interface IPlaygroundContext {

@@ -52,24 +52,8 @@ const compile = (files: IFiles) => {
 }
 
 self.addEventListener('message', async ({ data }) => {
-  try {
-    if (typeof data === 'string') {
-      self.postMessage({
-        type: 'UPDATE_FILE',
-        data: transform(data, {
-          presets: ['react', 'typescript'],
-          retainLines: true,
-          filename: 'tempFileName',
-        }).code,
-      })
-      return
-    }
-
-    self.postMessage({
-      type: 'UPDATE_FILES',
-      data: compile(data),
-    })
-  } catch (e) {
-    self.postMessage({ type: 'ERROR', error: e })
-  }
+  self.postMessage({
+    type: 'UPDATE_FILES',
+    data: compile(data),
+  })
 })

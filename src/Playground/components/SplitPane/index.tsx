@@ -10,7 +10,7 @@ import type { ISplitPane } from '@/Playground/types'
 import 'allotment/dist/style.css'
 
 export const SplitPane: React.FC<ISplitPane> = (props) => {
-  const { defaultSizes = [100, 100] } = props
+  const { defaultSizes = [50, 100, 100] } = props
 
   const SplitLinePosition = {
     LEFT: [0, Infinity],
@@ -55,12 +55,21 @@ export const SplitPane: React.FC<ISplitPane> = (props) => {
           <div className={styles['collapse-btn']} onClick={handleCollapseLeft}></div>
         </div>
       </Allotment.Pane>
-
       <Allotment.Pane snap minSize={0}>
         <div className={classnames(styles['collapse-right'], hiddenLeft ? styles.active : '')}>
           <div className={styles['collapse-btn']} onClick={handleCollapseRight}></div>
         </div>
         {props.children?.[1]}
+        <div className={classnames(styles['collapse-left'], hiddenRight ? styles.active : '')}>
+          <div className={styles['collapse-btn']} onClick={handleCollapseLeft}></div>
+        </div>
+      </Allotment.Pane>
+
+      <Allotment.Pane snap minSize={0}>
+        <div className={classnames(styles['collapse-right'], hiddenLeft ? styles.active : '')}>
+          <div className={styles['collapse-btn']} onClick={handleCollapseRight}></div>
+        </div>
+        {props.children?.[2]}
       </Allotment.Pane>
     </Allotment>
   )

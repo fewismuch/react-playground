@@ -9,7 +9,7 @@ import type { IEditorContainer } from '@/Playground/types'
 import { debounce } from '@/Playground/utils'
 
 export const EditorContainer: React.FC<IEditorContainer> = (props) => {
-  const { showFileSelector, fileSelectorReadOnly, options = {} } = props
+  const { showTabs, fileSelectorReadOnly, options = {} } = props
   const { files, setFiles, selectedFileName, setSelectedFileName } = useContext(PlaygroundContext)
   const [error, setError] = useState('')
   const file = files[selectedFileName] || {}
@@ -29,7 +29,7 @@ export const EditorContainer: React.FC<IEditorContainer> = (props) => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      {showFileSelector ? (
+      {showTabs ? (
         <FileSelector
           onChange={handleTabsChange}
           onError={handleTabsError}

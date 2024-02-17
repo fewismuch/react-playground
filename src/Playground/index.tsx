@@ -26,9 +26,8 @@ const ReactPlayground = (props: IPlayground) => {
     theme,
     files: propsFiles,
     importMap,
-    showCompileOutput = true,
     showHeader = true,
-    showFileSelector = true,
+    showTabs = true,
     fileSelectorReadOnly = false,
     border = false,
     defaultSizes,
@@ -84,12 +83,13 @@ const ReactPlayground = (props: IPlayground) => {
       {showHeader ? <Header /> : null}
       <div style={{ height: `calc(100% - ${showHeader ? 50 : 0}px)` }}>
         <SplitPane defaultSizes={defaultSizes}>
+          <div>menu</div>
           <EditorContainer
             options={options}
-            showFileSelector={showFileSelector}
+            showTabs={showTabs}
             fileSelectorReadOnly={fileSelectorReadOnly}
           />
-          {autorun ? <Output showCompileOutput={showCompileOutput} /> : null}
+          {autorun ? <Output /> : null}
         </SplitPane>
       </div>
     </div>

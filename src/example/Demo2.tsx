@@ -18,7 +18,6 @@ export default App
       <h1>作为组件使用：</h1>
       <PlaygroundSandbox
         showHeader={false}
-        showCompileOutput={false}
         fileSelectorReadOnly
         width={700}
         height={400}
@@ -32,8 +31,6 @@ export default App
       <div>滚动到可视范围内才会加载</div>
       <PlaygroundSandbox
         showHeader={false}
-        showCompileOutput={false}
-        fileSelectorReadOnly
         width={700}
         height={400}
         files={files}
