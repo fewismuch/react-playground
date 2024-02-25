@@ -14,9 +14,11 @@ export const EditorContainer: React.FC<IEditorContainer> = (props) => {
   const [error, setError] = useState('')
   const file = files[selectedFileName] || {}
 
+  // 修改为保存的时候才出发编译渲染
   const handleEditorChange = debounce((value: string) => {
-    files[file.name].value = value
-    setFiles({ ...files })
+    // files[file.name].value = value
+    // setFiles({ ...files })
+    console.log(value)
   }, 250)
 
   const handleTabsChange = (fileName: string) => {
@@ -26,6 +28,11 @@ export const EditorContainer: React.FC<IEditorContainer> = (props) => {
   const handleTabsError = (msg: string) => {
     setError(msg)
   }
+
+  const handleInputSave = debounce((value: string) => {
+    files[file.name].value = value
+    setFiles({ ...files })
+  }, 250)
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -37,7 +44,12 @@ export const EditorContainer: React.FC<IEditorContainer> = (props) => {
         />
       ) : null}
 
-      <Editor onChange={handleEditorChange} file={file} options={options} />
+      <Editor
+        onChange={handleEditorChange}
+        file={file}
+        options={options}
+        onSave={handleInputSave}
+      />
       <Message type='error' context={error} />
     </div>
   )

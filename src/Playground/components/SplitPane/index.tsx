@@ -10,7 +10,7 @@ import type { ISplitPane } from '@/Playground/types'
 import 'allotment/dist/style.css'
 
 export const SplitPane: React.FC<ISplitPane> = (props) => {
-  const { defaultSizes = [50, 100, 100] } = props
+  const { defaultSizes = [40, 100, 100], vertical = false } = props
 
   const SplitLinePosition = {
     LEFT: [0, Infinity],
@@ -48,29 +48,25 @@ export const SplitPane: React.FC<ISplitPane> = (props) => {
   }
 
   return (
-    <Allotment ref={ref} defaultSizes={defaultSizes}>
-      <Allotment.Pane snap minSize={0}>
+    <Allotment ref={ref} defaultSizes={defaultSizes} vertical={vertical}>
+      <Allotment.Pane snap minSize={200} preferredSize={200}>
         {props.children?.[0]}
-        <div className={classnames(styles['collapse-left'], hiddenRight ? styles.active : '')}>
-          <div className={styles['collapse-btn']} onClick={handleCollapseLeft}></div>
-        </div>
       </Allotment.Pane>
       <Allotment.Pane snap minSize={0}>
-        <div className={classnames(styles['collapse-right'], hiddenLeft ? styles.active : '')}>
-          <div className={styles['collapse-btn']} onClick={handleCollapseRight}></div>
-        </div>
         {props.children?.[1]}
         <div className={classnames(styles['collapse-left'], hiddenRight ? styles.active : '')}>
           <div className={styles['collapse-btn']} onClick={handleCollapseLeft}></div>
         </div>
       </Allotment.Pane>
 
-      <Allotment.Pane snap minSize={0}>
-        <div className={classnames(styles['collapse-right'], hiddenLeft ? styles.active : '')}>
-          <div className={styles['collapse-btn']} onClick={handleCollapseRight}></div>
-        </div>
-        {props.children?.[2]}
-      </Allotment.Pane>
+      {props.children?.[2] ? (
+        <Allotment.Pane snap minSize={0}>
+          <div className={classnames(styles['collapse-right'], hiddenLeft ? styles.active : '')}>
+            <div className={styles['collapse-btn']} onClick={handleCollapseRight}></div>
+          </div>
+          {props.children?.[2]}
+        </Allotment.Pane>
+      ) : null}
     </Allotment>
   )
 }

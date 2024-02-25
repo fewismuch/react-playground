@@ -9,9 +9,9 @@ import { ENTRY_FILE_NAME, initFiles, MAIN_FILE_NAME } from './files'
 import { PlaygroundContext, PlaygroundProvider } from './PlaygroundContext'
 import { getCustomActiveFile, getMergedCustomFiles, getPlaygroundTheme } from './utils'
 
-import type { IPlayground } from './types'
-
 import './index.less'
+import type { IPlayground } from './types'
+import { FileExplorer } from '@/Playground/components/FileExplorer'
 
 const defaultCodeSandboxOptions = {
   theme: 'dark',
@@ -83,7 +83,7 @@ const ReactPlayground = (props: IPlayground) => {
       {showHeader ? <Header /> : null}
       <div style={{ height: `calc(100% - ${showHeader ? 50 : 0}px)` }}>
         <SplitPane defaultSizes={defaultSizes}>
-          <div>menu</div>
+          <FileExplorer />
           <EditorContainer
             options={options}
             showTabs={showTabs}

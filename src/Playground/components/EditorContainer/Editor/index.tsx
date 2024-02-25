@@ -16,10 +16,11 @@ interface Props {
   file: IFile
   onChange?: (code: string | undefined) => void
   options?: IEditorOptions
+  onSave?: (code: string | undefined) => void
 }
 
 export const Editor: React.FC<Props> = (props) => {
-  const { file, onChange, options } = props
+  const { file, onChange, onSave, options } = props
   const { theme, files, setSelectedFileName } = useContext(PlaygroundContext)
   const editorRef = useRef<any>(null)
   const { doOpenEditor, loadJsxSyntaxHighlight, autoLoadExtraLib } = useEditor()
@@ -30,6 +31,7 @@ export const Editor: React.FC<Props> = (props) => {
     editorRef.current = editor
     // ignore save event
     editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
+      onSave?.(editor.getValue())
       editor.getAction('editor.action.formatDocument').run()
     })
 
