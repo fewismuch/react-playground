@@ -11,7 +11,7 @@ import { getCustomActiveFile, getMergedCustomFiles, getPlaygroundTheme } from '.
 
 import './index.less'
 import type { IPlayground } from './types'
-import { FileExplorer } from '@/Playground/components/FileExplorer'
+import { FilesExplorer } from '@/Playground/components/FileExplorer'
 
 const defaultCodeSandboxOptions = {
   theme: 'dark',
@@ -83,7 +83,7 @@ const ReactPlayground = (props: IPlayground) => {
       {showHeader ? <Header /> : null}
       <div style={{ height: `calc(100% - ${showHeader ? 50 : 0}px)` }}>
         <SplitPane defaultSizes={defaultSizes}>
-          <FileExplorer />
+          <FilesExplorer />
           <EditorContainer
             options={options}
             showTabs={showTabs}
